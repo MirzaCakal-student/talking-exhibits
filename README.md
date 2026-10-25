@@ -7,11 +7,11 @@ Topic **#1 Talking exhibits**.
 
 ## Team
 
-| Member | Email | Main responsibility |
-| --- | --- | --- |
-| Mirza Čakal | mirza.cakal@stu.ibu.edu.ba | Answerability classifier, retrieval pipeline |
-| Tarik Hadrović | tarik.hadrovic@stu.ibu.edu.ba | Exhibit texts, question set, test set |
-| Kerim Hodžić | kerim.hodzic@stu.ibu.edu.ba | Evaluation, LLM baseline, error analysis, demo |
+| Member | GitHub | Email | Main responsibility |
+| --- | --- | --- | --- |
+| Mirza Čakal | @MirzaCakal-student | mirza.cakal@stu.ibu.edu.ba | Answerability classifier, retrieval pipeline |
+| Tarik Hadrović | @Tarik111345 | tarik.hadrovic@stu.ibu.edu.ba | Exhibit texts, question set, test set |
+| Kerim Hodžić | @kerim279 | kerim.hodzic@stu.ibu.edu.ba | Evaluation, LLM baseline, error analysis, demo |
 
 ## Problem
 
