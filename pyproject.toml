@@ -1,0 +1,18 @@
+[project]
+name = "talking-exhibits"
+version = "0.1.0"
+description = "Detecting unanswerable visitor questions in exhibit-grounded QA (IT 3004, IBU)"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas",
+    "scikit-learn",
+    "rank-bm25",
+    "sentence-transformers",
+    "transformers",
+    "datasets",
+    "torch",
+    "matplotlib",
+]
+
+[tool.uv]
+package = false
