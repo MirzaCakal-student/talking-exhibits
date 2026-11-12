@@ -13,6 +13,7 @@ Tim: **Mirza Čakal**, **Tarik Hadrović**, **Kerim Hodžić**. Svaki član radi
 Pročitaj ovim redom i ništa ne mijenjaj:
 1. `CLAUDE.md`
 2. `TEAM_PLAN.md`: pravila (§1), raspodjela, rokovi, detaljni zadaci po članu (§4), Obsidian (§7)
+2a. `docs/team/<IME>.md` člana s kojim radiš
 3. `HANDOFF.md`: zahtjevi kursa, arhitektura, podaci, metode, evaluacija, paper, odbrana
 4. Sve u `course/`: silabus (šta je pokriveno po sedmicama), **Project Requirements and Guidelines** (milestoneovi, ocjenjivanje, obavezni elementi), predavanja i labove (stil koda koji profesorica očekuje), Project Report Guidelines
 5. `README.md`, `CONTRIBUTIONS.md`, `docs/AI_LOG.md`, te stanje koda u `src/`, `scripts/`, `data/`, `tests/`
@@ -38,6 +39,12 @@ Ako se nešto u `HANDOFF.md` ili `TEAM_PLAN.md` kosi s materijalima u `course/`,
 9. **Radiš samo na zadacima člana s kojim radiš** (`TEAM_PLAN.md` §4). Ako treba dirati tuđi fajl, pitaj i reci koga treba obavijestiti.
 10. **Tekstove izložaka i pitanja za test set ne pišeš umjesto nas.** Test mora biti ljudski. Smiješ predložiti primjere i provjeriti format i validnost.
 11. NLP komponenta je prioritet. Demo i UI dolaze tek kad glavna metoda radi.
+12. **Handoff poslije svake sesije:** na vrh sekcije "Dnevnik sesija" u `docs/team/<IME>.md` upiši šta je urađeno, stvarne rezultate, sljedeće korake, blokade i ciljeve (`TEAM_PLAN.md` §1.5). Mijenjaš samo fajl člana s kojim radiš.
+13. Nove lekcije se dodaju u `course/` svake sedmice. Ako materijala za neku sedmicu nema, potraži temu na internetu po naslovu iz silabusa i reci mi koji izvor si koristio.
+
+## Lične upute
+
+Prije prvog zadatka pročitaj **lični fajl člana** s kojim radiš: `docs/team/MIRZA.md`, `docs/team/TARIK.md` ili `docs/team/KERIM.md`. Tu su zadaci korak po korak, ovisnosti, checklist za M3, šta mora znati na odbrani i dnevnik sesija (kreni od zadnjeg unosa).
 
 ## Korak 3: prvi odgovor
 

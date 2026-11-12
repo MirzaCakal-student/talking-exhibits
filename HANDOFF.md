@@ -32,6 +32,8 @@ Ovaj fajl je **jedini izvor istine** za projekat. Čita ga svaki član tima i sv
 | Finalna predaja | Prije početka ispitnog roka | ⏳ | Kod, podaci, paper, slajdovi |
 | Prezentacija + individualna pitanja | Ispitna sedmica | ⏳ | 10–15 min, svako prezentira, pitanja **bez AI-a** |
 
+> **Nejasno, pitati profesoricu:** Course Policy u rasporedu ima sedmicu 14 (04.–10.01.2027) kao "Project Presentations / P3 Final Check", a Final Exam je sedmica 16 (18.–24.01.2027). Project Requirements kažu da se prezentira u ispitnoj sedmici. Dok ne dobijemo odgovor, planiramo kao da sve mora biti **gotovo do 03.01.2027** (sigurnija varijanta). Odgovor upisati u §13.
+
 Zakasnjeli milestone = 0 bodova za taj milestone. Sve što se brani mora biti predano prije ispitnog roka; Drive i git historija se provjeravaju.
 
 ## 2. Obavezni zahtjevi (iz "Project Requirements and Guidelines")
@@ -55,6 +57,7 @@ UI je opcionalan. Sam vizuelni interfejs nije NLP projekat. Rad na integraciji i
 **Reproducibilnost (GitHub):**
 - Organizovan, čitljiv, komentarisan kod koji radi bez nedokumentovanih ručnih koraka
 - README s instalacijom i pokretanjem, dependency fajl, **fiksni random seedovi**
+  - Kod nas: `pyproject.toml` + **`uv.lock` mora biti u gitu** (kao u lab repou), da svi imaju iste verzije paketa. `pytest` ide kao dev zavisnost (`uv add --dev pytest`).
 - Jasno označeni pretrenirani modeli, API-ji, eksterni kod; **README ima dijagram pipelinea koji označava šta je naše, a šta eksterno**
 - **Svaki član commita svoj rad sa svog GitHub naloga**
 - `CONTRIBUTIONS.md` (ko je šta radio) i `docs/AI_LOG.md` (**svaka** upotreba AI alata)
@@ -125,7 +128,8 @@ QR stranica izloška ──► pitanje ──► [Retrieval nad tekstom TOG izlo
 | `answer_start` | char offset u tekstu izloška, prazno ako nije answerable |
 | `author` | `mirza` / `tarik` / `kerim` |
 | `checked_by` | drugi član koji je provjerio |
-| `split` | `train` / `val` / `test` |
+| `source` | `human` / `llm_checked` (u test smije samo `human` ili `llm_checked` koje je čovjek ispravio i provjerio) |
+| `split` | `train` / `val` / `test` (popunjava `scripts/build_dataset.py`, ne ručno) |
 
 - **Pravila anotacije** napisati u `docs/annotation_guidelines.md` prije pisanja pitanja (granični slučajevi: djelimični odgovor, odgovor koji traži zaključivanje, brojevi napisani riječima).
 - Svako pitanje provjerava **drugi** član. Izmjeriti slaganje (Cohen's kappa) na ~50 dvostruko anotiranih pitanja → ide u paper.
@@ -230,6 +234,7 @@ Feedback s M3 check-ina **mora** biti obrađen u finalnoj predaji — upisati ga
 
 - Sekcije (obavezne): Abstract, Introduction, Literature Review, Dataset, Methodology, Results, Discussion and Limitations, Conclusion, Author Contributions, AI Tools Disclosure, References.
 - Max 20 strana bez referenci i priloga. Citation manager: **Zotero** ili Paperpile, jedan stil (IEEE preporuka).
+- Broj izvora: za **M3 ≥8** (5 direktno o problemu, iz Project Requirements); za **finalni paper ≥10 citata** (Project Report Guidelines u Lab 01). Ciljamo 15+.
 - Citirati **sve**: datasetove, modele, biblioteke, figure, eksterni kod.
 - Naš rad jasno odvojen od tuđeg.
 - Šablon i primjer papera su u Lab 01 dokumentu (IBU naslovna strana: Faculty of Engineering, Natural and Medical Sciences, Department of Information Technology; Supervisor Prof. Dr. Dželila Mehanović).
@@ -247,7 +252,7 @@ Feedback s M3 check-ina **mora** biti obrađen u finalnoj predaji — upisati ga
 | Robertson, Zaragoza (2009). The Probabilistic Relevance Framework: BM25 and Beyond | Baseline 1 |
 | Kamath, Jia, Liang (2020). Selective Question Answering under Domain Shift. ACL | Direktno: odbijanje / abstention |
 | Ji et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys | Motivacija |
-| Rađenović et al. (2026). Development of Serbian QA Datasets through Prompt-Based Generation and Human Validation. LREC 2026 | Regionalni QA resursi |
+| Rađenović et al. (2026). Development of Serbian QA Datasets through Prompt-Based Generation and Human Validation. LREC 2026 | Regionalni QA resursi (**još neprovjereno**: naći rad u ACL Anthology prije citiranja) |
 | Jurafsky & Martin, Speech and Language Processing, 3rd ed. (QA i RAG poglavlja) | Obavezna literatura kursa |
 
 Za pretragu koristiti Google Scholar, ACL Anthology, Semantic Scholar. Tražiti još radova o: answerability detection, abstention u LLM-ovima, museum/cultural heritage chatbots, QA za low-resource južnoslavenske jezike.
@@ -267,6 +272,7 @@ Za pretragu koristiti Google Scholar, ACL Anthology, Semantic Scholar. Tražiti 
 4. **Nikad ne izmišljaj** rezultate, brojeve, eksperimente, datasetove ni reference. Svaki broj mora izaći iz pokrenutog koda. Svaka referenca mora biti otvorena i provjerena.
 5. **Studenti moraju razumjeti sve.** Piši jednostavan, komentarisan kod u stilu lab repoa (jedna funkcija = jedan korak, DataFrame kroz pipeline). Nakon većeg komada koda objasni ga u 3–5 rečenica i predloži 2 pitanja koja bi profesorica mogla postaviti o njemu.
 6. **Nikad ne commituj, ne stage-aj i ne pushaj.** Svaki član commita svoj rad sa svog naloga. Ti predložiš commit poruku i komande, a član ih pokrene sam. Prije rada pitaj i objasni, a poslije svakog zadatka upiši bilješke za učenje u `study/<član>/` (vidi `TEAM_PLAN.md` §1.3–1.4).
+6a. **Handoff poslije svake sesije** (vidi `TEAM_PLAN.md` §1.5): dopuni sekciju "Dnevnik sesija" u `docs/team/<IME>.md` člana s kojim radiš (šta je urađeno, šta je sljedeće, blokade, ciljevi). Taj fajl ide u git, da tim vidi stanje.
 7. **Ne diraj test set** dok konfiguracija nije zaključana. Podešavanje samo na val.
 8. Seed `3004`, `uv run` za sve, novi paketi idu u `pyproject.toml`.
 9. Mala, provjerljiva koraka: napiši → pokreni → pokaži output → commit. Testovi u `tests/` za podatke, chunking i metrike.
@@ -284,6 +290,8 @@ Za pretragu koristiti Google Scholar, ACL Anthology, Semantic Scholar. Tražiti 
 | 25.10.2026 | Dozvola IBU-a za objavu tekstova izložaka | ❓ pitati |
 | 25.10.2026 | Uključujemo li kolege van tima za pitanja? Ako da → odobrenje profesorice prije prikupljanja | ❓ |
 | 25.10.2026 | LLM za B2: lokalno (Ollama) ili API? | ❓ |
+| 12.11.2026 | Dodana kolona `source` u šemu pitanja; `uv.lock` i `pytest` obavezni; finalni paper ≥10 citata; per-member upute u `docs/team/` | ✅ |
+| 12.11.2026 | Datum prezentacija: sedmica 14 (04.01.) ili ispitna sedmica 16? | ❓ pitati profesoricu |
 | | Feedback s M3 check-ina | ⏳ |
 
 ## 14. Alati i skillovi koje imamo (Claude + ostalo)
@@ -324,4 +332,4 @@ Koristi ono što ubrzava rad, ali sve upisati u AI_LOG.
 
 ---
 
-*Zadnje ažuriranje: 25.10.2026 (nakon M2). Napisao: Claude na zahtjev Mirze Čakala; tim provjerava i dopunjava.*
+*Zadnje ažuriranje: 12.11.2026 (usklađeno s materijalima u `course/`). Napisao: Claude na zahtjev Mirze Čakala; tim provjerava i dopunjava.*

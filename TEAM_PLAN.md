@@ -2,7 +2,14 @@
 
 Plan rada za tim i za Claude Code. Čita se zajedno s `HANDOFF.md`: HANDOFF objašnjava **šta** je projekat i **zašto** je takav, a ovaj fajl kaže **ko, kako i kad** radi.
 
-Stanje na dan pisanja: **08.11.2026**. M1 i M2 su predani. **M3 je u ponedjeljak 23.11.2026 u 08:00**, za 15 dana. Plan iz HANDOFF-a (sedmice 4–5) kasni, pa je ovdje sabijen.
+Stanje na dan pisanja: **08.11.2026**, dopunjeno **12.11.2026**. M1 i M2 su predani. **M3 je u ponedjeljak 23.11.2026 u 08:00**. Plan iz HANDOFF-a (sedmice 4–5) kasni, pa je ovdje sabijen.
+
+**Lične upute po članu** (šta tačno radiš, korak po korak, s checklistama i dnevnikom sesija):
+- [`docs/team/MIRZA.md`](docs/team/MIRZA.md)
+- [`docs/team/TARIK.md`](docs/team/TARIK.md)
+- [`docs/team/KERIM.md`](docs/team/KERIM.md)
+
+Ovaj fajl ostaje glavni plan; lični fajlovi ga razrađuju. Ako se razlikuju, važi ovaj fajl (a iznad njega `course/`).
 
 ---
 
@@ -80,7 +87,23 @@ kod: src/talking_exhibits/retrieval.py
 - **DEFENSE_QA.md:** pitanja grupisana po temama (Podaci, Baseline, Glavna metoda, Evaluacija, Greške, Kod). Svako pitanje ima kratak odgovor i link na kod i koncept. Član pokrije odgovore i vježba **naglas, bez AI-a**, jer na odbrani AI nije dozvoljen.
 - Član mora razumjeti i **tuđe** dijelove projekta, jer se na odbrani pita o cijelom projektu. Zato Claude jednom sedmično, na zahtjev, napravi u folderu člana `CROSS_REVIEW.md` sa sažetkom onoga što su druga dvojica uradila (iz `git log` i koda).
 
-### 1.5 Ostala pravila (iz HANDOFF-a)
+### 1.5 Handoff poslije svake sesije
+- Na kraju **svake** sesije Claude dopuni sekciju **"Dnevnik sesija"** na dnu `docs/team/<IME>.md` člana s kojim radi. Najnoviji unos ide na vrh te sekcije, po šablonu:
+
+```markdown
+### 2026-11-12 — kratak naslov
+- **Urađeno:** ... (fajlovi, funkcije, testovi koji prolaze)
+- **Stvarni rezultati:** brojevi iz pokretanja ili "nema"
+- **Sljedeće:** 1–3 konkretna koraka s rokom
+- **Blokade / čekam na:** ko, šta
+- **Ciljevi do sljedećeg roka:** ...
+```
+
+- Ovaj fajl **ide u git** (član ga commita zajedno sa svojim radom), da druga dvojica i njihovi Claude-ovi vide stanje bez pitanja.
+- Detaljnije lične bilješke ostaju lokalno u `study/<član>/` (LEARNING_LOG, concepts, DEFENSE_QA).
+- Claude u `docs/team/` mijenja **samo** fajl člana s kojim radi i samo sekcije "Dnevnik sesija" i checkliste (☐ → ☑). Ostatak fajla mijenja se dogovorom tima.
+
+### 1.6 Ostala pravila (iz HANDOFF-a)
 - Razgovor na **bosanskom** (ijekavica). Kod, komentari, docstringovi, README i paper su na **engleskom**.
 - **Nikad ne izmišljaj** rezultate, brojeve, datasetove ni reference. Svaki broj mora doći iz pokrenutog koda, a svaka referenca iz otvorenog izvora.
 - Seed **3004**, sve komande preko **`uv run`**, novi paketi idu u `pyproject.toml` (član pokreće `uv add`, Claude predloži).
@@ -126,6 +149,10 @@ pon 9.11 ──► uto 10.11 ──► pet 13.11 ──► pon 16.11 ──► �
 | **sedmica 8 (lab)** | Check-in od ~5 min: podaci, baseline, plan glavne metode; svako objašnjava svoj dio | Svi |
 
 Napomena: za M3 baseline se prijavljuje na **val**, ne na test. Test se otvara tek u finalnoj evaluaciji.
+
+**Stanje 12.11.2026 (iz repoa):** u gitu još nema ništa od rokova 9.11 i 10.11 (odluka o izlošcima, guidelines, skeleton koda, validator). Novi rok za sve što kasni: **pet 13.11 (izlošci + guidelines + šema) i sub 14.11 (kod + validator)**. Rokovi od 16.11 dalje ostaju isti. Ako je nešto urađeno lokalno, odmah pushati da drugi mogu nastaviti.
+
+**Zajednički tehnički zadatak (Mirza, odmah):** `uv add --dev pytest`, `uv lock`, commitati `pyproject.toml` i `uv.lock`, napraviti `tests/`. Ostali poslije toga `git pull` + `uv sync`.
 
 ---
 
@@ -200,16 +227,21 @@ Napomena: za M3 baseline se prijavljuje na **val**, ne na test. Test se otvara t
 
 Tačni datumi zavise od ispitnog rasporeda na LMS-u. Sve mora biti predano prije početka ispitnog roka.
 
+**Pažnja:** Course Policy ima sedmicu 14 (04.–10.01.2027) označenu kao "Project Presentations / P3 Final Check", a Final Exam je sedmica 16 (18.–24.01.2027). Dok profesorica ne potvrdi, sve gore planiramo tako da paper, kod i slajdovi budu **gotovi do 03.01.2027**. Pita: Tarik (mail profesorici/asistentici, službeni kanal).
+
+**Finalni paper:** ≥10 citata (Project Report Guidelines, Lab 01); za M3 je minimum 8.
+
 ---
 
 ## 6. Rutina jedne sesije s Claude Codeom
 
 1. Član otvori terminal u repou i pokrene `git pull`.
 2. Pokrene Claude Code. Claude pročita `CLAUDE.md`, a ono ga uputi na `TEAM_PLAN.md`, `HANDOFF.md` i `course/`.
-3. Claude utvrdi s kim radi, pogleda `git log` od zadnje sesije i `study/<član>/LEARNING_LOG.md`, pa predloži sljedeći zadatak iz §4.
+3. Claude utvrdi s kim radi, pročita `docs/team/<IME>.md` (lične upute + zadnji unos u dnevniku sesija), pogleda `git log` od zadnje sesije i `study/<član>/LEARNING_LOG.md`, pa predloži sljedeći zadatak iz §4.
 4. Rad ide po §1.3: razumijevanje, plan, potvrda, mali koraci, objašnjenje.
 5. Na kraju Claude:
    - upiše unos u `study/<član>/LEARNING_LOG.md` i dopuni `concepts/` i `DEFENSE_QA.md`,
+   - dopuni "Dnevnik sesija" u `docs/team/<IME>.md` (§1.5),
    - ispiše listu promijenjenih fajlova, prijedlog commit poruke i git komande,
    - podsjeti člana da upiše **AI_LOG** i **CONTRIBUTIONS** (navede činjenice, ne piše tekst u fajl).
 6. Član pregleda diff, upiše AI_LOG i CONTRIBUTIONS, pa **sam** commita i pusha.
