@@ -118,7 +118,7 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 - ☐ Odluka o izlošcima u HANDOFF §13
 - ☐ Mailovi: IBU (dozvola) i profesorica (sedmica 14, vanjski ljudi)
 - ☐ `data/exhibits/` svi tekstovi BS + EN, prolaze `load_exhibits`
-- ☐ `validate_questions.py` + prazan `questions.csv` sa zaglavljem
+- ☑ `validate_questions.py` + prazan `questions.csv` sa zaglavljem
 - ☐ ~300 pitanja spojeno, validator "OK"
 - ☐ Kappa izračunata (stvarni broj)
 - ☐ `build_dataset.py` → train/val/test, test ≥100
@@ -154,6 +154,19 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-14 — T-2 šema i validator pitanja (branch `tarik/validate-questions`)
+- **Urađeno:**
+  - `data/questions/questions.csv`: prazan obrazac, samo zaglavlje s 11 kolona (`qid, exhibit_id, lang, question, label, answer_text, answer_start, author, checked_by, source, split`). **Svi pišu pitanja u ovaj fajl.**
+  - `scripts/validate_questions.py`: provjerava kolone, `qid` (format `q0001`, jedinstven), dozvoljene vrijednosti (`lang`, `label`, `source`, `split`, poznat `exhibit_id`), `author`/`checked_by` (članovi tima, nisu ista osoba), span odgovora (`text[answer_start:...] == answer_text` u izlošku **istog jezika**; prazno za neodgovoriva) i duplikate (bez razlike u velikim slovima i razmacima). Kad je pozicija pogrešna, ispiše gdje se odgovor stvarno nalazi.
+  - `tests/test_validate_questions.py`: 16 testova na izmišljenim podacima.
+  - `pytest` dodan kao dev zavisnost (`pyproject.toml` + `uv.lock`); `.pytest_cache/` u `.gitignore`.
+- **Stvarni rezultati:** `uv run pytest tests -v` → `16 passed in 1.17s`. `uv run python scripts/validate_questions.py` na praznom fajlu → `OK (0 questions)`.
+- **Format izložaka koji validator očekuje:** `data/exhibits/<id>_<lang>.json` s poljima `id`, `lang`, `text` (isti `id` za BS i EN verziju). Validator ih zasad čita svojom funkcijom `load_exhibit_texts`; prelazi na Mirzin `data.load_exhibits` kad on bude gotov.
+- **Mirza:** `pytest` i `uv.lock` su dodani na ovom branchu, ne dodaji ih ponovo. Poslije merge-a: `git pull` + `uv sync`.
+- **Sljedeće:** T-1 lista izložaka (`data/exhibits/README.md`) + odluka u HANDOFF §13 + mailovi (IBU, profesorica); zatim T-3 tekstovi.
+- **Blokade / čekam na:** Kerimov `docs/annotation_guidelines.md` prije pisanja pitanja.
+- **Ciljevi do sljedećeg roka:** lista izložaka i prvi tekstovi do 15.11, da Mirza može pokrenuti BM25.
 
 ### 2026-11-12 — fajl napravljen (Mirzina sesija)
 - **Urađeno:** napravljene lične upute. Tarik još nije imao sesiju s Claude Code-om.
