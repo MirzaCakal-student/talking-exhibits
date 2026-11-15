@@ -5,6 +5,7 @@ data/processed/
 models/
 .env
 .ipynb_checkpoints/
+.pytest_cache/
 
 # Local only
 study/
