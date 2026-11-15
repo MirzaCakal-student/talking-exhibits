@@ -1,0 +1,23 @@
+qid,exhibit_id,lang,question,label,answer_text,answer_start,author,checked_by,source,split
+q0001,lipa_library,bs,Koliko mjesta ima čitaonica?,answerable,180 mjesta,125,mirza,tarik,human,val
+q0002,lipa_library,bs,Koliko knjiga student moze posuditi?,answerable,do pet knjiga,310,mirza,tarik,human,val
+q0003,lipa_library,bs,Ko je poklonio posebnu zbirku?,answerable,porodica Šarić,779,mirza,tarik,human,val
+q0004,lipa_library,bs,Koliko košta članarina u biblioteci?,unanswerable_plausible,,,mirza,tarik,human,val
+q0005,lipa_library,bs,Ko je direktor biblioteke?,unanswerable_plausible,,,mirza,tarik,human,val
+q0006,lipa_library,bs,Koji je glavni grad Japana?,out_of_scope,,,mirza,tarik,human,val
+q0007,lipa_library,en,When did the library open?,answerable,2009,38,mirza,tarik,human,val
+q0008,lipa_library,en,How many group study rooms are there?,answerable,four group study rooms,598,mirza,tarik,human,val
+q0009,lipa_library,en,How many librarians work in the library?,unanswerable_plausible,,,mirza,tarik,human,val
+q0010,lipa_library,en,Who designed the library building?,unanswerable_plausible,,,mirza,tarik,human,val
+q0011,lipa_library,en,How do I bake sourdough bread?,out_of_scope,,,mirza,tarik,human,val
+q0012,lipa_solar_car,bs,Koliko je težak automobil?,answerable,310 kilograma,259,mirza,tarik,human,val
+q0013,lipa_solar_car,bs,Koja je najveca brzina vozila?,answerable,110 kilometara na sat,522,mirza,tarik,human,val
+q0014,lipa_solar_car,bs,Koje mjesto je tim zauzeo na trci?,answerable,sedmo mjesto,706,mirza,tarik,human,val
+q0015,lipa_solar_car,bs,Koliko je koštala izrada automobila?,unanswerable_plausible,,,mirza,tarik,human,val
+q0016,lipa_solar_car,bs,Ko je bio vozač na trci u Belgiji?,unanswerable_plausible,,,mirza,tarik,human,val
+q0017,lipa_solar_car,bs,Kada je sljedeći rok za prijavu ispita?,out_of_scope,,,mirza,tarik,human,val
+q0018,lipa_solar_car,en,What is the body of the car made of?,answerable,carbon fibre,315,mirza,tarik,human,val
+q0019,lipa_solar_car,en,How far can the car drive without sun?,answerable,about 400 kilometres,449,mirza,tarik,human,val
+q0020,lipa_solar_car,en,Who sponsored the solar car project?,unanswerable_plausible,,,mirza,tarik,human,val
+q0021,lipa_solar_car,en,How long does the battery take to charge?,unanswerable_plausible,,,mirza,tarik,human,val
+q0022,lipa_solar_car,en,What is the best pizza place in town?,out_of_scope,,,mirza,tarik,human,val

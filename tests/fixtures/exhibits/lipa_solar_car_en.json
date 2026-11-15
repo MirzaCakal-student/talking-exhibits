@@ -1,0 +1,9 @@
+{
+  "id": "lipa_solar_car",
+  "lang": "en",
+  "title": "The Lipa One Solar Car",
+  "text": "Lipa One is a solar car built by students of mechanical and electrical engineering. Work on the project began in October 2021, and the vehicle was first presented in June 2023. The team had twenty-six students from three faculties. The car weighs 310 kilograms and has room only for the driver. The body is made of carbon fibre, which makes it light and strong. Six square metres of solar cells are placed on the roof. The battery allows a drive of about 400 kilometres without sun. The top speed of the vehicle is 110 kilometres per hour. The motor sits in the rear wheel, so there is no classic gearbox. In 2024 the vehicle took part in the European solar car race in Belgium. The team finished seventh in its class. During the race the battery temperature sensor failed, and the team lost two hours on the repair. Today the car is displayed in the hall of the Faculty of Engineering. A new generation of students is working on a model with two seats.",
+  "sources": [
+    "https://example.org/fictional-fixture"
+  ]
+}

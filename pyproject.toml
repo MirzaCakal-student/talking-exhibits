@@ -6,7 +6,6 @@ requires-python = ">=3.12"
 dependencies = [
     "pandas",
     "scikit-learn",
-    "rank-bm25",
     "sentence-transformers",
     "transformers",
     "datasets",
@@ -16,3 +15,13 @@ dependencies = [
 
 [tool.uv]
 package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
+
+[tool.pytest.ini_options]
+# The package lives in src/, so tests can "import talking_exhibits".
+pythonpath = ["src"]
+testpaths = ["tests"]
