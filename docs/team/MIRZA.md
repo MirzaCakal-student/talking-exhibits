@@ -159,6 +159,12 @@ Piši svojim riječima: šta rad radi, šta nalazi, kako se odnosi na nas. Claud
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-15 (3) — PR #1 merge-an, Mirzin kod spojen s main
+- **Urađeno:** Mirza merge-ao Tarikov PR #1; svoj rad commitao na `mirza/retrieval-baselines` i povukao `main`. Konflikti u `pyproject.toml` i `uv.lock` riješeni Mirzinom verzijom. Fixture pitanja sad imaju autore iz tima, da ih Tarikov validator prihvata.
+- **Stvarni rezultati:** `uv lock --check` uredan; `uv run pytest` → 53 passed; validator na fixture podacima → `OK (22 questions)`; na `data/` → `OK (0 questions)` (pitanja još nema).
+- **Sljedeće:** push brancha i PR u `main`; ostalo po `docs/STATUS.md` §4.
+- **Blokade / čekam na:** Tarik (izlošci, split), Kerim (guidelines, `evaluate.py`).
+
 ### 2026-11-15 (2) — pregled Tarikovog PR-a, status tima, priprema literature
 - **Urađeno:** pregledan Tarikov PR #1 (validator pitanja, obrazac `questions.csv`, 16 testova); napisan `docs/STATUS.md` (stanje cijelog tima, šta fali za M3, ko šta radi). Za Literature Review otvoreno i provjereno 6 izvora (venue RAG rada potvrđen: NeurIPS 2020, vol. 33).
 - **Stvarni rezultati:** nema novih (izložaka i pitanja i dalje nema).

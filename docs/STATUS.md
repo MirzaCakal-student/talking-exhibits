@@ -8,7 +8,7 @@ Ovaj fajl je presjek stanja za cijeli tim. Pravila i plan su u `TEAM_PLAN.md`, l
 
 ## 1. Šta je urađeno
 
-### Mirza (lokalno, **još nije commitano ni pushano**)
+### Mirza (branch `mirza/retrieval-baselines`, spojen s `main` poslije PR #1)
 | Šta | Fajl | Stanje |
 | --- | --- | --- |
 | Učitavanje i provjera izložaka i pitanja | `src/talking_exhibits/data.py` | ✅ + testovi |
@@ -22,13 +22,13 @@ Ovaj fajl je presjek stanja za cijeli tim. Pravila i plan su u `TEAM_PLAN.md`, l
 
 Baseline skripta je pokrenuta samo na 22 izmišljena pitanja (fixtures). Ti brojevi pokazuju da kod radi i **ne prijavljuju se**.
 
-### Tarik (PR #1, branch `tarik/validate-questions`, **otvoren, nije merge-an**)
+### Tarik (PR #1, branch `tarik/validate-questions`, **merge-an u `main` 15.11**)
 | Šta | Fajl | Stanje |
 | --- | --- | --- |
 | Prazan obrazac pitanja s 11 kolona | `data/questions/questions.csv` | ✅ |
 | Validator pitanja (kolone, qid, vrijednosti, autor ≠ provjerio, span odgovora, duplikati) | `scripts/validate_questions.py` | ✅ |
 | 16 testova za validator | `tests/test_validate_questions.py` | ✅ (po PR-u: 16 passed) |
-| `pytest` + `uv.lock` | `pyproject.toml`, `uv.lock` | ✅ (sudara se s Mirzinim izmjenama, vidi §3) |
+| `pytest` + `uv.lock` | `pyproject.toml`, `uv.lock` | ✅ (spojeno s Mirzinim izmjenama, vidi §3) |
 | AI_LOG, CONTRIBUTIONS, dnevnik sesije | | ✅ |
 
 ### Kerim
@@ -55,20 +55,19 @@ U repou i na GitHubu nema ničega od Kerima poslije 25.10.
 
 ---
 
-## 3. Sudar: Tarikov PR i Mirzine lokalne izmjene
+## 3. Spajanje Tarikovog PR-a i Mirzinog koda (riješeno 15.11)
 
-Oba su dodala `pytest` i `uv.lock`, i oba mijenjaju `pyproject.toml` i `.gitignore`. Kod se ne sudara (različiti fajlovi), a format izložaka je isti kod obojice: `data/exhibits/<id>_<lang>.json`.
+Oba su dodala `pytest` i `uv.lock`. Kod se nije sudarao (različiti fajlovi), a format izložaka je isti kod obojice: `data/exhibits/<id>_<lang>.json`.
 
-Redoslijed koji predlažemo (komande pokreće Mirza sam):
-1. Mirza pregleda i merge-a PR #1 na GitHubu.
-2. Mirza svoje lokalne izmjene commita na novi branch (`mirza/retrieval-baselines`), pa u njega povuče `main`.
-3. Konflikti:
-   - `pyproject.toml`: zadržati jednu `[dependency-groups] dev = ["pytest>=9.2.0"]`, Mirzin `[tool.pytest.ini_options]` i listu zavisnosti **bez** `rank-bm25`.
-   - `uv.lock`: ne rješavati ručno; uzeti bilo koju verziju i pokrenuti `uv lock`.
-   - `.gitignore`: zadržati obje linije (`.pytest_cache/` i `results/fixture_demo/`).
-4. `uv sync`, `uv run pytest` (treba proći 37 + 16 = 53 testa), push, PR.
+Šta je urađeno (komande je pokrenuo Mirza):
+1. PR #1 merge-an u `main` na GitHubu.
+2. Mirzin rad commitan na branch `mirza/retrieval-baselines`, pa je u njega povučen `main`.
+3. Konflikti u `pyproject.toml` i `uv.lock` riješeni Mirzinom verzijom (sadrži Tarikov `pytest`, uz to `[tool.pytest.ini_options]` i uklonjen `rank-bm25`). `.gitignore` se spojio sam.
+4. Provjera poslije spajanja: `uv lock --check` uredan, `uv run pytest` → **53 passed** (37 + 16), validator na fixture podacima → `OK (22 questions)`.
 
-Poslije toga: Tarikov validator može umjesto svoje `load_exhibit_texts` koristiti `talking_exhibits.data.load_exhibits`.
+**Svi poslije merge-a ovog brancha:** `git pull` + `uv sync` (`rank-bm25` se briše iz okoline).
+
+Sljedeći korak (Tarik): validator može umjesto svoje `load_exhibit_texts` koristiti `talking_exhibits.data.load_exhibits`.
 
 ---
 
@@ -91,7 +90,7 @@ Poslije toga: Tarikov validator može umjesto svoje `load_exhibit_texts` koristi
 6. Javi se timu: od 25.10 nema tvojih commitova, a git historija se boduje po osobi.
 
 ### Mirza
-1. Pregledati i merge-ati PR #1; commitati i pushati svoj rad (§3).
+1. ~~Pregledati i merge-ati PR #1~~ ✅; pushati `mirza/retrieval-baselines` i otvoriti PR.
 2. Napisati 3–4 teksta izložaka kad Tarik podijeli.
 3. 100 pitanja (50 BS, 50 EN) kad postoje izlošci i guidelines; provjera Kerimovih pitanja.
 4. Kad stigne `data/processed/val.csv`: `uv run python scripts/run_baselines.py`, ručna provjera 10 pitanja, rezultati u `results/`.
