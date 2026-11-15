@@ -18,3 +18,4 @@ Each member commits their own work from their own GitHub account. Update this fi
 | 25.10.2026 | Tarik Hadrović | Proposal review; discussed project setup and division of work with Mirza Čakal (Discord) |
 | 25.10.2026 | Kerim Hodžić | Reviewed the project proposal, discussed the planned evaluation approach, and confirmed responsibilities for the LLM baseline, error analysis, and web demo |
 | 25.10.2026 | Tarik Hadrović | Added GitHub usernames to README, added own entry to docs/AI_LOG.md |
+| 12–14.11.2026 | Tarik Hadrović | Added the question set template, the question validator (scripts/validate_questions.py) with 16 pytest tests, and pytest with uv.lock to the project |
