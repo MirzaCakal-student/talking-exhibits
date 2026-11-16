@@ -19,4 +19,6 @@ Each member commits their own work from their own GitHub account. Update this fi
 | 25.10.2026 | Kerim Hodžić | Reviewed the project proposal, discussed the planned evaluation approach, and confirmed responsibilities for the LLM baseline, error analysis, and web demo |
 | 25.10.2026 | Tarik Hadrović | Added GitHub usernames to README, added own entry to docs/AI_LOG.md |
 | 12–14.11.2026 | Tarik Hadrović | Added the question set template, the question validator (scripts/validate_questions.py) with 16 pytest tests, and pytest with uv.lock to the project |
+| 16.11.2026 | Kerim Hodžić | Added annotation guidelines (docs/annotation_guidelines.md), implemented evaluation metrics (src/talking_exhibits/evaluate.py), added 20 unit tests (tests/test_metrics.py), verified all 36 project tests passed, and updated personal project documentation |
+| 16.11.2026 | Kerim Hodžić | Implemented data analysis and baseline evaluation scripts (scripts/data_analysis.py and scripts/evaluate_all.py), verified syntax and successful output generation using temporary test data; actual dataset analysis and baseline results pending |
 | 16.11.2026 | Tarik Hadrović | Exhibit list (T-1): chose 12 IBU exhibits with the team split (4 per member), sources and writing rules in data/exhibits/README.md, linked from HANDOFF.md |

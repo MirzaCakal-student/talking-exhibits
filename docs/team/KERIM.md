@@ -141,6 +141,24 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+
+### 2026-11-16 — Annotation guidelines and evaluation metrics
+
+- **Urađeno:** Kreiran `docs/annotation_guidelines.md` s pravilima za tri klase pitanja, granične slučajeve, BS/EN anotaciju i tačne answer spanove. Implementiran `src/talking_exhibits/evaluate.py` s refusal metrikama, confusion matricom, jezičkim filterima i bootstrap 95% CI. Dodan `tests/test_metrics.py`.
+- **Stvarni rezultati:** 20 novih testova i ukupno 36 testova prošlo je uz `PYTHONPATH=src`. Stvarne baseline predikcije još nisu evaluirane.
+- **Sljedeće:** Tarik i Mirza trebaju pregledati i potvrditi annotation guidelines. Nastaviti s `scripts/data_analysis.py` i `scripts/evaluate_all.py`.
+- **Blokade / čekam na:** Mirzin PR #2, tekstovi izložaka, validation dataset i baseline predikcije.
+- **Ciljevi do sljedećeg roka:** Predati K-1 i K-2 kroz Pull Request. Do 19.11. pripremiti analizu podataka i evaluacijske izvještaje.
+
+
+### 2026-11-16 — Data analysis and baseline evaluation scripts (K-3/K-4)
+
+- **Urađeno:** Implementiran `scripts/data_analysis.py` za statistiku pitanja i tekstova izložaka, Jaccardovo preklapanje i PNG grafikone. Implementiran `scripts/evaluate_all.py` za evaluaciju baseline predikcija na validacijskom skupu, uključujući refusal metrike, jezičke rezultate i bootstrap intervale pouzdanosti.
+- **Provjera:** Obje skripte prošle provjeru Python sintakse i kontrolno pokretanje na šest sintetičkih pitanja. Generisano svih šest očekivanih izlaznih fajlova. Postojećih 36 testova prolazi.
+- **Blokade:** Stvarni `questions.csv` još nema pitanja, `data/exhibits/` nema tekstove, a `data/processed/val.csv` i baseline predikcije nisu dostupni.
+- **Sljedeće:** Uskladiti format predikcija s Mirzom, pokrenuti skripte na stvarnim podacima, provjeriti rezultate i dopuniti izvještaje.
+
+
 ### 2026-11-12 — fajl napravljen (Mirzina sesija)
 - **Urađeno:** napravljene lične upute. Kerim još nije imao sesiju s Claude Code-om.
 - **Sljedeće:** K-1 annotation guidelines (blokira pisanje pitanja), pa K-2 `evaluate.py`.
