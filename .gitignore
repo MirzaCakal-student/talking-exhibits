@@ -11,3 +11,6 @@ models/
 study/
 course/
 .obsidian/
+
+# Smoke-test output from the fictional fixtures
+results/fixture_demo/

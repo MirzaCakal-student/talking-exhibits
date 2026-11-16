@@ -89,7 +89,7 @@ QR stranica izloška ──► pitanje ──► [Retrieval nad tekstom TOG izlo
 | Komponenta | Naše / eksterno | Napomena |
 | --- | --- | --- |
 | Chunking izložaka (rečenice → pasusi ~100–150 riječi, overlap) | Naše | |
-| BM25 retrieval + prag (Baseline 1) | Naše | `rank-bm25` |
+| BM25 retrieval + prag (Baseline 1) | Naše | Vlastita implementacija BM25 u `retrieval.py` (IDF preko svih pasusa istog jezika, pretraga samo unutar izloška) |
 | Dense retrieval | Eksterno model, naš pipeline | `intfloat/multilingual-e5-base`, MIT licenca. **Obavezni prefiksi** `"query: "` i `"passage: "`, max 512 tokena |
 | **Answerability klasifikator (glavna metoda)** | **Naše (fine-tuning)** | Cross-encoder nad (pitanje, pasus), baza `xlm-roberta-base`; opcionalno poređenje s `classla/bcms-bertic` |
 | Kalibracija praga | Naše | Na validation setu |
@@ -102,10 +102,10 @@ QR stranica izloška ──► pitanje ──► [Retrieval nad tekstom TOG izlo
 ## 5. Podaci
 
 ### 5.1 Izlošci (knowledge base)
-- **Otvorena odluka:** koji izlošci. Preporuka: 10–15 izložaka o IBU kampusu, zgradama, projektima i historiji (tim to može "posjedovati" i provjeriti). Alternativa: Sarajevo/muzej.
+- **Odlučeno 16.11.2026:** 12 izložaka o IBU-u (4 po članu). **Lista, izvori, ko piše koji izložak, pravila pisanja i rezervna tema su u [`data/exhibits/README.md`](data/exhibits/README.md).** Prije pisanja teksta pročitaj taj fajl.
 - Svaki izložak: 300–800 riječi, **BS i EN verzija**, izvori navedeni.
 - Tekst piše tim na osnovu javnih IBU stranica i brošura (ne copy-paste). Tražiti od IBU dozvolu za objavu; ako je nema, repo sadrži linkove izvora i upute.
-- Format: `data/exhibits/<exhibit_id>.json` → `{"id", "title", "lang", "text", "sources": [url...]}`.
+- Format: jedan fajl po izlošku i jeziku, `data/exhibits/<id>_<lang>.json` (npr. `ibu_visitor_faq_bs.json`, `ibu_visitor_faq_en.json`, isti `id`) → `{"id", "title", "lang", "text", "sources": [url...]}`.
 
 ### 5.2 Question set (naš, najvažniji podaci)
 - Cilj 300 pitanja (minimum 100 u **test** setu), pola BS pola EN.
@@ -291,6 +291,7 @@ Za pretragu koristiti Google Scholar, ACL Anthology, Semantic Scholar. Tražiti 
 | 25.10.2026 | Uključujemo li kolege van tima za pitanja? Ako da → odobrenje profesorice prije prikupljanja | ❓ |
 | 25.10.2026 | LLM za B2: lokalno (Ollama) ili API? | ❓ |
 | 12.11.2026 | Dodana kolona `source` u šemu pitanja; `uv.lock` i `pytest` obavezni; finalni paper ≥10 citata; per-member upute u `docs/team/` | ✅ |
+| 15.11.2026 | BM25 pišemo sami (bez `rank-bm25`): izložak ima samo nekoliko pasusa, pa je IDF po izlošku nepouzdan; IDF se računa preko svih pasusa istog jezika, a skorovi su uporedivi između izložaka (jedan prag). Format izloška: jedan JSON po jeziku, `<id>_<lang>.json` | ✅ |
 | 12.11.2026 | Datum prezentacija: sedmica 14 (04.01.) ili ispitna sedmica 16? | ❓ pitati profesoricu |
 | | Feedback s M3 check-ina | ⏳ |
 

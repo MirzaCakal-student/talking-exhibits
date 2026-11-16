@@ -14,14 +14,14 @@ Ti gradiš **NLP srž sistema**: od teksta izloška do odluke "odgovori / odbij"
 
 | Fajl | Šta radi | Status |
 | --- | --- | --- |
-| `pyproject.toml`, `uv.lock` | Zavisnosti (zajedničko, ali ti ih uređuješ) | ☐ `uv.lock` fali |
-| `src/talking_exhibits/data.py` | Učitavanje i validacija izložaka i pitanja | ☐ |
-| `src/talking_exhibits/preprocess.py` | `normalize`, `strip_diacritics`, `split_sentences`, `chunk` | ☐ |
-| `src/talking_exhibits/retrieval.py` | `bm25_search`, `e5_search`, keš embeddinga | ☐ |
+| `pyproject.toml`, `uv.lock` | Zavisnosti (zajedničko, ali ti ih uređuješ) | ☑ |
+| `src/talking_exhibits/data.py` | Učitavanje i validacija izložaka i pitanja | ☑ |
+| `src/talking_exhibits/preprocess.py` | `normalize`, `strip_diacritics`, `split_sentences`, `chunk` | ☑ |
+| `src/talking_exhibits/retrieval.py` | `bm25_search`, `e5_search`, keš embeddinga | ☑ |
 | `src/talking_exhibits/answerability.py` | Klasifikator: trening i inferenca (poslije M3) | ☐ |
-| `scripts/run_baselines.py` | B0, B1, B1b na val + izbor praga | ☐ |
+| `scripts/run_baselines.py` | B0, B1, B1b na val + izbor praga | ☑ kod (čeka prave podatke) |
 | `scripts/train_classifier.py` + `notebooks/` | Fine-tuning na Colabu (poslije M3) | ☐ |
-| `tests/test_data.py`, `tests/test_preprocess.py`, `tests/test_retrieval.py` | pytest | ☐ |
+| `tests/test_data.py`, `tests/test_preprocess.py`, `tests/test_retrieval.py` | pytest | ☑ |
 
 Tuđe fajlove (`data/exhibits/`, `data/questions/`, `evaluate.py`, ...) ne mijenjaš bez dogovora s vlasnikom.
 
@@ -71,8 +71,8 @@ Tuđe fajlove (`data/exhibits/`, `data/questions/`, `evaluate.py`, ...) ne mijen
 **Pitanje za odbranu:** šta bi se desilo s BM25 da brišemo dijakritike u tekstu, a pitanja posjetilaca ih imaju?
 
 ### M-3 BM25 retrieval (rok 13.11 → realno 15.11, ~3 h)
-1. `rank-bm25` (`BM25Okapi`) nad pasusima **jednog** izloška (svaki izložak ima svoj indeks).
-2. `bm25_search(question, exhibit_id, k=3) -> list[(passage_id, text, score)]`.
+1. Vlastita implementacija BM25 (`build_bm25_index`, `bm25_score`): IDF i prosječna dužina računaju se preko svih pasusa istog jezika, a pretražuju se samo pasusi **jednog** izloška.
+2. `bm25_search(question, exhibit_id, lang, index, k=3)` vraća DataFrame (`passage_id`, `text`, `score`).
 3. Tokenizacija ista za pitanje i pasus (koristi `normalize`).
 4. Ručna provjera: 10 pitanja, je li pravi pasus u top-3. Zapiši rezultat u `study/mirza/LEARNING_LOG.md` (stvarni broj).
 
@@ -117,13 +117,13 @@ Piši svojim riječima: šta rad radi, šta nalazi, kako se odnosi na nas. Claud
 - **Pitanja pišeš sam.** Claude ih smije samo provjeriti (format, `answer_start`, da li klasa odgovara guidelinesu).
 
 ## 5. Checklist za M3 (tvoj dio)
-- ☐ `uv.lock` i `pytest` u gitu
-- ☐ `data.py` + testovi
-- ☐ `preprocess.py` + testovi
-- ☐ `retrieval.py` (BM25 + e5) + testovi
+- ☑ `uv.lock` i `pytest` u gitu
+- ☑ `data.py` + testovi
+- ☑ `preprocess.py` + testovi
+- ☑ `retrieval.py` (BM25 + e5) + testovi
 - ☐ `run_baselines.py` → B0, B1, B1b rezultati na val
 - ☐ Recall@3 tabela
-- ☐ README: sekcija "How to run" za tvoje skripte
+- ☑ README: sekcija "How to run" za tvoje skripte
 - ☐ Literature Review: 4+ izvora
 - ☐ 100 pitanja napisano, Kerimova provjerena
 - ☐ AI_LOG i CONTRIBUTIONS upisani (sam)
@@ -158,6 +158,28 @@ Piši svojim riječima: šta rad radi, šta nalazi, kako se odnosi na nas. Claud
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-15 (3) — PR #1 merge-an, Mirzin kod spojen s main
+- **Urađeno:** Mirza merge-ao Tarikov PR #1; svoj rad commitao na `mirza/retrieval-baselines` i povukao `main`. Konflikti u `pyproject.toml` i `uv.lock` riješeni Mirzinom verzijom. Fixture pitanja sad imaju autore iz tima, da ih Tarikov validator prihvata.
+- **Stvarni rezultati:** `uv lock --check` uredan; `uv run pytest` → 53 passed; validator na fixture podacima → `OK (22 questions)`; na `data/` → `OK (0 questions)` (pitanja još nema).
+- **Sljedeće:** push brancha i PR u `main`; ostalo po `docs/STATUS.md` §4.
+- **Blokade / čekam na:** Tarik (izlošci, split), Kerim (guidelines, `evaluate.py`).
+
+### 2026-11-15 (2) — pregled Tarikovog PR-a, status tima, priprema literature
+- **Urađeno:** pregledan Tarikov PR #1 (validator pitanja, obrazac `questions.csv`, 16 testova); napisan `docs/STATUS.md` (stanje cijelog tima, šta fali za M3, ko šta radi). Za Literature Review otvoreno i provjereno 6 izvora (venue RAG rada potvrđen: NeurIPS 2020, vol. 33).
+- **Stvarni rezultati:** nema novih (izložaka i pitanja i dalje nema).
+- **Pitanja nisu pisana:** nema tekstova izložaka ni `annotation_guidelines.md`, a pravilo tima zabranjuje da ih piše Claude (otvorena odluka u `docs/STATUS.md` §5).
+- **Sudar s PR #1:** `pyproject.toml`, `uv.lock`, `.gitignore`; postupak u `docs/STATUS.md` §3.
+- **Sljedeće:** merge PR #1 → commit i push Mirzinog koda → tekstovi izložaka → pitanja → baseline na pravom val splitu.
+- **Blokade / čekam na:** Tarik (izlošci, split), Kerim (guidelines, `evaluate.py`).
+
+### 2026-11-15 — kod za M-0 do M-5 napisan i testiran na fixture podacima
+- **Urađeno:** `uv.lock` + `pytest` (M-0); `data.py` (M-1); `preprocess.py` (M-2); `retrieval.py` s vlastitim BM25 i e5 pretragom + keš (M-3, M-4); `scripts/run_baselines.py` za B0/B1/B1b (M-5); `tests/` (37 testova prolazi) i izmišljeni fixture izlošci u `tests/fixtures/`; README "How to run". Uklonjen `rank-bm25` (ne koristi se).
+- **Stvarni rezultati:** **nema rezultata na pravim podacima** (izlošci i pitanja još nisu u repou). Skripta je pokrenuta samo na 22 izmišljena fixture pitanja kao provjera da radi; ti brojevi se ne prijavljuju.
+- **Odluke (upisane u HANDOFF §13):** BM25 pišemo sami, IDF preko svih pasusa istog jezika; format izloška `<id>_<lang>.json`.
+- **Sljedeće:** (1) kad Tarik pošalje izloške i `data/processed/val.csv`: `uv run python scripts/run_baselines.py` i ručna provjera 10 pitanja; (2) zamijeniti lokalni `refuse_metrics` Kerimovim iz `evaluate.py`; (3) Mirza piše 100 pitanja i svoju polovinu Literature Review (izvori provjereni, bilješke u `study/mirza/LITERATURA.md`).
+- **Blokade / čekam na:** Tarik (izlošci, šema pitanja, split), Kerim (`annotation_guidelines.md`, `evaluate.py`).
+- **Ciljevi do M3 (23.11 08:00):** B0/B1/B1b i Recall@3 na pravom val splitu; 4+ izvora u paperu; 100 pitanja.
 
 ### 2026-11-12 — usklađivanje planova i lične upute
 - **Urađeno:** HANDOFF.md i TEAM_PLAN.md usklađeni s `course/` (kolona `source`, `uv.lock`/`pytest`, ≥10 citata za finalni paper, nejasnoća oko sedmice 14, pravilo o handoffu). Napravljeni `docs/team/MIRZA.md`, `TARIK.md`, `KERIM.md`. Ažurirani `CLAUDE.md` i `PROMPT_CLAUDE_CODE.md`.
