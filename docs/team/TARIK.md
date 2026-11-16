@@ -155,6 +155,15 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-16 — T-1 lista izložaka (branch `tarik/exhibit-list`)
+- **Urađeno:** `data/exhibits/README.md`: 12 IBU izložaka (4 po članu) s izvorima samo s novog sajta `www.ibu.edu.ba`, format JSON-a, pravila pisanja, rizici i rezervna tema (`ibu_laws_regulations`). Svaka stranica je otvorena u browseru i provjerena (dužina teksta, broj činjenica, privatni podaci).
+- **Podjela:** Tarik `ibu_academic_calendar`, `ibu_visitor_faq`, `ibu_kk_igman_burch`, `ibu_student_life`; Mirza `ibu_fenms`, `ibu_projects`, `ibu_erasmus`, `ibu_accreditation`; Kerim `ibu_fess`, `ibu_feh`, `ibu_podcast_media`, `ibu_about_programs`.
+- **Stvarni rezultati:** nema brojeva; `uv run pytest tests -q` → 16 passed, validator → `OK (0 questions)`.
+- **Odbačene teme i zašto:** pojedinačni studijski programi (46–239 riječi), vijesti (jednokratni događaji, imena ljudi), univerzitetski psiholog (ime i mail osobe), stara stranica biblioteke (old.ibu.edu.ba se ne koristi, moguće zastarjelo).
+- **Sljedeće:** tekstovi BS + EN do 17.11 (svako svoje 4); poslije Mirzinog merge-a upis odluke u `HANDOFF.md` §13; mailovi IBU-u i profesorici.
+- **Blokade / čekam na:** Mirzin merge `mirza/retrieval-baselines` (zbog HANDOFF §13); Kerimov `annotation_guidelines.md` prije pisanja pitanja.
+- **Ciljevi do sljedećeg roka:** svih 24 JSON fajla (12 × BS/EN) do 17.11, da Mirza može pokrenuti BM25 na pravim podacima.
+
 ### 2026-11-14 — T-2 šema i validator pitanja (branch `tarik/validate-questions`)
 - **Urađeno:**
   - `data/questions/questions.csv`: prazan obrazac, samo zaglavlje s 11 kolona (`qid, exhibit_id, lang, question, label, answer_text, answer_start, author, checked_by, source, split`). **Svi pišu pitanja u ovaj fajl.**
