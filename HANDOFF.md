@@ -286,7 +286,7 @@ Za pretragu koristiti Google Scholar, ACL Anthology, Semantic Scholar. Tražiti 
 | --- | --- | --- |
 | 08.10.2026 | Izabrana tema #1 Talking exhibits | ✅ |
 | 25.10.2026 | Glavna metoda = fine-tunovani answerability klasifikator (zbog pravila o "team-built" komponenti) | ✅ |
-| 25.10.2026 | Koji izlošci (IBU kampus vs muzej)? | ❓ otvoreno |
+| 25.10.2026 | Koji izlošci (IBU kampus vs muzej)? → **16.11.2026: 12 izložaka o IBU-u, 4 po članu, izvori samo s novog sajta `www.ibu.edu.ba`; lista, podjela i pravila pisanja u [`data/exhibits/README.md`](data/exhibits/README.md)** | ✅ |
 | 25.10.2026 | Dozvola IBU-a za objavu tekstova izložaka | ❓ pitati |
 | 25.10.2026 | Uključujemo li kolege van tima za pitanja? Ako da → odobrenje profesorice prije prikupljanja | ❓ |
 | 25.10.2026 | LLM za B2: lokalno (Ollama) ili API? | ❓ |
