@@ -115,7 +115,7 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 100 svojih pitanja; ti provjeravaš **Mirzina** (`checked_by = tarik`). Pitanja za test set piše čovjek, a Claude smije samo validirati.
 
 ## 5. Checklist za M3 (tvoj dio)
-- ☐ Odluka o izlošcima u HANDOFF §13
+- ☑ Odluka o izlošcima u HANDOFF §13
 - ☐ Mailovi: IBU (dozvola) i profesorica (sedmica 14, vanjski ljudi)
 - ☐ `data/exhibits/` svi tekstovi BS + EN, prolaze `load_exhibits`
 - ☑ `validate_questions.py` + prazan `questions.csv` sa zaglavljem
@@ -154,6 +154,19 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-18 — alati za podatke: answer_start, split, kappa (branch `tarik/data-tools`)
+- **Urađeno:**
+  - `scripts/fill_answer_starts.py`: autor pitanja upiše samo `answer_text` (tačna kopija iz teksta), skripta sama upiše `answer_start` (u tekstu istog jezika). Ako se odgovor pojavljuje više puta, uzme prvi i upozori. Postojeće vrijednosti ne dira. `--dry-run` samo pokaže.
+  - `scripts/build_dataset.py` (T-6): split **po izlošku**, `random.Random(3004)`, default **6 train / 2 val / 4 test** izložaka (da test ima ≥100 pitanja uz ~25 pitanja po izlošku). Prvo pokrene validator; upozori ako test < 100 ili nekom splitu fali klasa; snimi `data/processed/{train,val,test}.csv`, ispiše tabelu split × klasa × jezik i upiše `split` u `questions.csv`.
+  - `scripts/compute_kappa.py` (T-5): Cohen's kappa za 3 klase i za odluku answer/refuse, iz dva CSV-a `qid,label` (npr. `data/questions/agreement/<ime>.csv`); ispiše i neslaganja.
+  - `tests/test_data_tools.py`: 14 testova (kappa provjerena ručnim računom: 0.5).
+  - `HANDOFF.md` §13: odluka o izlošcima ✅.
+- **Stvarni rezultati:** `uv run pytest -q` → **87 passed**. Na praznim podacima: `fill_answer_starts --dry-run` → 0 popunjeno; `build_dataset` → "No questions yet".
+- **Za tim (kako pisati pitanja):** u `questions.csv` upiši pitanje i za answerable samo `answer_text`; `answer_start` ostavi prazno pa pokreni `uv run python scripts/fill_answer_starts.py`, zatim `uv run python scripts/validate_questions.py`.
+- **Napomena za split:** plan je imao 60/15/25 % izložaka i 300 pitanja, što daje test od ~75 pitanja (< 100). Zato default 6/2/4 izložaka. Tim treba potvrditi.
+- **Sljedeće:** tekstovi izložaka (svi, kasni od 17.11); pitanja ~25 po izlošku; kappa na ~50 pitanja; split; paper Dataset + Literature Review.
+- **Blokade / čekam na:** tekstove izložaka svih članova; odluku tima o tekstovima (pravilo u `CLAUDE.md`).
 
 ### 2026-11-16 — T-1 lista izložaka (branch `tarik/exhibit-list`)
 - **Urađeno:** `data/exhibits/README.md`: 12 IBU izložaka (4 po članu) s izvorima samo s novog sajta `www.ibu.edu.ba`, format JSON-a, pravila pisanja, rizici i rezervna tema (`ibu_laws_regulations`). Svaka stranica je otvorena u browseru i provjerena (dužina teksta, broj činjenica, privatni podaci).
