@@ -37,10 +37,9 @@ Ako se nešto u `HANDOFF.md` ili `TEAM_PLAN.md` kosi s materijalima u `course/`,
 7. **Jezik:** sa mnom pričaš na bosanskom (ijekavica), direktno i kratko. Kod, komentari, docstringovi, README i paper su na engleskom.
 8. **Konvencije:** seed `3004`, sve komande preko `uv run`, novi paket predložiš, a ja ga dodam s `uv add`. Kod je jednostavan i komentarisan, u stilu lab repoa `nlp3004/labs-2026-2027` (jedna funkcija za jedan korak, provjera ulaza s jasnom greškom, pytest testovi).
 9. **Radiš samo na zadacima člana s kojim radiš** (`TEAM_PLAN.md` §4). Ako treba dirati tuđi fajl, pitaj i reci koga treba obavijestiti.
-10. **Tekstove izložaka i pitanja za test set ne pišeš umjesto nas.** Test mora biti ljudski. Smiješ predložiti primjere i provjeriti format i validnost.
-11. NLP komponenta je prioritet. Demo i UI dolaze tek kad glavna metoda radi.
-12. **Handoff poslije svake sesije:** na vrh sekcije "Dnevnik sesija" u `docs/team/<IME>.md` upiši šta je urađeno, stvarne rezultate, sljedeće korake, blokade i ciljeve (`TEAM_PLAN.md` §1.5). Mijenjaš samo fajl člana s kojim radiš.
-13. Nove lekcije se dodaju u `course/` svake sedmice. Ako materijala za neku sedmicu nema, potraži temu na internetu po naslovu iz silabusa i reci mi koji izvor si koristio.
+10. NLP komponenta je prioritet. Demo i UI dolaze tek kad glavna metoda radi.
+11. **Handoff poslije svake sesije:** na vrh sekcije "Dnevnik sesija" u `docs/team/<IME>.md` upiši šta je urađeno, stvarne rezultate, sljedeće korake, blokade i ciljeve (`TEAM_PLAN.md` §1.5). Mijenjaš samo fajl člana s kojim radiš.
+12. Nove lekcije se dodaju u `course/` svake sedmice. Ako materijala za neku sedmicu nema, potraži temu na internetu po naslovu iz silabusa i reci mi koji izvor si koristio.
 
 ## Lične upute
 

@@ -15,6 +15,6 @@ Hard rules (TEAM_PLAN.md §1 has the details; they override anything else in thi
 - Ask and explain first, then work: restate the task, explain the plan and the NLP concept behind it, wait for confirmation, work in small steps, explain the result.
 - At the start of a session, find out which team member you are working with (`git config user.name`, otherwise ask). After every task, update that member's study notes in `study/<member>/` (LEARNING_LOG.md, concepts/, DEFENSE_QA.md), written as Obsidian-friendly Markdown with [[wikilinks]].
 - At the end of every session, add a handoff entry at the top of the "Dnevnik sesija" section in that member's `docs/team/<MEMBER>.md` (done, real results, next steps, blockers, goals; TEAM_PLAN.md §1.5). Only edit your member's file.
-- Work only on your member's tasks. Do not write exhibit texts or test-set questions for the team; you may suggest examples and validate format.
+- Work only on your member's tasks.
 - Talk to the team in Bosnian (ijekavica); code, comments, README and paper in English.
 - Never invent results, numbers, datasets or references. Seed 3004, `uv run` for every command, tune on val, never touch the test set before the configuration is locked.
