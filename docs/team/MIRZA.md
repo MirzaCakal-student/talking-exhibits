@@ -159,6 +159,17 @@ Piši svojim riječima: šta rad radi, šta nalazi, kako se odnosi na nas. Claud
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-22 — provjera Kerimovih pitanja i prvi baseline rezultati na val
+- **Urađeno:** potvrđeni `docs/annotation_guidelines.md` (uz prijedlog pravila za da/ne pitanja u §5.10). Provjerena Kerimova pitanja q0001–q0100 (AI prvi prolaz + Mirzina provjera označenih i nasumičnih pitanja) i upisano `checked_by = mirza`; validator → `OK (200 questions)`. Lokalno napravljen split (plan B, `--val-exhibits 1 --test-exhibits 4`, seed 3004, bez upisa u CSV) i pokrenut `scripts/run_baselines.py` na val.
+- **Stvarni rezultati (val, 25 pitanja iz 1 izloška, `ibu_about_programs`; prag biran na istim pitanjima, pa su brojevi optimistični):**
+  - B0: refuse-F1 0.000
+  - B1 BM25 (prag 7.98): refuse-F1 0.903 [95% CI 0.759–1.000], false refusal 0.273; BS 0.824 / EN 1.000
+  - B1b e5 (prag 0.822): refuse-F1 0.889 [95% CI 0.727–1.000], false refusal 0.091; BS 0.833 / EN 0.933
+  - Recall@3 = 1.000 za oba (izložak ima malo pasusa). CI su iz Kerimovog `evaluate_all.py` (bootstrap 1000, seed 3004).
+- **Tumačenje:** intervali se preklapaju, pa se na 25 pitanja ne može reći da je jedan baseline bolji. BM25 odbija sve neodgovorive, ali i 3 od 11 odgovorivih; sva 3 su BS (q0076 prekratko pitanje; q0077 i q0080 drugi padež nego u tekstu, npr. "usmjeravanja" / "usmjeravanje"), jer BM25 nema lematizaciju. e5 odbija samo 1 odgovorivo, ali propusti 2 od 10 plausible pitanja.
+- **Sljedeće:** Tarik upisuje split u `questions.csv` (isti seed i parametri → isti split); Kerim pokreće `evaluate_all.py` u `results/`; poslije M3: moja 4 izloška i 100 pitanja, pa klasifikator.
+- **Blokade:** nema za M3.
+
 ### 2026-11-15 (3) — PR #1 merge-an, Mirzin kod spojen s main
 - **Urađeno:** Mirza merge-ao Tarikov PR #1; svoj rad commitao na `mirza/retrieval-baselines` i povukao `main`. Konflikti u `pyproject.toml` i `uv.lock` riješeni Mirzinom verzijom. Fixture pitanja sad imaju autore iz tima, da ih Tarikov validator prihvata.
 - **Stvarni rezultati:** `uv lock --check` uredan; `uv run pytest` → 53 passed; validator na fixture podacima → `OK (22 questions)`; na `data/` → `OK (0 questions)` (pitanja još nema).
