@@ -104,18 +104,20 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☑ Vlastiti izložak `ibu_feh`: BS + EN tekstovi, izvori i tehnička provjera
 - ☑ Vlastiti izložak `ibu_podcast_media`: BS + EN tekstovi, izvori i tehnička provjera
 - ☑ Vlastiti izložak `ibu_about_programs`: BS + EN tekstovi, izvori i tehnička provjera
+- ☑ `annotation_guidelines.md` pojašnjava izbor spana i granične slučajeve
 - ☐ `annotation_guidelines.md` potvrđen od Tarika i Mirze
 - ☑ `evaluate.py` + `test_metrics.py` (ručni primjeri)
-- ☑ `data_analysis.py` → preliminarna analiza 100 nacrta: 3 figure + tabele
+- ☑ `data_analysis.py` → preliminarna analiza 200 nacrta: 3 figure + tabele
 - ☐ K-3 ponovljen na kompletnom, pregledanom timskom skupu
 - ☑ `evaluate_all.py` — implementacija i testovi
 - ☐ K-4 pokrenut na stvarnom val skupu → `metrics_val.json` + tabela
 - ☑ Paper: Introduction — nacrt u `docs/introduction.md`
 - ☐ Introduction prenesen u zajednički `02 Paper` i citati usklađeni u Zotero/Paperpile
 - ☑ 100 vlastitih nacrta pitanja napisano i tehnički provjereno (50 BS / 50 EN; q0001–q0100)
+- ☑ Pitanja q0001–q0200 tehnički pregledana, nalazi u `docs/question_review.md`
 - ☐ Vlastita pitanja ljudski potvrđena i nezavisno pregledana (`source`, `checked_by`)
-- ☐ Tarikova pitanja: nalazi pregleda dostavljeni, korekcije i ljudska potvrda čekaju
-- ☐ K-7 prezentacija — odgođeno do završne prezentacijske faze po Kerimovoj uputi
+- ☐ Tarikova pitanja: predložene korekcije i nezavisni pregled čekaju tim
+- ☑ K-7 četiri slajda provjerena u `docs/m3_checkin.pptx`
 - ☐ AI_LOG i CONTRIBUTIONS upisani (sam)
 - ☐ Znaš za 5 minuta objasniti: metrike → tabele → baseline rezultati
 
@@ -125,7 +127,7 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 3. Finalna evaluacija na testu **tek kad je konfiguracija zaključana** (jedno pokretanje, s Mirzom).
 4. **Analiza grešaka: cilj 20, minimum 10** u `results/errors.csv` (`qid, system, gold, pred, kategorija, uzrok, objašnjenje`). Kategorije: retrieval promašio pasus / leksičko preklapanje zavarava / treba zaključivanje / greška u gold labeli / dijakritici ili sleng / prevod. Piši **uzrok, ne simptom**. ☑ Izvoz i testovi. ☐ Pregled stvarnih grešaka.
 5. ☑ Lokalni FastAPI demo + QR kodovi s BM25 i B2. ☐ Povezivanje treniranog klasifikatora.
-6. Paper: Results; slajdovi.
+6. ☑ Lokalni Results nacrt za preliminarnu analizu i provjeru prototipa. ☐ Poređenje sistema nakon evaluacije.
 
 ## 7. Šta moraš znati na odbrani
 - Precision, recall, F1 za refuse, s ručnim računom.
@@ -149,6 +151,12 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — M3 isporuke i tehnički pregled pitanja
+
+- **Urađeno:** Dovršene dopune smjernica, ispravljeno osam Kerimovih pitanja, a prijedlozi za deset Tarikovih redova zabilježeni su u `docs/question_review.md`. K-3 tabele i tri figure koriste privremeni spoj Kerimovih i Tarikovih nacrta iz `e2cf0ad`. Ažuriran je status B2 u Introduction, pripremljen preliminarni Results nacrt i provjerena četiri slajda za check-in.
+- **Provjera:** 200 jedinstvenih ID-jeva, 102 BS i 98 EN. Raspodjela klasa je 93 answerable, 76 plausible i 31 out of scope. Svih 93 spana odgovaraju tekstu i Unicode pomacima. Validator prijavljuje 100 praznih `source` i 200 praznih `checked_by`. Tri PNG-a su identična pri ponavljanju. Prošlo je 116 fokusiranih i 208 ukupnih testova.
+- **Blokade / sljedeće:** Tarik i Mirza trebaju potvrditi smjernice i razriješiti različite dodjele nezavisnog pregleda u TEAM_PLAN §2 i §4.3. Kerim potvrđuje porijeklo svojih pitanja. Za punu K-3 analizu nedostaju Mirzini nacrti i timski pregled. Za K-4 i analizu stvarnih grešaka nedostaju `data/processed/val.csv` i predikcije B0/B1/B1b. `02 Paper` i `03 Presentation` čekaju pristup zajedničkim dokumentima. Read-only provjera pokazuje konflikt pri integraciji `questions.csv` u `main`, koji treba riješiti uz oba bloka redova. Test split nije korišten.
 
 ### 2026-11-22 — Lokalna B2 inferencija kroz demo
 
