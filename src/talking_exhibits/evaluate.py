@@ -10,6 +10,10 @@ from __future__ import annotations
 import math
 import random
 from collections.abc import Callable, Iterable, Sequence
+from itertools import groupby
+from numbers import Real
+
+from sklearn.metrics import roc_auc_score
 
 GOLD_LABELS = (
     "answerable",
@@ -260,6 +264,51 @@ def confusion(
         matrix[actual][predicted] += 1
 
     return matrix
+
+
+def acceptance_score_metrics(
+    gold: Iterable[str], scores: Iterable[float]
+) -> dict:
+    """Evaluate aligned, finite scores where higher means more likely to answer.
+
+    Refusal AUROC treats both unanswerable labels as positive and is undefined
+    with one binary class. Each curve point accepts scores at or above its
+    threshold. Risk is the fraction of accepted questions that are unanswerable.
+    With zero coverage, the threshold and risk are undefined.
+    """
+    gold = list(gold)
+    scores = list(scores)
+    if not gold or len(gold) != len(scores):
+        raise ValueError("gold and scores must be nonempty and have equal lengths")
+    if any(label not in GOLD_LABELS for label in gold):
+        raise ValueError(f"gold labels must be one of {GOLD_LABELS}")
+    if any(
+        isinstance(score, bool) or not isinstance(score, Real) or not math.isfinite(score)
+        for score in scores
+    ):
+        raise ValueError("acceptance scores must be finite numbers")
+
+    scores = [float(score) for score in scores]
+    should_refuse = [label != "answerable" for label in gold]
+    auroc = None
+    if any(should_refuse) and not all(should_refuse):
+        auroc = float(roc_auc_score(should_refuse, [-score for score in scores]))
+
+    ranked = sorted(zip(scores, should_refuse), key=lambda row: row[0], reverse=True)
+    curve = [{"threshold": None, "coverage": 0.0, "risk": None}]
+    accepted = accepted_unanswerable = 0
+    for threshold, tied_rows in groupby(ranked, key=lambda row: row[0]):
+        for _, unanswerable in tied_rows:
+            accepted += 1
+            accepted_unanswerable += unanswerable
+
+        curve.append({
+            "threshold": threshold,
+            "coverage": accepted / len(gold),
+            "risk": accepted_unanswerable / accepted,
+        })
+
+    return {"refusal_auroc": auroc, "risk_coverage": curve}
 
 
 def _percentile(

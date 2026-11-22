@@ -229,7 +229,7 @@ Each question is evaluated only against its assigned exhibit.
 
 If a question explicitly concerns a different exhibit, it is `out_of_scope` for the selected exhibit.
 
-Knowledge from another exhibit must never be used to change the annotation.
+For example, “Which radio station did the students visit?” is out of scope for the library exhibit even if a separate media exhibit names the station. “What are the library's opening hours?” is `unanswerable_plausible` when the library exhibit omits the hours.
 
 ### 5.6 Bosnian questions without diacritics
 
@@ -249,7 +249,7 @@ The answer span must still preserve the original spelling and diacritics of the 
 
 ### 5.7 Multiple possible answer spans
 
-If the correct answer appears multiple times, select the first valid occurrence containing the complete answer.
+Choose the shortest contiguous span that fully answers the question. If equally short spans are equally valid, use the earliest occurrence that expresses the requested fact in context.
 
 Example:
 
@@ -261,9 +261,7 @@ Question:
 
 Answer span: `2012`
 
-Use the first occurrence of the correct answer.
-
-When several spans differ in length, select the shortest span that fully answers the question without losing required meaning.
+Use the first `2012` because its sentence explicitly gives the opening year.
 
 ### 5.8 Multi-part questions
 
@@ -287,9 +285,7 @@ Example:
 
 "When did it open?"
 
-If the exhibit discusses multiple buildings or events, the referent may be ambiguous.
-
-Rewrite the question to identify the intended subject.
+If the exhibit discusses multiple buildings or events, identify the intended subject before assigning a label. For example, use “When did the library open?” when the exhibit gives different opening years for the library and the laboratory. If the intended subject or reading cannot be established, hold the item for review before inclusion.
 
 ### 5.10 Yes/no questions
 
@@ -403,7 +399,7 @@ Use `human` when a student independently writes the question.
 
 ### AI-assisted questions
 
-Use `llm_checked` only when a question involved LLM assistance and was subsequently checked, corrected where necessary, and approved by a human annotator.
+Use `llm_checked` only when a question involved LLM assistance and a human annotator checked the exact question, label and, where applicable, answer span. Make any needed corrections before recording that confirmation. Leave `source` empty on an AI-assisted draft while confirmation is pending.
 
 LLM output must never be accepted as a gold annotation without human verification.
 
@@ -413,7 +409,7 @@ Any AI assistance must be documented according to the team's AI usage rules.
 
 ## 9. Independent review
 
-Each question must be checked by a team member other than its author.
+Each question must be checked by a team member other than its author. Record that member in `checked_by` after the independent review of the accepted row. Author verification for `source=llm_checked` leaves `checked_by` pending until that separate review occurs.
 
 The reviewer should verify:
 

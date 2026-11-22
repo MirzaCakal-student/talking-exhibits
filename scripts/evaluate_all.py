@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from talking_exhibits.evaluate import (
+    acceptance_score_metrics,
     bootstrap_ci,
     confusion,
     false_refusal_rate,
@@ -36,6 +37,8 @@ LABELS = (
     "out_of_scope",
 )
 LANGS = ("bs", "en")
+# These exports use the best retrieval score. Higher means more likely to answer.
+RETRIEVAL_SCORE_SYSTEMS = {"b1_bm25", "b1b_e5"}
 
 
 def read_gold(path: Path) -> pd.DataFrame:
@@ -62,10 +65,18 @@ def read_gold(path: Path) -> pd.DataFrame:
             f"Validation CSV lacks columns: {sorted(missing)}"
         )
 
+    if "split" in gold.columns:
+        invalid_splits = sorted(set(gold["split"]) - {"val"})
+        if invalid_splits:
+            raise ValueError(
+                "Validation CSV split must contain only 'val'; "
+                f"invalid values: {invalid_splits}"
+            )
+
     if (
         gold.empty
         or gold.qid.duplicated().any()
-        or (gold.qid == "").any()
+        or gold.qid.str.strip().eq("").any()
     ):
         raise ValueError(
             "Validation qids must be nonempty and unique"
@@ -85,8 +96,10 @@ def read_gold(path: Path) -> pd.DataFrame:
 def read_predictions(
     pattern: str,
     valid_qids: set[str],
+    *,
+    gold_decisions: dict[str, str] | None = None,
 ) -> pd.DataFrame:
-    """Load prediction files and verify their qid coverage."""
+    """Verify question coverage and any gold decisions exported with predictions."""
     files = sorted(
         Path(item) for item in glob.glob(pattern)
     )
@@ -117,7 +130,7 @@ def read_predictions(
             )
 
         if (
-            (frame.system == "").any()
+            frame.system.str.strip().eq("").any()
             or not frame.pred.isin(
                 ["answer", "refuse"]
             ).all()
@@ -126,6 +139,15 @@ def read_predictions(
                 f"{path.name}: invalid system or pred "
                 "(expected answer/refuse)"
             )
+
+        if gold_decisions is not None and "gold" in frame.columns:
+            expected = frame.qid.map(gold_decisions)
+            mismatched = frame.loc[expected.notna() & frame["gold"].ne(expected), "qid"]
+            if not mismatched.empty:
+                raise ValueError(
+                    f"{path.name}: gold decisions disagree with validation labels "
+                    f"for qids: {mismatched.head().tolist()}"
+                )
 
         # Score is required as a column but may be empty
         # for baselines that do not produce confidence scores.
@@ -179,11 +201,20 @@ def read_predictions(
     return predictions
 
 
+def expected_decisions(gold: pd.DataFrame) -> dict[str, str]:
+    return {
+        row.qid: "answer" if row.label == "answerable" else "refuse"
+        for row in gold.itertuples(index=False)
+    }
+
+
 def summarize(
     gold: list[str],
     pred: list[str],
     bootstrap: int,
     seed: int,
+    *,
+    acceptance_scores: list[float | None] | None = None,
 ) -> dict:
     """Calculate evaluation metrics and their F1 confidence interval."""
     stats = refuse_metrics(gold, pred)
@@ -211,6 +242,13 @@ def summarize(
 
     stats["confusion"] = confusion(gold, pred)
 
+    stats["refusal_auroc"] = None
+    stats["risk_coverage"] = None
+    if acceptance_scores is not None:
+        scores = [score for score in acceptance_scores if score is not None]
+        if len(scores) == len(acceptance_scores):
+            stats.update(acceptance_score_metrics(gold, scores))
+
     return stats
 
 
@@ -231,9 +269,13 @@ def calculate(
     for system, frame in pred_df.groupby(
         "system", sort=True
     ):
+        columns = ["qid", "pred"]
+        if system in RETRIEVAL_SCORE_SYSTEMS and "score" in frame:
+            columns.append("score")
+
         # Align predictions using qid, not CSV row order.
         aligned = gold_df.merge(
-            frame[["qid", "pred"]],
+            frame[columns],
             on="qid",
             how="left",
             validate="one_to_one",
@@ -243,10 +285,21 @@ def calculate(
         gold = aligned.label.tolist()
         pred = aligned.pred.tolist()
         lang = aligned.lang.tolist()
+        scores = None
+        if "score" in aligned:
+            scores = []
+            for value in aligned.score:
+                if pd.isna(value) or value == "":
+                    scores.append(None)
+                elif isinstance(value, str):
+                    scores.append(float(value))
+                else:
+                    scores.append(value)
 
         system_report = {
             "overall": summarize(
-                gold, pred, bootstrap, seed
+                gold, pred, bootstrap, seed,
+                acceptance_scores=scores,
             ),
             "by_language": {},
             "by_gold_class": {},
@@ -266,6 +319,9 @@ def calculate(
                     [pred[i] for i in indices],
                     bootstrap,
                     seed,
+                    acceptance_scores=(
+                        [scores[i] for i in indices] if scores is not None else None
+                    ),
                 )
 
         for label in LABELS:
@@ -400,6 +456,28 @@ def render_markdown(report: dict) -> str:
         "for exhibit clustering."
     )
 
+    lines.extend([
+        "",
+        "## Score-based evaluation",
+        "",
+        "Higher BM25 and e5 scores favor answering. Refusal AUROC uses lower scores "
+        "to rank unanswerable questions and requires both binary classes.",
+        "Risk is the share of accepted questions labeled unanswerable. "
+        "Coverage is the share of all questions accepted.",
+        "Only subsets with complete scores of known direction have curve points in `metrics_val.json`.",
+        "",
+        "| System | Language | Refusal AUROC | Risk–coverage points |",
+        "| --- | --- | ---: | ---: |",
+    ])
+    for system, values in report["systems"].items():
+        sections = [("all", values["overall"]), *values["by_language"].items()]
+        for language, stats in sections:
+            auroc = stats.get("refusal_auroc")
+            curve = stats.get("risk_coverage")
+            auroc_text = f"{auroc:.3f}" if auroc is not None else "N/A"
+            curve_points = len(curve) if curve is not None else "N/A"
+            lines.append(f"| {system} | {language} | {auroc_text} | {curve_points} |")
+
     return "\n".join(lines) + "\n"
 
 
@@ -444,10 +522,12 @@ def main() -> None:
 
     try:
         gold = read_gold(args.gold)
+        gold_decisions = expected_decisions(gold)
 
         pred = read_predictions(
             args.predictions,
-            set(gold.qid),
+            set(gold_decisions),
+            gold_decisions=gold_decisions,
         )
 
         report = calculate(
