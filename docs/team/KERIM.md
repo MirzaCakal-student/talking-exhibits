@@ -19,7 +19,7 @@ Ti odlučuješ **kako se mjeri da li sistem radi**: guidelines za anotaciju, met
 | `tests/test_metrics.py` | Testovi s ručno izračunatim primjerima | ☐ |
 | `scripts/data_analysis.py` | Tabele i grafike o podacima | ☐ |
 | `scripts/evaluate_all.py` | Jedna komanda → svi brojevi za paper | ☐ |
-| `src/talking_exhibits/llm_baseline.py` | B2 prompted LLM (poslije M3) | ☐ |
+| `src/talking_exhibits/llm_baseline.py` | B2 prompted LLM (poslije M3) | ☑ implementacija i testovi |
 | `demo/` | Web demo + QR (poslije glavne metode) | ☐ |
 | `results/figures/`, `results/*.json`, `results/errors.csv` | Izlazi | ☐ |
 
@@ -149,6 +149,12 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — B2 prompted LLM preko Ollame
+
+- **Urađeno:** `answer_question(question, passages)` poziva Ollama `/api/chat` za BS ili EN s temperaturom 0 i seedom 3004. Prihvata doslovan span iz jednog dostavljenog pasusa ili vraća `NOT_IN_TEXT`. `answer_with_retrieval(question, exhibit_id, lang, search)` koristi isti poziv pretrage kao postojeći runner i prosljeđuje pasuse odgovarajućeg izloška i jezika. `to_prediction(answer)` daje `answer` ili `refuse` za postojeći evaluator. `OllamaError` označava neuspjelo izvršavanje koje se ne boduje kao odbijanje.
+- **Provjera:** `tests/test_llm_baseline.py` ima 22 prolazna slučaja, a kompletni pytest 164. Testirana je veza s postojećim BM25 retrievalom. HTTP odgovori Ollame su simulirani, pa kvalitet stvarnih odgovora na BS i EN još nije izmjeren. Test split nije korišten.
+- **Sljedeće:** Za stvarno pokretanje potreban je Ollama server s lokalno instaliranim modelom (`qwen2.5:1.5b` po zadanim postavkama, izmjenjivo kroz `model`). Na pregledanom val skupu koristiti isti retrieval i `k` kao glavna metoda. U postojećem formatu predikcija koristiti `system=b2`, prazno `score` i `pred` iz `to_prediction`.
 
 ### 2026-11-22 — Tehnička provjera K-2, K-3, K-4 i K-6
 
