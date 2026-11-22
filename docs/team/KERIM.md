@@ -109,7 +109,9 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☐ `data_analysis.py` → ≥2 figure + tabela
 - ☐ `evaluate_all.py` → `metrics_val.json` + tabela
 - ☐ Paper: Introduction
-- ☐ 100 pitanja napisano, Tarikova provjerena
+- ☑ 100 vlastitih nacrta pitanja napisano (50 BS / 50 EN; q0001–q0100)
+- ☐ Vlastita pitanja ljudski potvrđena i nezavisno pregledana (`source`, `checked_by`)
+- ☐ Tarikova pitanja provjerena
 - ☐ M3 slajdovi
 - ☐ AI_LOG i CONTRIBUTIONS upisani (sam)
 - ☐ Znaš za 5 minuta objasniti: metrike → tabele → baseline rezultati
@@ -144,6 +146,15 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — K-6: 100 nacrta pitanja za ljudski pregled
+
+- **Urađeno:** U postojeći `data/questions/questions.csv` dodano 100 novih pitanja s `author=kerim`, ID-jevima q0001–q0100 i izvornom šemom od 11 kolona. Prije rada nije bilo pitanja ni pitanja drugih autora za očuvanje. Pitanja koriste samo odgovarajuće BS/EN tekstove četiri vlastita izloška. Obrađeni su kratki odgovori, parafraze, brojčani podaci, nenavedeni detalji iste teme i jasno nepovezana pitanja. Deset BS pitanja namjerno je bez dijakritika; odgovorima je sačuvan izvorni zapis.
+- **Stvarni rezultati:** FESS: 13 BS / 12 EN, klase 12 answerable / 10 plausible / 3 out_of_scope; FEH: 12/13, klase 11/10/4; podcast: 13/12, klase 11/10/4; about/programs: 12/13, klase 11/10/4. Ukupno 50 BS + 50 EN i tačno 45/40/15 po klasama. Svih 45 answer spanova i Unicode offseta prolazi; svih 55 neodgovorivih pitanja ima prazna answer polja. Nema tačnih normalizovanih duplikata niti kandidata s SequenceMatcher ≥0.78 ili token Jaccard ≥0.60 nakon normalizacije bez dijakritika. To nije zamjena za semantički ljudski pregled. `uv run --frozen pytest -q`: **87 passed**. `git diff --check` prolazi.
+- **Validator i status:** `uv run --frozen python scripts/validate_questions.py` završava kodom **1** i prijavljuje tačno **200** problema: 100 praznih `source` i 100 praznih `checked_by`. Nema drugih prijavljenih grešaka. Ova polja su namjerno prazna jer `llm_checked` prema guidelines podrazumijeva stvarnu ljudsku potvrdu, a nezavisni pregled nije izvršen. `split` je prazan za svih 100 redova. Ovo su nacrti za pregled, ne prihvaćen gold dataset.
+- **Sljedeće:** Kerim treba sadržajno pregledati svih 100 nacrta i, nakon stvarne provjere, evidentirati odgovarajući `source`. Nezavisni recenzent treba provjeriti oznake i spanove te stvarno upisati `checked_by`. Prema TEAM_PLAN §4.1 M-7, Mirza provjerava Kerimova pitanja; Kerim zasebno provjerava Tarikova prema K-6. Nakon tih koraka ponoviti validator. Kerim sam pregleda i commita/pusha ovu isporuku te dopunjava AI_LOG i CONTRIBUTIONS.
+- **Blokade / čekam na:** Ljudska potvrda i nezavisni pregled svih 100 pitanja; prihvaćanje guidelines još nije evidentirano lokalno. Trenutni CSV nema Tarikovih pitanja za Kerimov pregled. `course/` nije dostupan. Početno stablo bilo je čisto na `kerim/evaluation-and-dataset`, a sva četiri izloška commitana; nijedan izložak, validator ili tuđi fajl nije mijenjan.
+- **Ciljevi do sljedećeg roka:** Razriješiti stvarni pregled prije prihvatanja podataka za M3, 23.11.2026 u 08:00. K-6 nije u cijelosti označen završenim: autorstvo nacrta je završeno, nezavisni pregled i provjera Tarikovih pitanja čekaju. Split, modeliranje, evaluacija i drugi zadaci nisu pokretani.
 
 ### 2026-11-22 — Izložak ibu_about_programs (BS i EN)
 
