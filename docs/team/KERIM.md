@@ -105,15 +105,16 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☑ Vlastiti izložak `ibu_podcast_media`: BS + EN tekstovi, izvori i tehnička provjera
 - ☑ Vlastiti izložak `ibu_about_programs`: BS + EN tekstovi, izvori i tehnička provjera
 - ☐ `annotation_guidelines.md` potvrđen od Tarika i Mirze
-- ☐ `evaluate.py` + `test_metrics.py` (ručni primjeri)
+- ☑ `evaluate.py` + `test_metrics.py` (ručni primjeri)
 - ☑ `data_analysis.py` → preliminarna analiza 100 nacrta: 3 figure + tabele
 - ☐ K-3 ponovljen na kompletnom, pregledanom timskom skupu
-- ☐ `evaluate_all.py` → `metrics_val.json` + tabela
+- ☑ `evaluate_all.py` — implementacija i testovi
+- ☐ K-4 pokrenut na stvarnom val skupu → `metrics_val.json` + tabela
 - ☑ Paper: Introduction — nacrt u `docs/introduction.md`
 - ☐ Introduction prenesen u zajednički `02 Paper` i citati usklađeni u Zotero/Paperpile
-- ☑ 100 vlastitih nacrta pitanja napisano (50 BS / 50 EN; q0001–q0100)
+- ☑ 100 vlastitih nacrta pitanja napisano i tehnički provjereno (50 BS / 50 EN; q0001–q0100)
 - ☐ Vlastita pitanja ljudski potvrđena i nezavisno pregledana (`source`, `checked_by`)
-- ☐ Tarikova pitanja provjerena
+- ☐ Tarikova pitanja: nalazi pregleda dostavljeni, korekcije i ljudska potvrda čekaju
 - ☐ K-7 prezentacija — odgođeno do završne prezentacijske faze po Kerimovoj uputi
 - ☐ AI_LOG i CONTRIBUTIONS upisani (sam)
 - ☐ Znaš za 5 minuta objasniti: metrike → tabele → baseline rezultati
@@ -148,6 +149,12 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — Tehnička provjera K-2, K-3, K-4 i K-6
+
+- **Urađeno:** K-3 koristi zajednički loader izložaka pa nevažeći JSON tekst ne ulazi u statistiku. K-4 provjerava `gold` iz izvoza baselinea prema `qid` i binarnoj odluci iz `val.csv`, ako izvoz ima tu kolonu. Dodani regresijski testovi u postojeće testne fajlove.
+- **Provjera:** 75 fokusiranih i 142 ukupna testa prolaze. Ponovljeni K-3 nad Kerimovim podskupom daje iste tabele i tri identična PNG-a. Četiri Kerimova izloška imaju osam ispravnih jezičkih verzija (316–385 riječi). Svih 100 nacrta ima ispravan izložak i jezik, 45/45 spanova ima tačne Unicode pomake, a 55 neodgovorivih redova ima prazna polja odgovora. Validator završava kodom 1 zbog 100 praznih `source` i 100 praznih `checked_by` polja.
+- **Blokade / sljedeće:** K-1 čeka potvrde Tarika i Mirze. K-6 čeka Kerimovu ljudsku provjeru vlastitih nacrta, Mirzin nezavisni pregled i korekcije te ljudsku potvrdu Tarikovih pitanja iz prethodnog pregleda. Ponoviti K-3 kad tim pripremi kompletan pregledan skup. Za stvarni K-4 trebaju Tarikov `val.csv` i Mirzine baseline predikcije. Test split nije korišten.
 
 ### 2026-11-22 — K-7 odgođen; fokus na tehničkoj implementaciji
 

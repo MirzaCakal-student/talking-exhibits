@@ -300,3 +300,28 @@ def test_cli_reports_missing_predictions_without_writing_outputs(tmp_path, gold,
     assert error.value.code == 1
     assert "missing=['q0006']" in capsys.readouterr().err
     assert not out.exists()
+
+
+@pytest.mark.parametrize("stale_gold", [False, True])
+def test_cli_checks_prediction_gold_by_qid(tmp_path, gold, predictions, monkeypatch, capsys, stale_gold):
+    gold_path = write_csv(tmp_path, "val.csv", gold)
+    frame = predictions.assign(gold=["answer", "answer", "refuse", "refuse", "refuse", "refuse"])
+    if stale_gold:
+        frame.loc[0, "gold"] = "refuse"
+    pred_path = write_csv(tmp_path, "predictions.csv", frame.iloc[::-1])
+    out = tmp_path / "output"
+    monkeypatch.setattr(sys, "argv", [
+        "evaluate_all.py", "--gold", str(gold_path),
+        "--predictions", str(pred_path), "--out", str(out), "--bootstrap", "10",
+    ])
+
+    if stale_gold:
+        with pytest.raises(SystemExit) as error:
+            ea.main()
+        assert error.value.code == 1
+        assert "predictions.csv: gold decisions disagree with validation labels for qids: ['q0001']" in capsys.readouterr().err
+        assert not out.exists()
+    else:
+        ea.main()
+        report = json.loads((out / "metrics_val.json").read_text(encoding="utf-8"))
+        assert report["systems"]["b1_bm25"]["overall"]["n"] == len(gold)

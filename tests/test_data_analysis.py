@@ -111,3 +111,19 @@ def test_missing_question_language_text_is_rejected_before_outputs(tmp_path):
     with pytest.raises(ValueError, match="missing exhibit text"):
         da.analyze(csv, exhibits, out)
     assert not out.exists()
+
+
+def test_null_exhibit_text_is_rejected_before_outputs(tmp_path):
+    csv = tmp_path / "questions.csv"
+    exhibits = tmp_path / "exhibits"
+    out = tmp_path / "results"
+    questions().to_csv(csv, index=False)
+    write_exhibits(exhibits)
+    path = exhibits / "demo_bs.json"
+    exhibit = json.loads(path.read_text(encoding="utf-8"))
+    exhibit["text"] = None
+    path.write_text(json.dumps(exhibit), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="demo_bs.json.*'text' must be a non-empty string"):
+        da.analyze(csv, exhibits, out)
+    assert not out.exists()

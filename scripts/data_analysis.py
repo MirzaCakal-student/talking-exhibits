@@ -8,9 +8,9 @@ No model training or held-out test evaluation is performed here.
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import shlex
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -21,6 +21,10 @@ from matplotlib.ticker import MaxNLocator
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from talking_exhibits.data import load_exhibits as load_exhibit_rows
+
 LABELS = ["answerable", "unanswerable_plausible", "out_of_scope"]
 LANGS = ["bs", "en"]
 DIACRITICS = set("čćđšžČĆĐŠŽ")
@@ -42,27 +46,8 @@ def load_exhibits(directory: Path) -> dict[tuple[str, str], str]:
     if not directory.is_dir():
         raise FileNotFoundError(f"Exhibit directory not found: {directory}")
 
-    texts = {}
-
-    for path in sorted(directory.glob("*.json")):
-        with path.open(encoding="utf-8") as stream:
-            exhibit = json.load(stream)
-
-        for key in ("id", "lang", "text"):
-            if key not in exhibit:
-                raise ValueError(f"{path}: missing '{key}'")
-
-        identity = (str(exhibit["id"]), str(exhibit["lang"]))
-
-        if identity in texts:
-            raise ValueError(f"Duplicate exhibit/language pair: {identity}")
-
-        texts[identity] = str(exhibit["text"])
-
-    if not texts:
-        raise ValueError(f"No exhibit JSON files found in {directory}")
-
-    return texts
+    exhibits = load_exhibit_rows(directory)
+    return {(row.id, row.lang): row.text for row in exhibits.itertuples(index=False)}
 
 
 def read_questions(path: Path) -> pd.DataFrame:
@@ -487,7 +472,6 @@ def main() -> None:
     except (
         OSError,
         ValueError,
-        json.JSONDecodeError,
         pd.errors.ParserError,
     ) as exc:
         parser.exit(1, f"ERROR: {exc}\n")

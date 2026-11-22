@@ -93,8 +93,10 @@ def read_gold(path: Path) -> pd.DataFrame:
 def read_predictions(
     pattern: str,
     valid_qids: set[str],
+    *,
+    gold_decisions: dict[str, str] | None = None,
 ) -> pd.DataFrame:
-    """Load prediction files and verify their qid coverage."""
+    """Verify question coverage and any gold decisions exported with predictions."""
     files = sorted(
         Path(item) for item in glob.glob(pattern)
     )
@@ -134,6 +136,15 @@ def read_predictions(
                 f"{path.name}: invalid system or pred "
                 "(expected answer/refuse)"
             )
+
+        if gold_decisions is not None and "gold" in frame.columns:
+            expected = frame.qid.map(gold_decisions)
+            mismatched = frame.loc[expected.notna() & frame["gold"].ne(expected), "qid"]
+            if not mismatched.empty:
+                raise ValueError(
+                    f"{path.name}: gold decisions disagree with validation labels "
+                    f"for qids: {mismatched.head().tolist()}"
+                )
 
         # Score is required as a column but may be empty
         # for baselines that do not produce confidence scores.
@@ -452,10 +463,15 @@ def main() -> None:
 
     try:
         gold = read_gold(args.gold)
+        gold_decisions = {
+            row.qid: "answer" if row.label == "answerable" else "refuse"
+            for row in gold.itertuples(index=False)
+        }
 
         pred = read_predictions(
             args.predictions,
-            set(gold.qid),
+            set(gold_decisions),
+            gold_decisions=gold_decisions,
         )
 
         report = calculate(
