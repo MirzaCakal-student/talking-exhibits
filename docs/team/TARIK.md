@@ -154,6 +154,22 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-22 — nacrti pitanja za Tarikova 4 izloška (branch `tarik/questions`)
+- **Urađeno:**
+  - PR #6 (tekstovi) je merge-an.
+  - U `data/questions/questions.csv` je upisano 100 pitanja, `q0101`–`q0200`, po 25 za svaki od 4 Tarikova izloška. Sva imaju `author = tarik`, `source = llm_checked`, a `checked_by` je prazan.
+  - `answer_start` je popunjen preko `fill_answer_starts.py`. Za 3 odgovora koja se u tekstu ponavljaju (q0153, q0159, q0161) provjereno je da pokazuju na pravo mjesto.
+- **Stvarni rezultati:**
+  - raspodjela: answerable 48 (24 BS / 24 EN), unanswerable_plausible 36 (20/16), out_of_scope 16 (8/8);
+  - BS pitanja: nekoliko bez dijakritika;
+  - validator: jedine greške su 100× prazan `checked_by` (čeka recenzenta).
+- **Sljedeće:**
+  - Tarik pregleda pitanja;
+  - Kerim ili Mirza upiše `checked_by`;
+  - kad Kerim merge-a `kerim/evaluation-and-dataset` (q0001–q0100), konflikt u `questions.csv` se riješi tako da se zadrže oba bloka redova;
+  - kappa s Kerimom na ~50 pitanja, split, paper.
+- **Blokade / čekam na:** Mirzina 4 izloška. Ako ih ne bude do 22.11 navečer, ide plan B: 8 izložaka, split 3/1/4.
+
 ### 2026-11-19 — nacrti tekstova za Tarikova 4 izloška (branch `tarik/exhibit-drafts`)
 - **Urađeno:**
   - Tim se dogovorio da Claude smije pisati tekstove i pitanja, pa je pravilo obrisano u `CLAUDE.md`, `PROMPT_CLAUDE_CODE.md` (stavke prenumerisane), `TEAM_PLAN.md` §4.2 i ovom fajlu (T-1). AI_LOG, CONTRIBUTIONS, commit i push i dalje rade studenti.
