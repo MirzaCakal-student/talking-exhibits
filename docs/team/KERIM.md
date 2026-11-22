@@ -114,7 +114,7 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☑ 100 vlastitih nacrta pitanja napisano (50 BS / 50 EN; q0001–q0100)
 - ☐ Vlastita pitanja ljudski potvrđena i nezavisno pregledana (`source`, `checked_by`)
 - ☐ Tarikova pitanja provjerena
-- ☐ M3 slajdovi
+- ☐ K-7 prezentacija — odgođeno do završne prezentacijske faze po Kerimovoj uputi
 - ☐ AI_LOG i CONTRIBUTIONS upisani (sam)
 - ☐ Znaš za 5 minuta objasniti: metrike → tabele → baseline rezultati
 
@@ -148,6 +148,11 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — K-7 odgođen; fokus na tehničkoj implementaciji
+
+- **Tehničko stanje:** Lokalno postoji 100 Kerimovih nacrta; `source`, `checked_by` i `split` su prazni. Stvarni val split i baseline predikcije nisu dostupni, pa stvarna K-4 evaluacija čeka te zavisnosti. K-1 još čeka potvrde tima; K-2 ima implementaciju i postojeće testove; K-3 je preliminarno isporučen u commitu `1f5d2d7`.
+- **Sljedeći prijedlog, bez implementacije:** K-4 — provjera i ciljani testovi postojećeg `scripts/evaluate_all.py`, prvenstveno zaštita ulaza i kompatibilnost s baseline predikcijama. Čitanjem je potvrđeno da `read_gold` provjerava naziv `val.csv`, ali ne provjerava vrijednosti kolone `split`; u `tests/` nema direktnih testova ove skripte. Promjene tek nakon Kerimovog odobrenja. Nije otvaran test split niti pokretana baseline evaluacija.
 
 ### 2026-11-22 — K-3: preliminarna analiza dostupnih podataka
 
