@@ -115,8 +115,9 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☐ Introduction prenesen u zajednički `02 Paper` i citati usklađeni u Zotero/Paperpile
 - ☑ 100 vlastitih nacrta pitanja napisano i tehnički provjereno (50 BS / 50 EN; q0001–q0100)
 - ☑ Pitanja q0001–q0200 tehnički pregledana, nalazi u `docs/question_review.md`
-- ☐ Vlastita pitanja ljudski potvrđena i nezavisno pregledana (`source`, `checked_by`)
-- ☐ Tarikova pitanja: predložene korekcije i nezavisni pregled čekaju tim
+- ☑ Mirza potvrdio raspodjelu nezavisnog pregleda (Mirza → Kerim → Tarik → Mirza)
+- ☐ Kerim potvrdio porijeklo svojih pitanja, Mirza završio nezavisni pregled
+- ☐ Kerim nezavisno pregledao Tarikova pitanja, Tarik usaglasio korekcije
 - ☑ K-7 četiri slajda provjerena u `docs/m3_checkin.pptx`
 - ☐ K-7 slajdovi uvezeni u zajednički `03 Presentation`
 - ☐ AI_LOG i CONTRIBUTIONS upisani (sam)
@@ -152,6 +153,22 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — PR #8 i završna priprema podataka za M3
+
+- PR #8 je otvoren. `study/kerim/m3_pr8/questions_pr8.csv` je lokalni kandidat sastavljen iz `bb1c2c4` i `e2cf0ad`. Zadržava jedno zaglavlje i 200 izvornih redova u UTF-8. Provjereni su jedinstveni ID-jevi, jezici, klase i svih 93 Unicode raspona. Nema normalizovanih duplikata. Prije ručnog razrješenja koristi poređenje obje konfliktne verzije iz postupka ispod.
+- Mirza pregleda `q0001–q0100`, Kerim pregleda `q0101–q0200`, a Tarik pregleda Mirzina pitanja kad budu dostupna. `study/kerim/m3_pr8/question_confirmations.csv` sadrži oba bloka i označava redove s nalazima u `docs/question_review.md`. Kerim provjerava izložak, jezik, traženu informaciju, klasu i tačan span u izvornom tekstu. U `decision` upisuje `confirm` ili `needs_edit`, a razlog bilježi u `notes`. Tek nakon njegove stvarne provjere u prihvaćenoj verziji red dobija `source=llm_checked` za Kerimova pitanja ili `checked_by=kerim` za Tarikova pitanja. Mirza upisuje svoju potvrdu nakon nezavisnog pregleda Kerimovih pitanja.
+- Za kappu su spremni isti upiti za Kerima i Tarika u `study/kerim/m3_pr8/kappa_sample.csv`. Uzorak ima 50 pitanja iz svih osam izložaka, po 25 BS i EN, seed 3004. Svaki anotator koristi svoj list i odgovarajući jezički tekst izloška. Svih 50 polja `label` popunjava jednom od tri važeće klase bez konsultiranja postojećih oznaka, radnog lista za pregled ili drugog anotatora. Dogovor i korekcije slijede nakon predaje oba lista. Izvorne kopije `kappa_kerim.csv` i `kappa_tarik.csv` treba sačuvati u istom direktoriju.
+
+```bash
+uv run --frozen python scripts/compute_kappa.py \
+  --a study/kerim/m3_pr8/kappa_kerim.csv \
+  --b study/kerim/m3_pr8/kappa_tarik.csv
+```
+
+- Plan B ima osam izložaka po 25 pitanja. Postavke `--val-exhibits 1 --test-exhibits 4` ostavljaju tri izloška za train, jedan za val i četiri za test. Prije pokretanja Tarik rješava 100 praznih `source` i 200 praznih `checked_by` polja. Kad validator prođe, Tarik pokreće odobreni `uv run python scripts/build_dataset.py --val-exhibits 1 --test-exhibits 4` i dostavlja `data/processed/val.csv` Mirzi i Kerimu.
+- Za K-4 Mirza dostavlja `results/val_predictions_b0.csv`, `results/val_predictions_b1_bm25.csv` i `results/val_predictions_b1b_e5.csv` za isti `val.csv`. Kad stignu svi ulazi, `uv run --frozen python scripts/evaluate_all.py` piše `results/metrics_val.json` i `results/metrics_val.md`.
+- U `02 Paper` prenijeti Introduction iz `docs/introduction.md` i uskladiti četiri postojeće reference sa zajedničkom bibliografijom. Iz `docs/results_draft.md` prenijeti preliminarnu analizu i lokalnu provjeru B2. U `03 Presentation` uvesti četiri slajda iz `docs/m3_checkin.pptx` i provjeriti redoslijed i čitljivost tabele. Baseline brojeve dodati tek nakon stvarnog K-4 pokretanja.
 
 ### 2026-11-22 — Završna potvrda M3 i ručna integracija pitanja
 

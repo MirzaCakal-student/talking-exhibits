@@ -36,4 +36,7 @@ The similar pairs `q0104/q0114`, `q0129/q0141` and `q0139/q0140` request differe
 
 Kerim's 100 rows have empty `source` and `checked_by` fields. Tarik records `llm_checked` on his 100 rows and his author review is documented in the history of PR #7. His independent reviewer fields are empty. The validator reports 100 missing `source` values and 200 missing `checked_by` values across the combined snapshot. This technical review does not populate either field.
 
-`TEAM_PLAN.md` §2 assigns Mirza to review Tarik, Tarik to review Kerim, and Kerim to review Mirza. The K-6 row in §4.3 and `docs/team/KERIM.md` assign Kerim to Tarik. These technical findings cover Tarik as requested. The team still needs to confirm the independent review assignments and record the actual reviewers. Mirza's question draft was unavailable.
+Mirza confirmed the M3 review assignments on 22 November 2026. Mirza reviews Kerim's `q0001`–`q0100`. Kerim reviews Tarik's `q0101`–`q0200`. Tarik reviews Mirza's questions once available.
+
+- Kerim verifies each of his own AI-assisted drafts against the assigned exhibit and language. Enter `source=llm_checked` only for the exact wording, label and span he has personally checked. Use `human` only for independently human-written questions.
+- Kerim independently reviews each of Tarik's questions and confirms, revises or rejects the proposed changes above. Coordinate changes to Tarik's rows with Tarik. Enter `checked_by=kerim` only for rows Kerim has actually reviewed in their accepted form. Mirza enters `checked_by=mirza` for Kerim's rows after his own review.
