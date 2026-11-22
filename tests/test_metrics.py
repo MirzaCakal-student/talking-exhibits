@@ -7,6 +7,7 @@ import random
 import pytest
 
 from talking_exhibits.evaluate import (
+    acceptance_score_metrics,
     bootstrap_ci,
     confusion,
     false_refusal_rate,
@@ -44,6 +45,60 @@ LANG = [
     "bs",
     "en",
 ]
+
+
+@pytest.mark.parametrize("scores, expected", [([2, -1], 1.0), ([-1, 2], 0.0)])
+def test_refusal_auroc_score_direction(scores, expected):
+    result = acceptance_score_metrics(["answerable", "unanswerable_plausible"], scores)
+    assert result["refusal_auroc"] == expected
+
+
+def test_acceptance_score_metrics_group_ties():
+    gold = ["answerable", "answerable", "unanswerable_plausible", "out_of_scope"]
+    scores = [0.9, 0.5, 0.5, -0.1]
+    result = acceptance_score_metrics(gold, scores)
+    assert result == {
+        "refusal_auroc": 3.5 / 4,
+        "risk_coverage": [
+            {"threshold": None, "coverage": 0.0, "risk": None},
+            {"threshold": 0.9, "coverage": 0.25, "risk": 0.0},
+            {"threshold": 0.5, "coverage": 0.75, "risk": 1 / 3},
+            {"threshold": -0.1, "coverage": 1.0, "risk": 0.5},
+        ],
+    }
+    assert acceptance_score_metrics(gold[::-1], scores[::-1]) == result
+
+
+def test_acceptance_score_metrics_with_one_unique_score():
+    result = acceptance_score_metrics(["answerable", "out_of_scope"], [0, 0])
+    assert result["refusal_auroc"] == 0.5
+    assert len(result["risk_coverage"]) == 2
+    assert result["risk_coverage"][-1] == {"threshold": 0.0, "coverage": 1.0, "risk": 0.5}
+
+
+@pytest.mark.parametrize("gold, risk", [
+    (["answerable", "answerable"], 0.0),
+    (["unanswerable_plausible", "out_of_scope"], 1.0),
+])
+def test_acceptance_score_metrics_with_one_binary_class(gold, risk):
+    result = acceptance_score_metrics(gold, [2, 1])
+    assert result["refusal_auroc"] is None
+    assert [point["risk"] for point in result["risk_coverage"]] == [None, risk, risk]
+
+
+@pytest.mark.parametrize("gold, scores, message", [
+    ([], [], "nonempty"),
+    (["answerable"], [0, 1], "equal lengths"),
+    (["unknown"], [0], "gold labels"),
+    (["answerable"], [None], "finite numbers"),
+    (["answerable"], [True], "finite numbers"),
+    (["answerable"], ["0.5"], "finite numbers"),
+    (["answerable"], [math.nan], "finite numbers"),
+    (["answerable"], [math.inf], "finite numbers"),
+])
+def test_acceptance_score_metrics_rejects_invalid_input(gold, scores, message):
+    with pytest.raises(ValueError, match=message):
+        acceptance_score_metrics(gold, scores)
 
 
 def test_manual_refusal_counts():

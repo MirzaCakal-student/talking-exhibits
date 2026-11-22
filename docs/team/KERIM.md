@@ -121,7 +121,7 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 
 ## 6. Poslije M3
 1. **B2 prompted LLM** (`llm_baseline.py`): open model preko Ollame (Qwen ili Llama, mali) ili API. Prompt: *"Answer only from the text; otherwise reply exactly: NOT_IN_TEXT"*. Isti retrieval kao glavni sistem. Fiksna temperatura 0. Odluka lokalno vs API ide u HANDOFF §13.
-2. AUROC i **risk–coverage kriva** (treba score, ne samo labela).
+2. ☑ AUROC i **risk–coverage kriva** implementirani i testirani. ☐ Pokretanje na stvarnom val skupu.
 3. Finalna evaluacija na testu **tek kad je konfiguracija zaključana** (jedno pokretanje, s Mirzom).
 4. **Analiza grešaka: cilj 20, minimum 10** u `results/errors.csv` (`qid, system, gold, pred, kategorija, uzrok, objašnjenje`). Kategorije: retrieval promašio pasus / leksičko preklapanje zavarava / treba zaključivanje / greška u gold labeli / dijakritici ili sleng / prevod. Piši **uzrok, ne simptom**.
 5. Demo (FastAPI ili Streamlit) + QR kodovi (`qrcode`), tek kad glavna metoda radi.
@@ -149,6 +149,12 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — AUROC i risk–coverage
+
+- **Urađeno:** `evaluate.py` računa AUROC za odbijanje i udio neodgovorivih među prihvaćenim pitanjima na svakom pragu. `evaluate_all.py` spaja ocjene B1/B1b po `qid` i prikazuje metrike ukupno i po jeziku. Viša ocjena pogoduje prihvatanju. Rezultat je nedostupan za podskup s nepotpunim ocjenama. AUROC traži obje binarne klase.
+- **Stvarni rezultati:** Prošlo je 85 fokusiranih i 184 ukupna testa. `git diff --check` je prošao. Test split nije korišten.
+- **Blokade / sljedeće:** Za mjerenje na stvarnim podacima trebaju Tarikov `data/processed/val.csv` i Mirzini `results/val_predictions_*.csv` sa stvarnim BM25 i e5 ocjenama. B0 i B2 imaju metrike binarne odluke.
 
 ### 2026-11-22 — B2 prompted LLM preko Ollame
 

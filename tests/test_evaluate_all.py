@@ -223,6 +223,7 @@ def test_missing_prediction_column_and_empty_predictions_are_rejected(tmp_path, 
 
 def test_shuffled_predictions_preserve_alignment_and_seeded_report(tmp_path, gold, predictions):
     gold_path = write_csv(tmp_path, "val.csv", gold)
+    predictions = predictions.assign(score=["8", "-2", "2", "3", "1", "-4"])
     shuffled = predictions.iloc[[4, 1, 5, 0, 3, 2]]
     pred_path = write_csv(tmp_path, "predictions.csv", shuffled)
     loaded_gold = ea.read_gold(gold_path)
@@ -242,6 +243,10 @@ def test_shuffled_predictions_preserve_alignment_and_seeded_report(tmp_path, gol
     assert overall["macro_f1"] == 0.625
     assert system["by_language"]["bs"]["f1"] == 1
     assert system["by_language"]["en"]["f1"] == 0.5
+    assert overall["refusal_auroc"] == 5 / 8
+    assert system["by_language"]["bs"]["refusal_auroc"] == 1.0
+    assert system["by_language"]["en"]["refusal_auroc"] == 0.5
+    assert overall["risk_coverage"][3] == {"threshold": 2.0, "coverage": 0.5, "risk": 2 / 3}
     assert system["by_gold_class"]["out_of_scope"]["correct_decision_rate"] == 1
     assert overall["confusion"] == {
         "answerable": {"answer": 1, "refuse": 1},
@@ -261,10 +266,43 @@ def test_report_preserves_na_when_no_answerable_questions_exist(gold, prediction
     assert set(system["by_language"]) == {"bs"}
     assert set(system["by_gold_class"]) == {"out_of_scope"}
     assert system["overall"]["refuse_f1_ci95"] == [1, 1]
+    assert system["overall"]["refusal_auroc"] is None
+    assert system["overall"]["risk_coverage"][-1]["risk"] == 1.0
     markdown = ea.render_markdown(report)
     assert markdown.startswith("# Validation evaluation\n")
     assert "| b1_bm25 | all | 1 | 1.000 | 1.000 | 1.000 | [1.000, 1.000] | N/A |" in markdown
     assert "## Three-class gold × binary prediction confusion" in markdown
+    assert "| b1_bm25 | all | N/A | 2 |" in markdown
+
+
+@pytest.mark.parametrize("system, score", [("b0", ""), ("b2", ""), ("other", "0.5")])
+def test_unsupported_systems_keep_decision_metrics_only(gold, predictions, system, score):
+    report = ea.calculate(gold, predictions.assign(system=system, score=score), bootstrap=10, seed=3004)
+    result = report["systems"][system]
+    for stats in (result["overall"], *result["by_language"].values()):
+        assert stats["f1"] > 0
+        assert stats["refusal_auroc"] is None
+        assert stats["risk_coverage"] is None
+
+
+@pytest.mark.parametrize("missing_score", ["", float("nan")])
+def test_partial_scores_only_allow_complete_language_subset(gold, predictions, missing_score):
+    frame = predictions.assign(system="b1b_e5", score=[0.5, missing_score, 0.1, 0.0, -0.2, 0.1])
+    report = ea.calculate(gold, frame, bootstrap=10, seed=3004)
+    result = report["systems"]["b1b_e5"]
+    for stats in (result["overall"], result["by_language"]["en"]):
+        assert stats["refusal_auroc"] is None
+        assert stats["risk_coverage"] is None
+    assert result["by_language"]["bs"]["refusal_auroc"] == 1.0
+    assert len(result["by_language"]["bs"]["risk_coverage"]) == 4
+
+
+def test_calculate_can_accept_existing_decision_only_frames(gold, predictions):
+    report = ea.calculate(gold, predictions.drop(columns="score"), bootstrap=10, seed=3004)
+    overall = report["systems"]["b1_bm25"]["overall"]
+    assert overall["f1"] == 0.75
+    assert overall["refusal_auroc"] is None
+    assert overall["risk_coverage"] is None
 
 
 @pytest.mark.parametrize("split", ["train", "test"])
@@ -324,4 +362,9 @@ def test_cli_checks_prediction_gold_by_qid(tmp_path, gold, predictions, monkeypa
     else:
         ea.main()
         report = json.loads((out / "metrics_val.json").read_text(encoding="utf-8"))
-        assert report["systems"]["b1_bm25"]["overall"]["n"] == len(gold)
+        overall = report["systems"]["b1_bm25"]["overall"]
+        assert overall["n"] == len(gold)
+        assert overall["refusal_auroc"] == 0
+        assert overall["risk_coverage"][-1]["risk"] == 4 / 6
+        markdown = (out / "metrics_val.md").read_text(encoding="utf-8")
+        assert "| b1_bm25 | all | 0.000 | 7 |" in markdown
