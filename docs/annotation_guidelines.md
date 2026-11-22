@@ -48,6 +48,8 @@ This principle applies equally to Bosnian and English questions.
 
 A question is answerable when its complete answer is explicitly stated in the selected exhibit text.
 
+**Answerability decision rule:** A question is classified as `answerable` only when the requested information is explicitly stated in the corresponding exhibit text. Related information, assumptions, or external knowledge are not sufficient. If the question is relevant to the exhibit but the requested information is missing, it must be labelled `unanswerable_plausible`.
+
 The annotator must identify an exact answer span within the exhibit text.
 
 Example exhibit (Bosnian):

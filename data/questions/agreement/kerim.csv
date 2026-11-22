@@ -1,0 +1,52 @@
+
+qid,exhibit_id,lang,question,label
+q0184,ibu_student_life,en,What does SIS stand for?,answerable
+q0067,ibu_podcast_media,en,Which two audio services are linked from the IBU Podcast page?,answerable
+q0173,ibu_kk_igman_burch,bs,Koja je najduža rijeka u Evropi?,out_of_scope
+q0125,ibu_academic_calendar,en,How do I make a traditional Bosnian pita?,out_of_scope
+q0049,ibu_feh,en,Where can I exchange euros for convertible marks nearby?,out_of_scope
+q0021,ibu_fess,en,How many students belong to Business Development Club?,unanswerable_plausible
+q0134,ibu_visitor_faq,en,Which English certificates are accepted?,answerable
+q0020,ibu_fess,en,Which companies are the faculty's regional partners?,unanswerable_plausible
+q0121,ibu_academic_calendar,en,How many points do I need to pass the scholarship exam?,unanswerable_plausible
+q0161,ibu_kk_igman_burch,en,How can the players study while playing for the club?,answerable
+q0104,ibu_academic_calendar,bs,kada je promocija diplomanata,answerable
+q0051,ibu_podcast_media,bs,Ko zajedno sa studentima producira i vodi IBU Podcast?,answerable
+q0167,ibu_kk_igman_burch,bs,koliko igraca ima seniorska ekipa,unanswerable_plausible
+q0040,ibu_feh,en,What technology-related resource is highlighted for Film and Video Production?,answerable
+q0149,ibu_visitor_faq,en,What is the capital of Japan?,out_of_scope
+q0052,ibu_podcast_media,bs,Studio kojeg odsjeka služi kao baza IBU Podcasta?,answerable
+q0146,ibu_visitor_faq,en,How much does parking on campus cost?,unanswerable_plausible
+q0135,ibu_visitor_faq,en,What levels does the English preparatory school have?,answerable
+q0175,ibu_kk_igman_burch,en,Who wrote Romeo and Juliet?,out_of_scope
+q0031,ibu_feh,bs,Koliko nastavnika radi na Odsjeku za engleski jezik i književnost?,unanswerable_plausible
+q0042,ibu_feh,en,Which activities bring students together in T-Club?,answerable
+q0127,ibu_visitor_faq,bs,Koliko koštaju knjige i studijski materijal?,answerable
+q0199,ibu_student_life,en,What is the tallest mountain in the world?,out_of_scope
+q0140,ibu_visitor_faq,bs,Koliko mjesta ima studentski dom?,unanswerable_plausible
+q0065,ibu_podcast_media,en,On what date was the news item about the radio visit published?,answerable
+q0034,ibu_feh,bs,Gdje je predviđeno snimanje studentskih filmova?,unanswerable_plausible
+q0152,ibu_kk_igman_burch,bs,Kako se klub zvao kada je osnovan?,answerable
+q0151,ibu_kk_igman_burch,bs,Kada je osnovan klub?,answerable
+q0120,ibu_academic_calendar,en,When are the results of the scholarship exam announced?,unanswerable_plausible
+q0035,ibu_feh,bs,Koliki je mjesečni iznos stipendije za studente ovog fakulteta?,unanswerable_plausible
+q0007,ibu_fess,bs,Koliko ECTS bodova nosi master studij menadžmenta?,unanswerable_plausible
+q0027,ibu_feh,bs,Koja studijska oblast navodi prevođenje i uređivanje tekstova kao moguće profesionalne pravce?,answerable
+q0095,ibu_about_programs,en,How many places are available in the Dentistry programme?,unanswerable_plausible
+q0075,ibu_podcast_media,en,How do I solve a quadratic equation?,out_of_scope
+q0107,ibu_academic_calendar,en,When do the fall final examinations take place?,answerable
+q0165,ibu_kk_igman_burch,bs,Koliko titula prvaka Premijer lige je klub osvojio?,unanswerable_plausible
+q0084,ibu_about_programs,bs,Do kojeg datuma traje prijava za stipendije?,unanswerable_plausible
+q0114,ibu_academic_calendar,bs,Gdje se održava promocija diplomanata?,unanswerable_plausible
+q0099,ibu_about_programs,en,How should I store a homemade burek overnight?,out_of_scope
+q0142,ibu_visitor_faq,bs,koliko bodova na TOEFL testu treba za upis,unanswerable_plausible
+q0014,ibu_fess,en,"Which faculty department covers banking, accounting and insurance?",answerable
+q0046,ibu_feh,en,What is the annual membership fee for Linguistic Club?,unanswerable_plausible
+q0070,ibu_podcast_media,en,How often does IBU Finals release a new episode?,unanswerable_plausible
+q0131,ibu_visitor_faq,bs,Koliko ECTS bodova ima studij na Fakultetu obrazovanja?,answerable
+q0195,ibu_student_life,en,How many computers are there in the library?,unanswerable_plausible
+q0025,ibu_fess,en,How do I get to Sarajevo's main railway station from here?,out_of_scope
+q0170,ibu_kk_igman_burch,en,What are the club's colours?,unanswerable_plausible
+q0004,ibu_fess,bs,Koji klub podržava napore za stabilnu i mirnu Bosnu i Hercegovinu?,answerable
+q0061,ibu_podcast_media,bs,U koliko sati je pocela posjeta BH Radiju 1?,unanswerable_plausible
+q0073,ibu_podcast_media,en,What was the title of an archival recording the students heard during the radio visit?,unanswerable_plausible
