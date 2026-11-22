@@ -108,7 +108,8 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☐ `evaluate.py` + `test_metrics.py` (ručni primjeri)
 - ☐ `data_analysis.py` → ≥2 figure + tabela
 - ☐ `evaluate_all.py` → `metrics_val.json` + tabela
-- ☐ Paper: Introduction
+- ☑ Paper: Introduction — nacrt u `docs/introduction.md`
+- ☐ Introduction prenesen u zajednički `02 Paper` i citati usklađeni u Zotero/Paperpile
 - ☑ 100 vlastitih nacrta pitanja napisano (50 BS / 50 EN; q0001–q0100)
 - ☐ Vlastita pitanja ljudski potvrđena i nezavisno pregledana (`source`, `checked_by`)
 - ☐ Tarikova pitanja provjerena
@@ -146,6 +147,14 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — K-5: Introduction nacrt za M3
+
+- **Urađeno:** Kreiran `docs/introduction.md` kao samostalan engleski nacrt za naknadni prijenos u postojeći Google Doc `02 Paper`, u zajedničkom folderu `Čakal, Hadrović, Hodžić`. Obuhvata kontekst QA vodiča, nedovoljnu tekstualnu podršku i halucinacije, BS/EN opseg, tačne RQ1–RQ3, plan retrievala i klasifikatora, baseline poređenja, namjeravane doprinose i strukturu rada. Postojeći kod razlikovan je od planiranog fine-tuninga i LLM baselinea, a pitanje-dataset opisan je kao nacrt koji čeka ljudski pregled. Dopunjene postojeće lokalne bilješke.
+- **Stvarni rezultati:** Oko 650 riječi uvoda bez referenci. Programski potvrđeno da sva tri istraživačka pitanja odgovaraju HANDOFF-u riječ po riječ, uključujući interpunkciju; četiri upotrijebljena citata imaju četiri odgovarajuće reference. Izvori provjereni na ACL Anthology i arXiv stranicama: Ji et al. (arXiv preprint, 2022), Rajpurkar et al. (2018), Kamath et al. (2020), Conneau et al. (2020). Unicode NFC i provjere placeholdera prolaze; `git diff --check` prolazi. Nisu izvođeni eksperimenti niti prijavljivani rezultati modela.
+- **Sljedeće:** Kerim pregleda sadržaj, dopuni svoje evidencije i ručno commita/pusha nacrt. Tekst potom treba prenijeti u `02 Paper`, uskladiti s postojećim dijelovima i konačnim stilom citiranja te reference unijeti kroz timski Zotero/Paperpile. Ova isporuka ne mijenja Literature Review, Dataset, Methodology ili Results.
+- **Blokade / čekam na:** Google Drive plugin nije povezan, preglednik traži prijavu, a direktna poveznica na `02 Paper` trenutno nije dostupna. Kerim je izričito odobrio nacrt u postojećem `docs/` direktoriju; zajednički dokument nije mijenjan. `course/` i lokalne Project Report Guidelines nisu dostupni; korišteni su zahtjevi iz HANDOFF §10 i TEAM_PLAN §4.3, uključujući IEEE preporuku. Konačna numeracija citata i unos u reference manager nisu potvrđeni.
+- **Ciljevi do sljedećeg roka:** Prenijeti pregledan Introduction prije M3 roka 23.11.2026 u 08:00. K-5 nacrt je pripremljen, ali zahtjev „tekst u 02 Paper“ ostaje otvoren do prijenosa. Cijeli M3 paper i njegov minimum od osam izvora nisu označeni završenim. Prethodni K-6 commit je `814f962`; početno stablo bilo je čisto na `kerim/evaluation-and-dataset`. Podaci, izlošci, kod, AI_LOG i CONTRIBUTIONS nisu mijenjani.
 
 ### 2026-11-22 — K-6: 100 nacrta pitanja za ljudski pregled
 
