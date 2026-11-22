@@ -76,7 +76,6 @@ Napravi i prazan `data/questions/questions.csv` sa samo zaglavljem, da svi pišu
   (Ako tim odluči drugačije, npr. jedan fajl s obje verzije, javi Mirzi **prije** nego napiše `load_exhibits`.)
 - Bez privatnih podataka (imena studenata, mailovi).
 - Namjerno ostavi neke "očekivane" činjenice **van teksta** (cijena, arhitekta, tačan broj), jer su to dobra `unanswerable_plausible` pitanja.
-- **Tekstove pišete vi.** Claude smije provjeriti format, dužinu i JSON, i predložiti strukturu, ali ne piše tekst.
 
 ### T-4 Koordinacija pitanja (rok 16.11)
 - Podijeli izloške za pitanja (svako ~4). Svako piše pitanja za izloške koje **nije** sam pisao, da pitanja ne budu "preblizu" tekstu.
@@ -154,6 +153,22 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-19 — nacrti tekstova za Tarikova 4 izloška (branch `tarik/exhibit-drafts`)
+- **Urađeno:**
+  - Tim se dogovorio da Claude smije pisati tekstove i pitanja, pa je pravilo obrisano u `CLAUDE.md`, `PROMPT_CLAUDE_CODE.md` (stavke prenumerisane), `TEAM_PLAN.md` §4.2 i ovom fajlu (T-1). AI_LOG, CONTRIBUTIONS, commit i push i dalje rade studenti.
+  - 8 JSON fajlova u `data/exhibits/`: `ibu_academic_calendar`, `ibu_visitor_faq`, `ibu_kk_igman_burch`, `ibu_student_life`, svaki BS + EN, samo iz izvora iz `data/exhibits/README.md`. Bez imena, telefona i mailova. Neke činjenice su namjerno izostavljene za `unanswerable_plausible`: cijene, satnice, trener, dvorana, radno vrijeme biblioteke.
+- **Stvarni rezultati:**
+  - broj riječi: kalendar 394/504, FAQ 432/502, KK Igman 364/420, studentski život 349/385 (BS/EN);
+  - `load_exhibits` učita 8 tekstova;
+  - validator: `Found 8 exhibit texts`, `OK (0 questions)`;
+  - `uv run pytest -q` → 87 passed.
+- **Sljedeće:**
+  - Tarik pročita tekstove i provjeri činjenice;
+  - README status ☐ → ☑ tek poslije njegove provjere;
+  - AI_LOG (tekstove je napisao Claude iz izvora, Tarik ih provjerio), commit, push i PR;
+  - zatim pitanja ~25 po izlošku, kappa, split, paper.
+- **Blokade / čekam na:** tekstove Mirze i Kerima (8 izložaka).
 
 ### 2026-11-18 — alati za podatke: answer_start, split, kappa (branch `tarik/data-tools`)
 - **Urađeno:**
