@@ -62,10 +62,18 @@ def read_gold(path: Path) -> pd.DataFrame:
             f"Validation CSV lacks columns: {sorted(missing)}"
         )
 
+    if "split" in gold.columns:
+        invalid_splits = sorted(set(gold["split"]) - {"val"})
+        if invalid_splits:
+            raise ValueError(
+                "Validation CSV split must contain only 'val'; "
+                f"invalid values: {invalid_splits}"
+            )
+
     if (
         gold.empty
         or gold.qid.duplicated().any()
-        or (gold.qid == "").any()
+        or gold.qid.str.strip().eq("").any()
     ):
         raise ValueError(
             "Validation qids must be nonempty and unique"
@@ -117,7 +125,7 @@ def read_predictions(
             )
 
         if (
-            (frame.system == "").any()
+            frame.system.str.strip().eq("").any()
             or not frame.pred.isin(
                 ["answer", "refuse"]
             ).all()
