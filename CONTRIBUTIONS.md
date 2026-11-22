@@ -35,3 +35,6 @@ Each member commits their own work from their own GitHub account. Update this fi
 | 22.11.2026 | Kerim Hodžić | Prepared the Introduction and preliminary Results drafts, updated the question review documentation, and created four M3 check-in slides. Independently reviewed Tarik's 100 questions and documented proposed corrections requiring Tarik's approval. |
 | 22.11.2026 | Tarik Hadrović | Reviewed Kerim's PR #8 before merge; kappa sample: script and 50 unlabelled questions (25 per author, seed 3004) for the agreement check (T-5) |
 | 22.11.2026 | Tarik Hadrović | Kappa sample labels as the second annotator next to Kerim |
+| 12.11.2026 | Mirza Čakal | Aligned TEAM_PLAN.md and HANDOFF.md with the course requirements; per-member task guides in docs/team/ |
+| 15.11.2026 | Mirza Čakal | Data loading and validation, preprocessing and sentence-based chunking, own BM25 and multilingual-e5 retrieval, baseline script B0/B1/B1b, 37 tests, README run instructions, uv.lock; reviewed and merged PR #1 |
+| 22.11.2026 | Mirza Čakal | Approved the annotation guidelines; reviewed Kerim's questions q0001–q0100; ran baselines B0/B1/B1b on the validation split (results/); my half of the Literature Review in 02 Paper |
