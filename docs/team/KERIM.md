@@ -101,6 +101,7 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 
 ## 5. Checklist za M3 (tvoj dio)
 - ☑ Vlastiti izložak `ibu_fess`: BS + EN tekstovi, izvori i tehnička provjera
+- ☑ Vlastiti izložak `ibu_feh`: BS + EN tekstovi, izvori i tehnička provjera
 - ☐ `annotation_guidelines.md` potvrđen od Tarika i Mirze
 - ☐ `evaluate.py` + `test_metrics.py` (ručni primjeri)
 - ☐ `data_analysis.py` → ≥2 figure + tabela
@@ -141,6 +142,14 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — Izložak ibu_feh (BS i EN)
+
+- **Urađeno:** Kreirani `data/exhibits/ibu_feh_bs.json` i `data/exhibits/ibu_feh_en.json` za drugi izložak dodijeljen Kerimu. Činjenice provjerene 22.11.2026 na dogovorenoj fakultetskoj stranici i stranici školarina: obrazovno usmjerenje, četiri studijske oblasti, mogući profesionalni pravci, četiri kluba i kategorije školarina. Obje verzije imaju isti skup činjenica, bez ličnih imena, kontakata i tvrdnji o garantovanom zaposlenju. Dopunjene postojeće lokalne bilješke u `study/kerim/`.
+- **Stvarni rezultati:** BS 349 riječi; EN 365 riječi; po šest odlomaka, pet JSON polja i dva izvora. `load_exhibits` učitava sva četiri postojeća JSON-a, a `get_exhibit_text` vraća tačan tekst za oba nova jezika. `chunk(size=120, overlap=30)` daje po četiri pasusa. `uv run --frozen pytest -q`: **87 passed**. Provjere JSON šeme, dužine, Unicode zapisa, izvora i `git diff --check` prolaze.
+- **Sljedeće:** Kerim pregleda i ručno commita/pusha ovu isporuku. Sljedeći zasebni izložak je `ibu_podcast_media` (BS + EN), prema postojećoj podjeli; nije započet.
+- **Blokade / čekam na:** Timski pregled sadržaja i postojeće otvoreno pitanje IBU dozvole za objavu. `course/` nije lokalno dostupan; primijenjeni su dostupni zahtjevi iz HANDOFF-a i TEAM_PLAN-a. Prethodni FESS je commitan kao `53d1573`; početno radno stablo bilo je čisto na `kerim/evaluation-and-dataset`, a FESS fajlovi nisu mijenjani.
+- **Ciljevi do sljedećeg roka:** Pregledati ovaj par prije M3 roka 23.11.2026 u 08:00 i nastaviti preostale vlastite izloške u zasebnim isporukama. U ovoj sesiji nisu kreirana pitanja, otvaran test split niti mijenjani AI_LOG i CONTRIBUTIONS; njihove unose dopunjava Kerim.
 
 ### 2026-11-22 — Izložak ibu_fess (BS i EN)
 
