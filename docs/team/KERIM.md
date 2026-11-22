@@ -103,6 +103,7 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☑ Vlastiti izložak `ibu_fess`: BS + EN tekstovi, izvori i tehnička provjera
 - ☑ Vlastiti izložak `ibu_feh`: BS + EN tekstovi, izvori i tehnička provjera
 - ☑ Vlastiti izložak `ibu_podcast_media`: BS + EN tekstovi, izvori i tehnička provjera
+- ☑ Vlastiti izložak `ibu_about_programs`: BS + EN tekstovi, izvori i tehnička provjera
 - ☐ `annotation_guidelines.md` potvrđen od Tarika i Mirze
 - ☐ `evaluate.py` + `test_metrics.py` (ručni primjeri)
 - ☐ `data_analysis.py` → ≥2 figure + tabela
@@ -143,6 +144,14 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — Izložak ibu_about_programs (BS i EN)
+
+- **Urađeno:** Kreirani `data/exhibits/ibu_about_programs_bs.json` i `data/exhibits/ibu_about_programs_en.json`. Oba planirana izvora otvorena i provjerena 22.11.2026: `/about` podržava institucionalno usmjerenje, lokaciju i strukturu fakulteta, a `/admission` nazive programa, prikazane nivoe studija i poveznice za buduće studente. Činjenice upoređene kroz svih šest odlomaka u oba jezika; nivoi nisu pripisivani svim programima na osnovu općeg pregleda. Dopunjene postojeće lokalne bilješke.
+- **Stvarni rezultati:** BS **327 riječi**, EN **353 riječi**; svaki tekst ima 23 rečenice i daje četiri pasusa uz `chunk(size=120, overlap=30)`. JSON ključevi, tipovi, ID-jevi, jezici, izvori i Unicode NFC prolaze. Razdvajanje rečenica čuva sav sadržaj osim normalizacije razmaka; svaka rečenica prisutna je u barem jednom pasusu. `uv run --frozen pytest -q`: **87 passed**. `git diff --check` prolazi. Svih osam očekivanih fajlova za četiri Kerimova izloška postoji, ima 300–800 riječi i uspješno se učitava postojećim loaderom.
+- **Sljedeće:** Kerim pregleda i ručno commita/pusha ovu isporuku. Četiri vlastita dvojezična teksta su pripremljena i tehnički provjerena; u ovoj sesiji nije započet drugi zadatak.
+- **Blokade / čekam na:** Timski sadržajni pregled i postojeće otvoreno pitanje IBU dozvole za objavu. `course/` nije dostupan lokalno; korišteni su dostupni zahtjevi iz HANDOFF-a i TEAM_PLAN-a. Početno radno stablo bilo je čisto na `kerim/evaluation-and-dataset`; prethodni podcast commitan je kao `53b4cf8`. Prethodnih šest JSON-a nije mijenjano.
+- **Ciljevi do sljedećeg roka:** Pregledati posljednji par prije M3 roka 23.11.2026 u 08:00. Potpunost vlastitih izložaka ne označava kompletan dataset ili M3 završenim. Pitanja, evaluacija, paper i slajdovi nisu rađeni; test split nije otvaran. Kerim sam dopunjava AI_LOG i CONTRIBUTIONS.
 
 ### 2026-11-22 — Izložak ibu_podcast_media (BS i EN)
 
