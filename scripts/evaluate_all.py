@@ -201,6 +201,13 @@ def read_predictions(
     return predictions
 
 
+def expected_decisions(gold: pd.DataFrame) -> dict[str, str]:
+    return {
+        row.qid: "answer" if row.label == "answerable" else "refuse"
+        for row in gold.itertuples(index=False)
+    }
+
+
 def summarize(
     gold: list[str],
     pred: list[str],
@@ -515,10 +522,7 @@ def main() -> None:
 
     try:
         gold = read_gold(args.gold)
-        gold_decisions = {
-            row.qid: "answer" if row.label == "answerable" else "refuse"
-            for row in gold.itertuples(index=False)
-        }
+        gold_decisions = expected_decisions(gold)
 
         pred = read_predictions(
             args.predictions,
