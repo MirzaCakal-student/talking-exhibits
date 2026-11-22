@@ -1,0 +1,903 @@
+{
+  "dataset": "validation",
+  "seed": 3004,
+  "bootstrap_samples": 1000,
+  "systems": {
+    "b0": {
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 14,
+        "n": 25,
+        "tp": 0,
+        "fp": 0,
+        "tn": 11,
+        "fn": 14,
+        "false_refusal_rate": 0.0,
+        "macro_f1": 0.3055555555555556,
+        "refuse_f1_ci95": [
+          0.0,
+          0.0
+        ],
+        "confusion": {
+          "answerable": {
+            "answer": 11,
+            "refuse": 0
+          },
+          "unanswerable_plausible": {
+            "answer": 10,
+            "refuse": 0
+          },
+          "out_of_scope": {
+            "answer": 4,
+            "refuse": 0
+          }
+        },
+        "refusal_auroc": null,
+        "risk_coverage": null
+      },
+      "by_language": {
+        "bs": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7,
+          "n": 12,
+          "tp": 0,
+          "fp": 0,
+          "tn": 5,
+          "fn": 7,
+          "false_refusal_rate": 0.0,
+          "macro_f1": 0.29411764705882354,
+          "refuse_f1_ci95": [
+            0.0,
+            0.0
+          ],
+          "confusion": {
+            "answerable": {
+              "answer": 5,
+              "refuse": 0
+            },
+            "unanswerable_plausible": {
+              "answer": 5,
+              "refuse": 0
+            },
+            "out_of_scope": {
+              "answer": 2,
+              "refuse": 0
+            }
+          },
+          "refusal_auroc": null,
+          "risk_coverage": null
+        },
+        "en": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7,
+          "n": 13,
+          "tp": 0,
+          "fp": 0,
+          "tn": 6,
+          "fn": 7,
+          "false_refusal_rate": 0.0,
+          "macro_f1": 0.3157894736842105,
+          "refuse_f1_ci95": [
+            0.0,
+            0.0
+          ],
+          "confusion": {
+            "answerable": {
+              "answer": 6,
+              "refuse": 0
+            },
+            "unanswerable_plausible": {
+              "answer": 5,
+              "refuse": 0
+            },
+            "out_of_scope": {
+              "answer": 2,
+              "refuse": 0
+            }
+          },
+          "refusal_auroc": null,
+          "risk_coverage": null
+        }
+      },
+      "by_gold_class": {
+        "answerable": {
+          "n": 11,
+          "expected_decision": "answer",
+          "correct_decision_rate": 1.0
+        },
+        "unanswerable_plausible": {
+          "n": 10,
+          "expected_decision": "refuse",
+          "correct_decision_rate": 0.0
+        },
+        "out_of_scope": {
+          "n": 4,
+          "expected_decision": "refuse",
+          "correct_decision_rate": 0.0
+        }
+      }
+    },
+    "b1_bm25": {
+      "overall": {
+        "precision": 0.8235294117647058,
+        "recall": 1.0,
+        "f1": 0.9032258064516129,
+        "support": 14,
+        "n": 25,
+        "tp": 14,
+        "fp": 3,
+        "tn": 8,
+        "fn": 0,
+        "false_refusal_rate": 0.2727272727272727,
+        "macro_f1": 0.8726655348047538,
+        "refuse_f1_ci95": [
+          0.7586206896551725,
+          1.0
+        ],
+        "confusion": {
+          "answerable": {
+            "answer": 8,
+            "refuse": 3
+          },
+          "unanswerable_plausible": {
+            "answer": 0,
+            "refuse": 10
+          },
+          "out_of_scope": {
+            "answer": 0,
+            "refuse": 4
+          }
+        },
+        "refusal_auroc": 0.922077922077922,
+        "risk_coverage": [
+          {
+            "threshold": null,
+            "coverage": 0.0,
+            "risk": null
+          },
+          {
+            "threshold": 19.19381095895254,
+            "coverage": 0.04,
+            "risk": 0.0
+          },
+          {
+            "threshold": 16.840950027186963,
+            "coverage": 0.08,
+            "risk": 0.0
+          },
+          {
+            "threshold": 15.693613472307014,
+            "coverage": 0.12,
+            "risk": 0.0
+          },
+          {
+            "threshold": 13.271741066756931,
+            "coverage": 0.16,
+            "risk": 0.0
+          },
+          {
+            "threshold": 12.015113442452845,
+            "coverage": 0.2,
+            "risk": 0.0
+          },
+          {
+            "threshold": 11.533508595356286,
+            "coverage": 0.24,
+            "risk": 0.0
+          },
+          {
+            "threshold": 10.3765716880857,
+            "coverage": 0.28,
+            "risk": 0.0
+          },
+          {
+            "threshold": 8.348448268968232,
+            "coverage": 0.32,
+            "risk": 0.0
+          },
+          {
+            "threshold": 7.612547788151279,
+            "coverage": 0.36,
+            "risk": 0.1111111111111111
+          },
+          {
+            "threshold": 6.8301449217668795,
+            "coverage": 0.4,
+            "risk": 0.2
+          },
+          {
+            "threshold": 6.366121870149142,
+            "coverage": 0.44,
+            "risk": 0.2727272727272727
+          },
+          {
+            "threshold": 4.951509965223483,
+            "coverage": 0.48,
+            "risk": 0.3333333333333333
+          },
+          {
+            "threshold": 4.654079099508187,
+            "coverage": 0.52,
+            "risk": 0.3076923076923077
+          },
+          {
+            "threshold": 4.180348233696828,
+            "coverage": 0.56,
+            "risk": 0.2857142857142857
+          },
+          {
+            "threshold": 3.868422730773289,
+            "coverage": 0.6,
+            "risk": 0.26666666666666666
+          },
+          {
+            "threshold": 3.7197568183606733,
+            "coverage": 0.64,
+            "risk": 0.3125
+          },
+          {
+            "threshold": 3.4652611728317217,
+            "coverage": 0.68,
+            "risk": 0.35294117647058826
+          },
+          {
+            "threshold": 3.3543756987540907,
+            "coverage": 0.72,
+            "risk": 0.3888888888888889
+          },
+          {
+            "threshold": 2.956625576271305,
+            "coverage": 0.76,
+            "risk": 0.42105263157894735
+          },
+          {
+            "threshold": 2.9455580085261457,
+            "coverage": 0.8,
+            "risk": 0.45
+          },
+          {
+            "threshold": 2.8108176759007613,
+            "coverage": 0.84,
+            "risk": 0.47619047619047616
+          },
+          {
+            "threshold": 2.272413650048645,
+            "coverage": 0.88,
+            "risk": 0.5
+          },
+          {
+            "threshold": 0.8720628085322658,
+            "coverage": 0.92,
+            "risk": 0.5217391304347826
+          },
+          {
+            "threshold": 0.7823306511446075,
+            "coverage": 0.96,
+            "risk": 0.5416666666666666
+          },
+          {
+            "threshold": 0.28562885926640363,
+            "coverage": 1.0,
+            "risk": 0.56
+          }
+        ]
+      },
+      "by_language": {
+        "bs": {
+          "precision": 0.7,
+          "recall": 1.0,
+          "f1": 0.8235294117647058,
+          "support": 7,
+          "n": 12,
+          "tp": 7,
+          "fp": 3,
+          "tn": 2,
+          "fn": 0,
+          "false_refusal_rate": 0.6,
+          "macro_f1": 0.6974789915966386,
+          "refuse_f1_ci95": [
+            0.5707792207792209,
+            1.0
+          ],
+          "confusion": {
+            "answerable": {
+              "answer": 2,
+              "refuse": 3
+            },
+            "unanswerable_plausible": {
+              "answer": 0,
+              "refuse": 5
+            },
+            "out_of_scope": {
+              "answer": 0,
+              "refuse": 2
+            }
+          },
+          "refusal_auroc": 0.9142857142857143,
+          "risk_coverage": [
+            {
+              "threshold": null,
+              "coverage": 0.0,
+              "risk": null
+            },
+            {
+              "threshold": 16.840950027186963,
+              "coverage": 0.08333333333333333,
+              "risk": 0.0
+            },
+            {
+              "threshold": 13.271741066756931,
+              "coverage": 0.16666666666666666,
+              "risk": 0.0
+            },
+            {
+              "threshold": 4.951509965223483,
+              "coverage": 0.25,
+              "risk": 0.3333333333333333
+            },
+            {
+              "threshold": 4.654079099508187,
+              "coverage": 0.3333333333333333,
+              "risk": 0.25
+            },
+            {
+              "threshold": 4.180348233696828,
+              "coverage": 0.4166666666666667,
+              "risk": 0.2
+            },
+            {
+              "threshold": 3.868422730773289,
+              "coverage": 0.5,
+              "risk": 0.16666666666666666
+            },
+            {
+              "threshold": 3.4652611728317217,
+              "coverage": 0.5833333333333334,
+              "risk": 0.2857142857142857
+            },
+            {
+              "threshold": 2.956625576271305,
+              "coverage": 0.6666666666666666,
+              "risk": 0.375
+            },
+            {
+              "threshold": 2.9455580085261457,
+              "coverage": 0.75,
+              "risk": 0.4444444444444444
+            },
+            {
+              "threshold": 2.272413650048645,
+              "coverage": 0.8333333333333334,
+              "risk": 0.5
+            },
+            {
+              "threshold": 0.8720628085322658,
+              "coverage": 0.9166666666666666,
+              "risk": 0.5454545454545454
+            },
+            {
+              "threshold": 0.7823306511446075,
+              "coverage": 1.0,
+              "risk": 0.5833333333333334
+            }
+          ]
+        },
+        "en": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 7,
+          "n": 13,
+          "tp": 7,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "false_refusal_rate": 0.0,
+          "macro_f1": 1.0,
+          "refuse_f1_ci95": [
+            1.0,
+            1.0
+          ],
+          "confusion": {
+            "answerable": {
+              "answer": 6,
+              "refuse": 0
+            },
+            "unanswerable_plausible": {
+              "answer": 0,
+              "refuse": 5
+            },
+            "out_of_scope": {
+              "answer": 0,
+              "refuse": 2
+            }
+          },
+          "refusal_auroc": 1.0,
+          "risk_coverage": [
+            {
+              "threshold": null,
+              "coverage": 0.0,
+              "risk": null
+            },
+            {
+              "threshold": 19.19381095895254,
+              "coverage": 0.07692307692307693,
+              "risk": 0.0
+            },
+            {
+              "threshold": 15.693613472307014,
+              "coverage": 0.15384615384615385,
+              "risk": 0.0
+            },
+            {
+              "threshold": 12.015113442452845,
+              "coverage": 0.23076923076923078,
+              "risk": 0.0
+            },
+            {
+              "threshold": 11.533508595356286,
+              "coverage": 0.3076923076923077,
+              "risk": 0.0
+            },
+            {
+              "threshold": 10.3765716880857,
+              "coverage": 0.38461538461538464,
+              "risk": 0.0
+            },
+            {
+              "threshold": 8.348448268968232,
+              "coverage": 0.46153846153846156,
+              "risk": 0.0
+            },
+            {
+              "threshold": 7.612547788151279,
+              "coverage": 0.5384615384615384,
+              "risk": 0.14285714285714285
+            },
+            {
+              "threshold": 6.8301449217668795,
+              "coverage": 0.6153846153846154,
+              "risk": 0.25
+            },
+            {
+              "threshold": 6.366121870149142,
+              "coverage": 0.6923076923076923,
+              "risk": 0.3333333333333333
+            },
+            {
+              "threshold": 3.7197568183606733,
+              "coverage": 0.7692307692307693,
+              "risk": 0.4
+            },
+            {
+              "threshold": 3.3543756987540907,
+              "coverage": 0.8461538461538461,
+              "risk": 0.45454545454545453
+            },
+            {
+              "threshold": 2.8108176759007613,
+              "coverage": 0.9230769230769231,
+              "risk": 0.5
+            },
+            {
+              "threshold": 0.28562885926640363,
+              "coverage": 1.0,
+              "risk": 0.5384615384615384
+            }
+          ]
+        }
+      },
+      "by_gold_class": {
+        "answerable": {
+          "n": 11,
+          "expected_decision": "answer",
+          "correct_decision_rate": 0.7272727272727273
+        },
+        "unanswerable_plausible": {
+          "n": 10,
+          "expected_decision": "refuse",
+          "correct_decision_rate": 1.0
+        },
+        "out_of_scope": {
+          "n": 4,
+          "expected_decision": "refuse",
+          "correct_decision_rate": 1.0
+        }
+      }
+    },
+    "b1b_e5": {
+      "overall": {
+        "precision": 0.9230769230769231,
+        "recall": 0.8571428571428571,
+        "f1": 0.888888888888889,
+        "support": 14,
+        "n": 25,
+        "tp": 12,
+        "fp": 1,
+        "tn": 10,
+        "fn": 2,
+        "false_refusal_rate": 0.09090909090909091,
+        "macro_f1": 0.8792270531400965,
+        "refuse_f1_ci95": [
+          0.7272727272727272,
+          1.0
+        ],
+        "confusion": {
+          "answerable": {
+            "answer": 10,
+            "refuse": 1
+          },
+          "unanswerable_plausible": {
+            "answer": 2,
+            "refuse": 8
+          },
+          "out_of_scope": {
+            "answer": 0,
+            "refuse": 4
+          }
+        },
+        "refusal_auroc": 0.8831168831168831,
+        "risk_coverage": [
+          {
+            "threshold": null,
+            "coverage": 0.0,
+            "risk": null
+          },
+          {
+            "threshold": 0.8662496209144592,
+            "coverage": 0.04,
+            "risk": 0.0
+          },
+          {
+            "threshold": 0.8582546710968018,
+            "coverage": 0.08,
+            "risk": 0.0
+          },
+          {
+            "threshold": 0.8555690050125122,
+            "coverage": 0.12,
+            "risk": 0.3333333333333333
+          },
+          {
+            "threshold": 0.8492842316627502,
+            "coverage": 0.16,
+            "risk": 0.25
+          },
+          {
+            "threshold": 0.8482999205589294,
+            "coverage": 0.2,
+            "risk": 0.2
+          },
+          {
+            "threshold": 0.8452160954475403,
+            "coverage": 0.24,
+            "risk": 0.16666666666666666
+          },
+          {
+            "threshold": 0.8448482155799866,
+            "coverage": 0.28,
+            "risk": 0.14285714285714285
+          },
+          {
+            "threshold": 0.8409557342529297,
+            "coverage": 0.32,
+            "risk": 0.125
+          },
+          {
+            "threshold": 0.8296241760253906,
+            "coverage": 0.36,
+            "risk": 0.2222222222222222
+          },
+          {
+            "threshold": 0.8247846364974976,
+            "coverage": 0.4,
+            "risk": 0.2
+          },
+          {
+            "threshold": 0.8239610195159912,
+            "coverage": 0.44,
+            "risk": 0.18181818181818182
+          },
+          {
+            "threshold": 0.8224098086357117,
+            "coverage": 0.48,
+            "risk": 0.16666666666666666
+          },
+          {
+            "threshold": 0.8208417892456055,
+            "coverage": 0.52,
+            "risk": 0.23076923076923078
+          },
+          {
+            "threshold": 0.819098949432373,
+            "coverage": 0.56,
+            "risk": 0.2857142857142857
+          },
+          {
+            "threshold": 0.8111699223518372,
+            "coverage": 0.6,
+            "risk": 0.3333333333333333
+          },
+          {
+            "threshold": 0.7913170456886292,
+            "coverage": 0.64,
+            "risk": 0.375
+          },
+          {
+            "threshold": 0.7883415222167969,
+            "coverage": 0.68,
+            "risk": 0.4117647058823529
+          },
+          {
+            "threshold": 0.7820935249328613,
+            "coverage": 0.72,
+            "risk": 0.3888888888888889
+          },
+          {
+            "threshold": 0.7804047465324402,
+            "coverage": 0.76,
+            "risk": 0.42105263157894735
+          },
+          {
+            "threshold": 0.7788907289505005,
+            "coverage": 0.8,
+            "risk": 0.45
+          },
+          {
+            "threshold": 0.7683197259902954,
+            "coverage": 0.84,
+            "risk": 0.47619047619047616
+          },
+          {
+            "threshold": 0.7656255960464478,
+            "coverage": 0.88,
+            "risk": 0.5
+          },
+          {
+            "threshold": 0.7457736730575562,
+            "coverage": 0.92,
+            "risk": 0.5217391304347826
+          },
+          {
+            "threshold": 0.7445268630981445,
+            "coverage": 0.96,
+            "risk": 0.5416666666666666
+          },
+          {
+            "threshold": 0.7393155097961426,
+            "coverage": 1.0,
+            "risk": 0.56
+          }
+        ]
+      },
+      "by_language": {
+        "bs": {
+          "precision": 1.0,
+          "recall": 0.7142857142857143,
+          "f1": 0.8333333333333333,
+          "support": 7,
+          "n": 12,
+          "tp": 5,
+          "fp": 0,
+          "tn": 5,
+          "fn": 2,
+          "false_refusal_rate": 0.0,
+          "macro_f1": 0.8333333333333334,
+          "refuse_f1_ci95": [
+            0.5,
+            1.0
+          ],
+          "confusion": {
+            "answerable": {
+              "answer": 5,
+              "refuse": 0
+            },
+            "unanswerable_plausible": {
+              "answer": 2,
+              "refuse": 3
+            },
+            "out_of_scope": {
+              "answer": 0,
+              "refuse": 2
+            }
+          },
+          "refusal_auroc": 0.8285714285714286,
+          "risk_coverage": [
+            {
+              "threshold": null,
+              "coverage": 0.0,
+              "risk": null
+            },
+            {
+              "threshold": 0.8555690050125122,
+              "coverage": 0.08333333333333333,
+              "risk": 1.0
+            },
+            {
+              "threshold": 0.8492842316627502,
+              "coverage": 0.16666666666666666,
+              "risk": 0.5
+            },
+            {
+              "threshold": 0.8482999205589294,
+              "coverage": 0.25,
+              "risk": 0.3333333333333333
+            },
+            {
+              "threshold": 0.8448482155799866,
+              "coverage": 0.3333333333333333,
+              "risk": 0.25
+            },
+            {
+              "threshold": 0.8409557342529297,
+              "coverage": 0.4166666666666667,
+              "risk": 0.2
+            },
+            {
+              "threshold": 0.8296241760253906,
+              "coverage": 0.5,
+              "risk": 0.3333333333333333
+            },
+            {
+              "threshold": 0.8239610195159912,
+              "coverage": 0.5833333333333334,
+              "risk": 0.2857142857142857
+            },
+            {
+              "threshold": 0.819098949432373,
+              "coverage": 0.6666666666666666,
+              "risk": 0.375
+            },
+            {
+              "threshold": 0.7883415222167969,
+              "coverage": 0.75,
+              "risk": 0.4444444444444444
+            },
+            {
+              "threshold": 0.7804047465324402,
+              "coverage": 0.8333333333333334,
+              "risk": 0.5
+            },
+            {
+              "threshold": 0.7457736730575562,
+              "coverage": 0.9166666666666666,
+              "risk": 0.5454545454545454
+            },
+            {
+              "threshold": 0.7445268630981445,
+              "coverage": 1.0,
+              "risk": 0.5833333333333334
+            }
+          ]
+        },
+        "en": {
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333333333333333,
+          "support": 7,
+          "n": 13,
+          "tp": 7,
+          "fp": 1,
+          "tn": 5,
+          "fn": 0,
+          "false_refusal_rate": 0.16666666666666666,
+          "macro_f1": 0.9212121212121211,
+          "refuse_f1_ci95": [
+            0.7692307692307693,
+            1.0
+          ],
+          "confusion": {
+            "answerable": {
+              "answer": 5,
+              "refuse": 1
+            },
+            "unanswerable_plausible": {
+              "answer": 0,
+              "refuse": 5
+            },
+            "out_of_scope": {
+              "answer": 0,
+              "refuse": 2
+            }
+          },
+          "refusal_auroc": 0.9285714285714286,
+          "risk_coverage": [
+            {
+              "threshold": null,
+              "coverage": 0.0,
+              "risk": null
+            },
+            {
+              "threshold": 0.8662496209144592,
+              "coverage": 0.07692307692307693,
+              "risk": 0.0
+            },
+            {
+              "threshold": 0.8582546710968018,
+              "coverage": 0.15384615384615385,
+              "risk": 0.0
+            },
+            {
+              "threshold": 0.8452160954475403,
+              "coverage": 0.23076923076923078,
+              "risk": 0.0
+            },
+            {
+              "threshold": 0.8247846364974976,
+              "coverage": 0.3076923076923077,
+              "risk": 0.0
+            },
+            {
+              "threshold": 0.8224098086357117,
+              "coverage": 0.38461538461538464,
+              "risk": 0.0
+            },
+            {
+              "threshold": 0.8208417892456055,
+              "coverage": 0.46153846153846156,
+              "risk": 0.16666666666666666
+            },
+            {
+              "threshold": 0.8111699223518372,
+              "coverage": 0.5384615384615384,
+              "risk": 0.2857142857142857
+            },
+            {
+              "threshold": 0.7913170456886292,
+              "coverage": 0.6153846153846154,
+              "risk": 0.375
+            },
+            {
+              "threshold": 0.7820935249328613,
+              "coverage": 0.6923076923076923,
+              "risk": 0.3333333333333333
+            },
+            {
+              "threshold": 0.7788907289505005,
+              "coverage": 0.7692307692307693,
+              "risk": 0.4
+            },
+            {
+              "threshold": 0.7683197259902954,
+              "coverage": 0.8461538461538461,
+              "risk": 0.45454545454545453
+            },
+            {
+              "threshold": 0.7656255960464478,
+              "coverage": 0.9230769230769231,
+              "risk": 0.5
+            },
+            {
+              "threshold": 0.7393155097961426,
+              "coverage": 1.0,
+              "risk": 0.5384615384615384
+            }
+          ]
+        }
+      },
+      "by_gold_class": {
+        "answerable": {
+          "n": 11,
+          "expected_decision": "answer",
+          "correct_decision_rate": 0.9090909090909091
+        },
+        "unanswerable_plausible": {
+          "n": 10,
+          "expected_decision": "refuse",
+          "correct_decision_rate": 0.8
+        },
+        "out_of_scope": {
+          "n": 4,
+          "expected_decision": "refuse",
+          "correct_decision_rate": 1.0
+        }
+      }
+    }
+  }
+}
