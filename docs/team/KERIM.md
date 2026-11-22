@@ -118,11 +118,12 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☐ Vlastita pitanja ljudski potvrđena i nezavisno pregledana (`source`, `checked_by`)
 - ☐ Tarikova pitanja: predložene korekcije i nezavisni pregled čekaju tim
 - ☑ K-7 četiri slajda provjerena u `docs/m3_checkin.pptx`
+- ☐ K-7 slajdovi uvezeni u zajednički `03 Presentation`
 - ☐ AI_LOG i CONTRIBUTIONS upisani (sam)
 - ☐ Znaš za 5 minuta objasniti: metrike → tabele → baseline rezultati
 
 ## 6. Poslije M3
-1. **B2 prompted LLM** (`llm_baseline.py`): open model preko Ollame (Qwen ili Llama, mali) ili API. Prompt: *"Answer only from the text; otherwise reply exactly: NOT_IN_TEXT"*. Isti retrieval kao glavni sistem. Fiksna temperatura 0. Odluka lokalno vs API ide u HANDOFF §13.
+1. ☑ **B2 prompted LLM** (`llm_baseline.py`) lokalno provjeren na BS i EN s Ollamom i `qwen2.5:1.5b`. Fiksna temperatura 0 i seed 3004. ☐ Mjerenje na pregledanom val skupu.
 2. ☑ AUROC i **risk–coverage kriva** implementirani i testirani. ☐ Pokretanje na stvarnom val skupu.
 3. Finalna evaluacija na testu **tek kad je konfiguracija zaključana** (jedno pokretanje, s Mirzom).
 4. **Analiza grešaka: cilj 20, minimum 10** u `results/errors.csv` (`qid, system, gold, pred, kategorija, uzrok, objašnjenje`). Kategorije: retrieval promašio pasus / leksičko preklapanje zavarava / treba zaključivanje / greška u gold labeli / dijakritici ili sleng / prevod. Piši **uzrok, ne simptom**. ☑ Izvoz i testovi. ☐ Pregled stvarnih grešaka.
@@ -151,6 +152,83 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — Završna potvrda M3 i ručna integracija pitanja
+
+- **Spremno za M3:** K-2 metrike i testovi, K-3 preliminarne tabele i tri figure, lokalni K-5 Introduction, K-6 tehnički pregled i K-7 četiri slajda. Rezultati opisuju 200 nacrta i 16 jezičkih verzija izložaka.
+- **Ljudske potvrde:** K-1 čeka potvrde Tarika i Mirze. K-6 čeka Kerimovu potvrdu porijekla, nezavisni pregled i dogovor tima o različitim dodjelama u TEAM_PLAN §2 i §4.3. `02 Paper` i `03 Presentation` čekaju prijenos u zajedničke dokumente.
+- **Ulazi za evaluaciju:** Tarik dostavlja pregledani `data/processed/val.csv` iz splita po izlošcima. Mirza dostavlja `results/val_predictions_b0.csv`, `results/val_predictions_b1_bm25.csv` i `results/val_predictions_b1b_e5.csv` za iste `qid`, te trenirani klasifikator i prag za završnu integraciju. Time se omogućavaju K-4, AUROC, risk–coverage, `results/errors.csv` i dopuna Results. Finalni test slijedi tek nakon zaključavanja konfiguracije.
+- **Provjera:** 208 testova prolazi. Na privremenom CSV-u svih 200 zapisa i 93 raspona očuvani su u UTF-8. Validator nalazi 100 praznih `source` i 200 praznih `checked_by`. Namjerni sudar ID-ja odbijen je prije pisanja kandidata. Svi opisni brojevi i tri PNG-a reproducirani su, a PPTX ima četiri slajda.
+
+#### Priprema kandidata za CSV prije ručnog mergea
+
+Na čistoj grani `kerim/evaluation-and-dataset`, nakon ručnog `git fetch origin`, pokreni ovaj blok iz korijena repozitorija. Provjereni `origin/main` je `e2cf0ad` (PR #7). Ako se ulazi promijene, blok će odbiti neočekivane raspone, autore ili nevažeće zapise.
+
+```bash
+question_csv=data/questions/questions.csv
+integration_dir=$(mktemp -d) &&
+  git show "HEAD:$question_csv" > "$integration_dir/kerim.csv" &&
+  git show "origin/main:$question_csv" > "$integration_dir/tarik.csv" &&
+  uv run --frozen python - "$integration_dir" <<'PY'
+import csv
+import sys
+from pathlib import Path
+
+sys.path.insert(0, "scripts")
+import validate_questions as validator
+
+directory = Path(sys.argv[1])
+kerim, tarik = (directory / name for name in ("kerim.csv", "tarik.csv"))
+
+def read_records(path):
+    with path.open(encoding="utf-8", newline="") as stream:
+        reader = csv.reader(stream, strict=True)
+        columns = next(reader, [])
+        rows = list(reader)
+    if columns != validator.REQUIRED_COLUMNS or any(len(row) != len(columns) for row in rows):
+        raise SystemExit(f"Invalid CSV schema or row length in {path}")
+    return rows
+
+author = validator.REQUIRED_COLUMNS.index("author")
+blocks = []
+for path, member, start in ((kerim, "kerim", 1), (tarik, "tarik", 101)):
+    rows = read_records(path)
+    expected = {f"q{i:04d}" for i in range(start, start + 100)}
+    if len(rows) != 100 or {row[0] for row in rows} != expected or any(row[author] != member for row in rows):
+        raise SystemExit(f"Unexpected IDs or authors in {path}. Recheck the integration inputs.")
+    blocks.extend(rows)
+
+left = kerim.read_bytes()
+separator = b"" if left.endswith(b"\n") else b"\n"
+candidate = directory / "candidate.csv"
+with candidate.open("xb") as stream:
+    stream.write(left + separator + tarik.read_bytes().split(b"\n", 1)[1])
+
+if read_records(candidate) != blocks:
+    raise SystemExit("Merged values differ from the source records.")
+
+questions = validator.load_questions(candidate)
+problems = validator.validate(questions, validator.load_exhibit_texts(Path("data/exhibits")))
+for problem in problems:
+    if not (problem.endswith("got ''") and (": source must be one of" in problem or ": checked_by must be one of" in problem)):
+        raise SystemExit(problem)
+
+print(f"{candidate}: {len(questions)} records, all fields preserved.")
+print(f"Exact answer spans: {int(questions.label.eq('answerable').sum())}")
+print(f"Pending metadata: {(questions.source == '').sum()} source, {(questions.checked_by == '').sum()} checked_by")
+PY
+```
+
+Kandidat zadržava Kerimovo zaglavlje i oba bloka u izvornom obliku. Tek nakon uspješne provjere ručno pokreni `git merge --no-commit --no-ff origin/main`. Za provjerene commitove očekuje se samo konflikt u `data/questions/questions.csv`. U istom terminalu provjeri da Gitov drugi i treći zapis konflikta odgovaraju kopijama prije nego potvrdiš zamjenu radnog CSV-a.
+
+```bash
+git show ":2:$question_csv" | cmp - "$integration_dir/kerim.csv" &&
+  git show ":3:$question_csv" | cmp - "$integration_dir/tarik.csv" &&
+  cp -i "$integration_dir/candidate.csv" "$question_csv"
+cmp "$question_csv" "$integration_dir/candidate.csv"
+```
+
+Nakon provjere ručno dodaj samo razriješeni CSV, pregledaj indeks i pokreni pytest prije commita i pushanja grane. PR može ići na pregled kao draft. Prazna polja za ljudsku potvrdu ostaju vidljiva u PR-u.
 
 ### 2026-11-22 — M3 isporuke i tehnički pregled pitanja
 
