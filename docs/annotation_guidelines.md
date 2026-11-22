@@ -399,7 +399,7 @@ Use `human` when a student independently writes the question.
 
 ### AI-assisted questions
 
-Use `llm_checked` only when a question involved LLM assistance and was subsequently checked, corrected where necessary, and approved by a human annotator.
+Use `llm_checked` only when a question involved LLM assistance and a human annotator checked the exact question, label and, where applicable, answer span. Make any needed corrections before recording that confirmation. Leave `source` empty on an AI-assisted draft while confirmation is pending.
 
 LLM output must never be accepted as a gold annotation without human verification.
 
@@ -409,7 +409,7 @@ Any AI assistance must be documented according to the team's AI usage rules.
 
 ## 9. Independent review
 
-Each question must be checked by a team member other than its author.
+Each question must be checked by a team member other than its author. Record that member in `checked_by` after the independent review of the accepted row. Author verification for `source=llm_checked` leaves `checked_by` pending until that separate review occurs.
 
 The reviewer should verify:
 

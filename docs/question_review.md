@@ -1,6 +1,6 @@
 # Question review for M3
 
-The review covers Kerim's `q0001`–`q0100` and Tarik's `q0101`–`q0200` at main commit `e2cf0ad`. Each question was compared with its assigned exhibit and language. The combined draft has 200 unique IDs, 93 exact answer spans with valid offsets, and 107 unanswerable items with empty answer fields. The validator found zero normalized exact duplicates. All split fields are unassigned.
+Kerim Hodžić (`kerim279`) is the author of `q0001`–`q0100`. Tarik Hadrović is the author of `q0101`–`q0200`. Both blocks are in `data/questions/questions.csv` after merge commit `af3effc`. The merged draft has 200 unique IDs, 93 exact answer spans with valid offsets, and 107 unanswerable items with empty answer fields. The validator found zero normalized exact duplicates. All split fields are unassigned.
 
 ## Kerim edits
 
@@ -16,6 +16,8 @@ The review covers Kerim's `q0001`–`q0100` and Tarik's `q0101`–`q0200` at mai
 | q0093 | “Covered” implies funding. | Ask what the separate admissions link lists. |
 
 ## Recommendations for Tarik
+
+The ten edits below are pending Tarik's approval. The CSV currently contains his submitted wording and spans.
 
 | QID | Issue | Suggested correction |
 | --- | --- | --- |
