@@ -100,6 +100,7 @@ Problem (halucinacije, pouzdanost vodiča kroz izložbu), motivacija, RQ1–RQ3 
 Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 
 ## 5. Checklist za M3 (tvoj dio)
+- ☑ Vlastiti izložak `ibu_fess`: BS + EN tekstovi, izvori i tehnička provjera
 - ☐ `annotation_guidelines.md` potvrđen od Tarika i Mirze
 - ☐ `evaluate.py` + `test_metrics.py` (ručni primjeri)
 - ☐ `data_analysis.py` → ≥2 figure + tabela
@@ -140,6 +141,15 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — Izložak ibu_fess (BS i EN)
+
+- **Urađeno:** Završena jedna samostalna isporuka Kerimovog dijela T-3: `data/exhibits/ibu_fess_bs.json` i `data/exhibits/ibu_fess_en.json`. Obje verzije zasnovane su na fakultetskoj stranici i stranici školarina iz dogovorene liste izvora, otvorenim 22.11.2026. Sadrže iste činjenice o oblastima, odsjecima, praktičnom obrazovanju, klubovima i strukturi studija, bez ličnih imena i kontakata. Dodane lokalne bilješke u `study/kerim/`.
+- **Stvarni rezultati:** BS tekst ima 358 riječi, EN tekst 385; oba imaju traženih pet JSON polja i po dva izvora. `load_exhibits` uspješno učitava oba teksta; `chunk(size=120, overlap=30)` daje 4 BS i 5 EN pasusa. `uv run --frozen pytest -q`: **87 passed**. Ovo su tehničke provjere, ne rezultati eksperimenata.
+- **Odabir zadatka:** K-1 već ima nacrt, ali potvrda oba recenzenta nije evidentirana lokalno. K-2 je implementiran i postojeći testovi prolaze. K-3/K-4 imaju skripte, ali stvarna analiza i evaluacija čekaju podatke i predikcije. Izložak `ibu_fess`, prvi dodijeljen Kerimu u `data/exhibits/README.md`, nije postojao i predstavlja nezavisno isporučiv preduslov za pitanja i analizu. `course/` nije dostupan lokalno; korišteni su dostupni zahtjevi iz HANDOFF-a i TEAM_PLAN-a.
+- **Sljedeće:** Pregledati ovaj par prije ručnog commita i pusha; sljedeća zasebna isporuka je Kerimov `ibu_feh` (BS + EN), do M3 roka 23.11.2026 u 08:00.
+- **Blokade / čekam na:** Timski pregled sadržaja i postojeće otvoreno pitanje dozvole IBU-a za objavu; stvarna pitanja, split i baseline predikcije još nedostaju. Nije izvršeno pisanje niti potvrđivanje pitanja, otvaranje test splita ili odobravanje guidelines.
+- **Ciljevi do sljedećeg roka:** Nastaviti s preostalim vlastitim izlošcima u odvojenim isporukama; ne označavati kompletan dataset, K-3 ili K-4 završenim bez stvarnih podataka i izlaza. Kerim sam dopunjava AI_LOG i CONTRIBUTIONS.
 
 
 ### 2026-11-16 — Annotation guidelines and evaluation metrics
