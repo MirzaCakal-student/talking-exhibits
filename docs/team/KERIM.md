@@ -106,7 +106,8 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 - ☑ Vlastiti izložak `ibu_about_programs`: BS + EN tekstovi, izvori i tehnička provjera
 - ☐ `annotation_guidelines.md` potvrđen od Tarika i Mirze
 - ☐ `evaluate.py` + `test_metrics.py` (ručni primjeri)
-- ☐ `data_analysis.py` → ≥2 figure + tabela
+- ☑ `data_analysis.py` → preliminarna analiza 100 nacrta: 3 figure + tabele
+- ☐ K-3 ponovljen na kompletnom, pregledanom timskom skupu
 - ☐ `evaluate_all.py` → `metrics_val.json` + tabela
 - ☑ Paper: Introduction — nacrt u `docs/introduction.md`
 - ☐ Introduction prenesen u zajednički `02 Paper` i citati usklađeni u Zotero/Paperpile
@@ -147,6 +148,15 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — K-3: preliminarna analiza dostupnih podataka
+
+- **Urađeno:** Postojeći `scripts/data_analysis.py` dopunjen tabelama po izlošku i autoru, opisnim statistikama dužina, statusom pregleda i reproduktivnom komandom. Zadržani su postojeće učitavanje, Jaccard i tri grafikona. Dodane su preliminarne oznake i provjerene oznake namjerno izostavljenih dijakritika; nepostojeća klasa sada ima Jaccard `N/A`, umjesto lažno izmjerene nule. Kreirani `results/data_tables.md`, tri PNG-a u `results/figures/` i `tests/test_data_analysis.py`. Dopunjene postojeće lokalne bilješke.
+- **Tačan opseg:** Četiri Kerimova izloška u osam BS/EN verzija i 100 nacrta pitanja q0001–q0100 (`author=kerim`), sve već pohranjeno u commitima. Po 25 pitanja po izlošku; 50 BS i 50 EN. Zabilježenih valjanih `source` vrijednosti i nezavisnih pregleda ima 0/100; svih 100 `split` polja je prazno. Nema lokalnih train/val/test fajlova. Nisu kreirani splitovi niti pokretani modeli.
+- **Dostupnost timskih podataka:** Read-only provjera `git ls-remote --heads origin` potvrdila je da pregledani remote refovi odgovaraju aktuelnim headovima. `origin/tarik/exhibit-drafts` sadrži osam JSON-a za četiri njegova izloška, ali nema redova pitanja; ništa nije kopirano. U `origin/mirza/retrieval-baselines` nisu dostupni izlošci ni pitanja. Ostale pregledane grane također ne daju dodatna pitanja ili splitove. Ovo nije tvrdnja o necommitanom ili drugdje pohranjenom radu članova tima.
+- **Stvarni rezultati:** BS klase: 22 answerable / 20 plausible / 8 out_of_scope; EN: 23 / 20 / 7. Pitanja: prosjek 9,11 riječi, medijan 9, raspon 4–14; verzije izložaka: prosjek 353,88, medijan 355,5, raspon 316–385. Prosječni Jaccard: 0,0303 / 0,0232 / 0,0073 istim redom klasa. Plausible je iznad out_of_scope i ispod answerable; ovo ne dokazuje slabost BM25 praga. Prethodni K-6 zapis navodi 10/50 BS pitanja s namjerno izostavljenim dijakriticima (20%); samo odsustvo znakova daje 28/50 (56%), pa se preostalih 18 ne proglašava namjernim izostavljanjem.
+- **Provjera:** Skripta na stvarnim podacima završila izlaznim kodom 0; komanda sa svih deset qid-jeva je u `results/data_tables.md`. Novi fokusirani testovi: 9 prošlo; `uv run --frozen pytest -q`: 96 prošlo. Nezavisni račun potvrđuje dužine, Jaccard, vrijednosti stubaca i histograme (100 pitanja / 8 verzija). Provjereni PNG renderi imaju iste SHA-256 vrijednosti kao isporučeni fajlovi; slike su otvorene i vizuelno pregledane. Učitavanje i svih 100 mapiranja na isti jezik prolaze; 45/45 answer spanova je ispravno. Validator i dalje prijavljuje samo 100 praznih `source` i 100 praznih `checked_by` polja. `git diff --check` prolazi; indeks je prazan.
+- **Blokade / sljedeće:** Analiza je preliminarna dok ne budu dostupni kompletni, ljudski potvrđeni i nezavisno pregledani timski podaci. `course/` nije dostupan. Ponoviti K-3 nakon njihove integracije; K-4 zavisi od val splita i stvarnih baseline predikcija i nije započet. Kerim pregleda ove promjene, sam ažurira evidencije i ručno commita/pusha. Introduction je već committan kao `6b4d520`; početno stablo bilo je čisto na `kerim/evaluation-and-dataset`. Izlošci, pitanja, Introduction, AI_LOG i CONTRIBUTIONS ostaju nepromijenjeni.
 
 ### 2026-11-22 — K-5: Introduction nacrt za M3
 
