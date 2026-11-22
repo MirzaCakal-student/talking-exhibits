@@ -23,3 +23,4 @@ Each member commits their own work from their own GitHub account. Update this fi
 | 16.11.2026 | Kerim Hodžić | Implemented data analysis and baseline evaluation scripts (scripts/data_analysis.py and scripts/evaluate_all.py), verified syntax and successful output generation using temporary test data; actual dataset analysis and baseline results pending |
 | 16.11.2026 | Tarik Hadrović | Exhibit list (T-1): chose 12 IBU exhibits with the team split (4 per member), sources and writing rules in data/exhibits/README.md, linked from HANDOFF.md |
 | 18.11.2026 | Tarik Hadrović | Data tools: answer_start filler, exhibit-level split (T-6), Cohen's kappa (T-5), 14 tests; exhibit decision in HANDOFF |
+| 19.11.2026 | Tarik Hadrović | Exhibit texts for the academic calendar, visitor FAQ, KK Igman Burch and student life (BS and EN, 8 files in data/exhibits/); removed the rule against AI-drafted texts as agreed by the team |

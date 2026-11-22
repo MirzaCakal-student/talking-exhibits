@@ -194,7 +194,7 @@ Napomena: za M3 baseline se prijavljuje na **val**, ne na test. Test se otvara t
 
 **Poslije M3:** finalna verzija dataseta, priprema SQuAD 2.0 parova za trening (zajedno s Mirzom), kategorije grešaka u analizi, dio slajdova o podacima.
 
-**Tarikov Claude posebno pazi na:** da nikad ne piše tekstove izložaka ni pitanja **umjesto** Tarika za test set (test mora biti ljudski), te da objasni zašto je split po izlošku, šta mjeri kappa i kako se čita.
+**Tarikov Claude posebno pazi na:** da objasni zašto je split po izlošku, šta mjeri kappa i kako se čita.
 
 ### 4.3 Kerim Hodžić — evaluacija, analiza, demo
 
