@@ -154,6 +154,30 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-22 — paper nacrt: Dataset (T-7) i pola Literature Review (T-8) (branch `tarik/paper-log`)
+
+- **Urađeno:** PR #6 (izlošci) i PR #7 (pitanja) mergeani u main. Claude napisao nacrt `docs/paper/tarik_dataset_and_literature.md` (Literature Review, 5 pasusa, 7 provjerenih izvora u IEEE stilu: Rajpurkar 2018, Kamath 2020, Wen 2025, Ji 2023, Rađenović 2026, Varitimiadis 2021, Kucia 2025; Dataset sekcija) i HTML verziju za lijepljenje u Google Docs `02 Paper`. Paper ide samo u Google Docs; `.md` nacrt se ne commita.
+- **Stvarni rezultati:** nema novih brojeva. U Dataset sekciji ostaju `[zagrade]` za ukupan broj pitanja, kappa, split i Kerimovu tabelu.
+- **Sljedeće:** Tarik ubacuje tekst u `02 Paper`, otvara izvore i dodaje ih u Zotero, sam upisuje red u AI_LOG i CONTRIBUTIONS, pusha `tarik/paper-log`, PR. Zatim: provjera Kerimovih q0001–q0100 (`checked_by=tarik`), kappa s Kerimom (~50 pitanja), `build_dataset.py` (plan B `--val-exhibits 1 --test-exhibits 4` ako Mirzini izlošci ne stignu), upis pravih brojeva u paper.
+- **Blokeri:** Kerim još nije otvorio PR (`origin/kerim/evaluation-and-dataset`; konflikt u `questions.csv`, zadržati oba bloka); Mirzina 4 izloška nedostaju.
+- **Cilj:** M3, 23.11.2026 u 08:00.
+
+### 2026-11-22 — nacrti pitanja za Tarikova 4 izloška (branch `tarik/questions`)
+- **Urađeno:**
+  - PR #6 (tekstovi) je merge-an.
+  - U `data/questions/questions.csv` je upisano 100 pitanja, `q0101`–`q0200`, po 25 za svaki od 4 Tarikova izloška. Sva imaju `author = tarik`, `source = llm_checked`, a `checked_by` je prazan.
+  - `answer_start` je popunjen preko `fill_answer_starts.py`. Za 3 odgovora koja se u tekstu ponavljaju (q0153, q0159, q0161) provjereno je da pokazuju na pravo mjesto.
+- **Stvarni rezultati:**
+  - raspodjela: answerable 48 (24 BS / 24 EN), unanswerable_plausible 36 (20/16), out_of_scope 16 (8/8);
+  - BS pitanja: nekoliko bez dijakritika;
+  - validator: jedine greške su 100× prazan `checked_by` (čeka recenzenta).
+- **Sljedeće:**
+  - Tarik pregleda pitanja;
+  - Kerim ili Mirza upiše `checked_by`;
+  - kad Kerim merge-a `kerim/evaluation-and-dataset` (q0001–q0100), konflikt u `questions.csv` se riješi tako da se zadrže oba bloka redova;
+  - kappa s Kerimom na ~50 pitanja, split, paper.
+- **Blokade / čekam na:** Mirzina 4 izloška. Ako ih ne bude do 22.11 navečer, ide plan B: 8 izložaka, split 3/1/4.
+
 ### 2026-11-19 — nacrti tekstova za Tarikova 4 izloška (branch `tarik/exhibit-drafts`)
 - **Urađeno:**
   - Tim se dogovorio da Claude smije pisati tekstove i pitanja, pa je pravilo obrisano u `CLAUDE.md`, `PROMPT_CLAUDE_CODE.md` (stavke prenumerisane), `TEAM_PLAN.md` §4.2 i ovom fajlu (T-1). AI_LOG, CONTRIBUTIONS, commit i push i dalje rade studenti.
