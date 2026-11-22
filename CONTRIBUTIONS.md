@@ -34,3 +34,4 @@ Each member commits their own work from their own GitHub account. Update this fi
 | 22.11.2026 | Kerim Hodžić | Implemented error-analysis export and a bilingual FastAPI demonstration with exhibit-specific QR codes. Verified local routing, exhibit and language isolation, model error handling, and the complete automated test suite (208 tests passed). |
 | 22.11.2026 | Kerim Hodžić | Prepared the Introduction and preliminary Results drafts, updated the question review documentation, and created four M3 check-in slides. Independently reviewed Tarik's 100 questions and documented proposed corrections requiring Tarik's approval. |
 | 22.11.2026 | Tarik Hadrović | Reviewed Kerim's PR #8 before merge; kappa sample: script and 50 unlabelled questions (25 per author, seed 3004) for the agreement check (T-5) |
+| 22.11.2026 | Tarik Hadrović | Kappa sample labels as the second annotator next to Kerim |
