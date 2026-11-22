@@ -24,3 +24,4 @@ Each member commits their own work from their own GitHub account. Update this fi
 | 16.11.2026 | Tarik Hadrović | Exhibit list (T-1): chose 12 IBU exhibits with the team split (4 per member), sources and writing rules in data/exhibits/README.md, linked from HANDOFF.md |
 | 18.11.2026 | Tarik Hadrović | Data tools: answer_start filler, exhibit-level split (T-6), Cohen's kappa (T-5), 14 tests; exhibit decision in HANDOFF |
 | 19.11.2026 | Tarik Hadrović | Exhibit texts for the academic calendar, visitor FAQ, KK Igman Burch and student life (BS and EN, 8 files in data/exhibits/); removed the rule against AI-drafted texts as agreed by the team |
+| 22.11.2026 | Tarik Hadrović | Question set for my 4 exhibits: 100 questions (q0101–q0200) in Bosnian and English across the three classes, drafted with Claude Code; answer positions filled with fill_answer_starts.py |
