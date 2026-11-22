@@ -123,8 +123,8 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 1. **B2 prompted LLM** (`llm_baseline.py`): open model preko Ollame (Qwen ili Llama, mali) ili API. Prompt: *"Answer only from the text; otherwise reply exactly: NOT_IN_TEXT"*. Isti retrieval kao glavni sistem. Fiksna temperatura 0. Odluka lokalno vs API ide u HANDOFF §13.
 2. ☑ AUROC i **risk–coverage kriva** implementirani i testirani. ☐ Pokretanje na stvarnom val skupu.
 3. Finalna evaluacija na testu **tek kad je konfiguracija zaključana** (jedno pokretanje, s Mirzom).
-4. **Analiza grešaka: cilj 20, minimum 10** u `results/errors.csv` (`qid, system, gold, pred, kategorija, uzrok, objašnjenje`). Kategorije: retrieval promašio pasus / leksičko preklapanje zavarava / treba zaključivanje / greška u gold labeli / dijakritici ili sleng / prevod. Piši **uzrok, ne simptom**.
-5. Demo (FastAPI ili Streamlit) + QR kodovi (`qrcode`), tek kad glavna metoda radi.
+4. **Analiza grešaka: cilj 20, minimum 10** u `results/errors.csv` (`qid, system, gold, pred, kategorija, uzrok, objašnjenje`). Kategorije: retrieval promašio pasus / leksičko preklapanje zavarava / treba zaključivanje / greška u gold labeli / dijakritici ili sleng / prevod. Piši **uzrok, ne simptom**. ☑ Izvoz i testovi. ☐ Pregled stvarnih grešaka.
+5. ☑ Lokalni FastAPI demo + QR kodovi s BM25 i B2. ☐ Povezivanje treniranog klasifikatora.
 6. Paper: Results; slajdovi.
 
 ## 7. Šta moraš znati na odbrani
@@ -149,6 +149,13 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — Izvoz grešaka i lokalni demo
+
+- **Urađeno:** `uv run --frozen python scripts/analyze_errors.py` izvozi pogrešne binarne odluke iz validacijskih predikcija po `qid` u `results/errors.csv`. Čuva izvornu oznaku iz skupa i postojeće ručne anotacije. Skripta provjerava kategorije i broji potpune preglede.
+- **Demo:** `uv run --frozen uvicorn --app-dir src talking_exhibits.demo.app:create_app --factory` pokreće BS/EN stranice, QR kodove i upite nad BM25 i B2. Za telefon postaviti `TALKING_EXHIBITS_BASE_URL` na privatni HTTP URL računara i pokrenuti Uvicorn na istoj privatnoj adresi i portu.
+- **Provjera:** Prošlo je 56 fokusiranih testova analize i evaluatora, 41 test demoa i B2 te 208 ukupno. Lokalni HTTP poslužio je 16 stranica izložaka i 16 QR kodova. QR kod očitan s renderovane FEH stranice vodi na njenu BS verziju. Kada Ollama nije dostupna, API vraća lokalizirani HTTP 503 na oba jezika.
+- **Blokade / sljedeće:** Za stvarne analize trebaju pregledani `val.csv` i predikcije sistema. Zatim ručno provjeriti najmanje 10 grešaka, s ciljem 20. Za stvarne odgovore pokrenuti Ollama s lokalnim modelom (`qwen2.5:1.5b` ili `OLLAMA_MODEL`). Kada Mirzin klasifikator i prag budu dostupni, predati adapter `select_passage` pri pokretanju demoa. Test split nije korišten.
 
 ### 2026-11-22 — AUROC i risk–coverage
 

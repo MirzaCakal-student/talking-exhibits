@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if exhibit %}{{ exhibit.title }} · {% endif %}Talking Exhibits</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css').path }}">
+    {% if exhibit %}<script src="{{ url_for('static', path='ask.js').path }}" defer></script>{% endif %}
+</head>
+<body>
+    <header class="site-header">
+        <div class="shell header-inner">
+            <a class="brand" href="/?lang={{ lang }}">Talking Exhibits</a>
+            <nav class="languages" aria-label="{{ words.language }}">
+                {% for code, name, link in language_options %}
+                    <a lang="{{ code }}" hreflang="{{ code }}" href="{{ link }}"{% if code == lang %} aria-current="page"{% endif %}>{{ name }}</a>
+                {% endfor %}
+            </nav>
+        </div>
+    </header>
+    <main class="shell">
+        {% if missing %}
+            <h1>{{ words.missing }}</h1>
+            <a class="back" href="/?lang={{ lang }}">{{ words.exhibits }}</a>
+        {% elif exhibit %}
+            <a class="back" href="/?lang={{ lang }}"><span aria-hidden="true">←</span> {{ words.exhibits }}</a>
+            <h1>{{ exhibit.title }}</h1>
+            <div class="exhibit-grid">
+                <section class="panel question-panel" aria-labelledby="question-label">
+                    <form id="ask-form" data-endpoint="{{ url_for('ask', exhibit_id=exhibit.id, lang=lang).path }}"
+                          data-loading="{{ words.loading }}" data-error="{{ words.error }}" data-empty="{{ words.empty }}">
+                        <label id="question-label" for="question">{{ words.question }}</label>
+                        <textarea id="question" name="question" rows="3" required maxlength="{{ max_question_length }}"
+                                  placeholder="{{ words.placeholder }}"></textarea>
+                        <button type="submit">{{ words.submit }} <span aria-hidden="true">→</span></button>
+                    </form>
+                    <div aria-live="polite" aria-atomic="true">
+                        <div id="feedback" class="feedback" hidden>
+                            <strong id="answer-label" hidden>{{ words.answer }}</strong>
+                            <p id="message"></p>
+                        </div>
+                    </div>
+                </section>
+                <aside class="panel qr-panel" aria-labelledby="qr-heading">
+                    {% set qr = url_for('qr_code', exhibit_id=exhibit.id, lang=lang).path %}
+                    <h2 id="qr-heading">{{ words.qr }}</h2>
+                    <img src="{{ qr }}" width="156" height="156" alt="{{ words.qr_alt }}">
+                    <a href="{{ qr }}" download="{{ exhibit.id }}-{{ lang }}.svg">{{ words.qr_download }}</a>
+                </aside>
+            </div>
+            <details class="panel exhibit-text">
+                <summary>{{ words.read }}</summary>
+                {% for paragraph in exhibit.text.split('\n\n') %}<p>{{ paragraph }}</p>{% endfor %}
+                <h2>{{ words.sources }}</h2>
+                <ul>
+                    {% for source in exhibit.sources if source is string and source.startswith(('http://', 'https://')) %}
+                        <li><a href="{{ source }}">{{ source }}</a></li>
+                    {% endfor %}
+                </ul>
+            </details>
+        {% else %}
+            <h1>{{ words.exhibits }}</h1>
+            <p class="intro">{{ words.browse }}</p>
+            <ul class="exhibit-list">
+                {% for item in exhibits %}
+                    <li><a href="{{ url_for('exhibit', exhibit_id=item.id, lang=lang).path }}">{{ item.title }} <span aria-hidden="true">→</span></a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </main>
+</body>
+</html>

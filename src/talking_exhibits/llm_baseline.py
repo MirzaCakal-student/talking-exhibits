@@ -17,6 +17,7 @@ NOT_IN_TEXT = "NOT_IN_TEXT"
 DEFAULT_MODEL = "qwen2.5:1.5b"
 DEFAULT_BASE_URL = "http://127.0.0.1:11434"
 DEFAULT_TIMEOUT = 60.0
+PassageSelector = Callable[[str, tuple[str, ...]], str | None]
 
 SYSTEM_PROMPT = (
     "Answer the visitor question in its language (Bosnian or English), "
@@ -121,8 +122,13 @@ def answer_with_retrieval(
     model: str = DEFAULT_MODEL,
     base_url: str = DEFAULT_BASE_URL,
     timeout: float = DEFAULT_TIMEOUT,
+    select_passage: PassageSelector | None = None,
 ) -> str:
-    """Use a bound BM25 or e5 search with the same signature as the baseline runner."""
+    """Search one exhibit and optionally gate generation on a selected passage.
+
+    A classifier adapter can return an approved passage or None to refuse.
+    Without an adapter, B2 judges answerability using all retrieved passages.
+    """
     if not question.strip():
         return NOT_IN_TEXT
 
@@ -132,7 +138,15 @@ def answer_with_retrieval(
 
     # Retrieval returns passage IDs in the <exhibit>_<lang>_p<n> format.
     prefix = f"{exhibit_id}_{lang}_p"
-    passages = hits.loc[hits["passage_id"].str.startswith(prefix, na=False), "text"]
+    passages = tuple(hits.loc[hits["passage_id"].str.startswith(prefix, na=False), "text"])
+    if select_passage is not None and passages:
+        approved = select_passage(question, passages)
+        if approved is None:
+            return NOT_IN_TEXT
+        if approved not in passages:
+            raise ValueError("The selected passage must come from the exhibit retrieval results.")
+        passages = (approved,)
+
     return answer_question(question, passages, model=model, base_url=base_url, timeout=timeout)
 
 
