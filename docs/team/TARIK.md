@@ -154,6 +154,14 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-22 — uzorak za kappa (branch `tarik/kappa`)
+
+- **Urađeno:** pregledan Kerimov PR #8 (208 testova prolazi, Tarikovih 100 redova netaknuto osim `checked_by=kerim`, nema konflikta) i mergean u main (`313ef43`, 200 pitanja). Nova skripta `scripts/make_kappa_sample.py` (+3 testa) izvlači 50 pitanja (25 Kerim, 25 Tarik, seed 3004) bez labela u `data/questions/agreement/sample.csv`. Format provjeren sa `compute_kappa.py` na lažnim labelama (samo u scratchpadu).
+- **Stvarni rezultati:** uzorak 50 pitanja, 8 izložaka, 29 EN / 21 BS. Kappa još ne postoji.
+- **Sljedeće:** Tarik i Kerim nezavisno popune `agreement/tarik.csv` i `agreement/kerim.csv`, pa `compute_kappa.py`, pa broj u paper 2.4. Mirza popunjava `checked_by` za q0001–q0100, pa split `build_dataset.py --val-exhibits 1 --test-exhibits 4`.
+- **Blokeri:** Mirzin `checked_by` za Kerimova pitanja.
+- **Cilj:** M3, 23.11.2026 u 08:00.
+
 ### 2026-11-22 — paper nacrt: Dataset (T-7) i pola Literature Review (T-8) (branch `tarik/paper-log`)
 
 - **Urađeno:** PR #6 (izlošci) i PR #7 (pitanja) mergeani u main. Claude napisao nacrt `docs/paper/tarik_dataset_and_literature.md` (Literature Review, 5 pasusa, 7 provjerenih izvora u IEEE stilu: Rajpurkar 2018, Kamath 2020, Wen 2025, Ji 2023, Rađenović 2026, Varitimiadis 2021, Kucia 2025; Dataset sekcija) i HTML verziju za lijepljenje u Google Docs `02 Paper`. Paper ide samo u Google Docs; `.md` nacrt se ne commita.
