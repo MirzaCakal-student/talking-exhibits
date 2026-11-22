@@ -102,6 +102,7 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## 5. Checklist za M3 (tvoj dio)
 - ☑ Vlastiti izložak `ibu_fess`: BS + EN tekstovi, izvori i tehnička provjera
 - ☑ Vlastiti izložak `ibu_feh`: BS + EN tekstovi, izvori i tehnička provjera
+- ☑ Vlastiti izložak `ibu_podcast_media`: BS + EN tekstovi, izvori i tehnička provjera
 - ☐ `annotation_guidelines.md` potvrđen od Tarika i Mirze
 - ☐ `evaluate.py` + `test_metrics.py` (ručni primjeri)
 - ☐ `data_analysis.py` → ≥2 figure + tabela
@@ -142,6 +143,14 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 ## Dnevnik sesija (handoff)
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
+
+### 2026-11-22 — Izložak ibu_podcast_media (BS i EN)
+
+- **Urađeno:** Kreirani `data/exhibits/ibu_podcast_media_bs.json` i `data/exhibits/ibu_podcast_media_en.json`. Oba odobrena izvora otvorena su i provjerena 22.11.2026: stranica podcasta podržava opis produkcije, DCPR studija, studentskog formata, poveznica i tema epizoda; članak o BH Radiju 1 podržava opis obrazovne posjete, arhiva i obiđenih studija. Pet odlomaka u oba jezika upoređeno je po činjenicama, uključujući razliku između datuma posjete i objave. Nisu uključena lična imena, kontakti, tvrdnje o publici ili neprovjerena oprema. Dopunjene postojeće lokalne bilješke.
+- **Stvarni rezultati:** BS **316 riječi**, EN **378 riječi**; po pet odlomaka, pet JSON polja i dva izvora. `load_exhibits` učitava svih šest JSON-a, a `get_exhibit_text` vraća oba nova teksta. Unicode NFC, nazivi, šema i granice dužine prolaze. `chunk(size=120, overlap=30)` daje po četiri pasusa; svaka izvorna rečenica prisutna je u barem jednom pasusu. `uv run --frozen pytest -q`: **87 passed**. `git diff --check` prolazi.
+- **Sljedeće:** Kerim pregleda i ručno commita/pusha ovu isporuku. Četvrti vlastiti izložak je `ibu_about_programs` (BS + EN); nije započet.
+- **Blokade / čekam na:** Timski pregled i postojeće otvoreno pitanje IBU dozvole za objavu. `course/` nije dostupan lokalno; korišteni su dostupni zahtjevi iz HANDOFF-a i TEAM_PLAN-a. Početno radno stablo bilo je čisto na `kerim/evaluation-and-dataset`; FESS i FEH već su commitani kao `53d1573` i `5ea19e2` i nisu mijenjani.
+- **Ciljevi do sljedećeg roka:** Pregledati ovu isporuku prije M3 roka 23.11.2026 u 08:00. Pitanja i četvrti izložak nisu rađeni; test split nije otvaran. Kerim sam dopunjava AI_LOG i CONTRIBUTIONS.
 
 ### 2026-11-22 — Izložak ibu_feh (BS i EN)
 
