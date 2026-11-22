@@ -154,6 +154,14 @@ Bar 4 izvora, svaki **otvoren i pročitan**, u Zotero:
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-22 — paper nacrt: Dataset (T-7) i pola Literature Review (T-8) (branch `tarik/paper-log`)
+
+- **Urađeno:** PR #6 (izlošci) i PR #7 (pitanja) mergeani u main. Claude napisao nacrt `docs/paper/tarik_dataset_and_literature.md` (Literature Review, 5 pasusa, 7 provjerenih izvora u IEEE stilu: Rajpurkar 2018, Kamath 2020, Wen 2025, Ji 2023, Rađenović 2026, Varitimiadis 2021, Kucia 2025; Dataset sekcija) i HTML verziju za lijepljenje u Google Docs `02 Paper`. Paper ide samo u Google Docs; `.md` nacrt se ne commita.
+- **Stvarni rezultati:** nema novih brojeva. U Dataset sekciji ostaju `[zagrade]` za ukupan broj pitanja, kappa, split i Kerimovu tabelu.
+- **Sljedeće:** Tarik ubacuje tekst u `02 Paper`, otvara izvore i dodaje ih u Zotero, sam upisuje red u AI_LOG i CONTRIBUTIONS, pusha `tarik/paper-log`, PR. Zatim: provjera Kerimovih q0001–q0100 (`checked_by=tarik`), kappa s Kerimom (~50 pitanja), `build_dataset.py` (plan B `--val-exhibits 1 --test-exhibits 4` ako Mirzini izlošci ne stignu), upis pravih brojeva u paper.
+- **Blokeri:** Kerim još nije otvorio PR (`origin/kerim/evaluation-and-dataset`; konflikt u `questions.csv`, zadržati oba bloka); Mirzina 4 izloška nedostaju.
+- **Cilj:** M3, 23.11.2026 u 08:00.
+
 ### 2026-11-22 — nacrti pitanja za Tarikova 4 izloška (branch `tarik/questions`)
 - **Urađeno:**
   - PR #6 (tekstovi) je merge-an.
