@@ -150,6 +150,11 @@ Svako objašnjava svoj dio; Feedback se poslije upisuje u `HANDOFF.md` §13.
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-22 — Lokalna B2 inferencija kroz demo
+
+- **Urađeno:** Ollama 0.40.16 i `qwen2.5:1.5b` rade na `127.0.0.1:11434` s isključenim cloud funkcijama. B2 uputa sada traži potvrdu da jedan pasus izričito odgovara na cijelo pitanje prije citiranja. Time su u ponovljenoj provjeri otklonjeni HTTP 500 zbog ponavljanja tokena na BS pitanju i prihvatanje nepovezanog citata na EN pitanju.
+- **Provjera:** Osam stvarnih upita kroz demo dalo je tri tačna citata i pet odbijanja `NOT_IN_TEXT`. Provjeren je sadržaj poslan Ollami i svaki upit je koristio samo pasuse izabrane verzije izloška. Za nedostajući model demo vraća HTTP 503 na oba jezika. Prošao je 41 fokusirani test i svih 208 testova. Test split nije korišten.
+
 ### 2026-11-22 — Izvoz grešaka i lokalni demo
 
 - **Urađeno:** `uv run --frozen python scripts/analyze_errors.py` izvozi pogrešne binarne odluke iz validacijskih predikcija po `qid` u `results/errors.csv`. Čuva izvornu oznaku iz skupa i postojeće ručne anotacije. Skripta provjerava kategorije i broji potpune preglede.

@@ -49,7 +49,11 @@ def test_answers_bs_and_en_with_deterministic_chat(monkeypatch, question, passag
     assert payload["stream"] is False
     assert payload["options"] == {"temperature": 0, "seed": 3004}
     system, user = payload["messages"]
-    assert system["role"] == "system" and "exactly NOT_IN_TEXT" in system["content"]
+    assert system["role"] == "system"
+    instruction = system["content"]
+    assert "explicitly answers the entire question" in instruction
+    assert "Mentioning the same topic or a related name is insufficient" in instruction
+    assert instruction.index("exactly: NOT_IN_TEXT") < instruction.index("exact quote")
     assert user["role"] == "user"
     assert json.loads(user["content"]) == {"question": question, "passages": [passage]}
 
