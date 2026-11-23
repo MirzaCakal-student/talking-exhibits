@@ -159,6 +159,14 @@ Piši svojim riječima: šta rad radi, šta nalazi, kako se odnosi na nas. Claud
 
 Najnoviji unos na vrhu. Piše Claude na kraju sesije (`TEAM_PLAN.md` §1.5).
 
+### 2026-11-23 — završna provjera za M3 (repo i 02 Paper)
+- **Urađeno:**
+  - Repo na `main` (72b8b9d) provjeren: `uv run pytest` → 211 passed; validator → `OK (200 questions)`; split upisan u `questions.csv` (train 75 / val 25 / test 100); `results/metrics_val.md` odgovara `results/val_baselines.json`.
+  - 02 Paper: napravljen kostur svih 11 obaveznih sekcija; upisana Mirzina polovina Literature Review i Tarikova polovina (doslovno iz njegovog dokumenta); citati ujednačeni u IEEE [1]–[13] (Tarik [1]–[7], Mirza [8]–[13]); Kerimov Introduction prenumerisan na isti sistem (SQuAD 2.0 [1], Kamath [2], Ji [4], XLM-R [12]); References ima svih 13 izvora.
+- **Stvarni rezultati:** Cohen's kappa na 50 pitanja = 1.000 (3 klase i answer/refuse), iz `scripts/compute_kappa.py`. Paper navodi da su oznake pravljene uz pomoć LLM-a, pa to nije nezavisno ljudsko slaganje. AUROC iz `results/metrics_val.json`: BM25 0.922, e5 0.883.
+- **Otvoreno poslije M3:** Abstract, Methodology, Discussion and Limitations i Conclusion; Mirzina 4 izloška i 100 pitanja (pa novi split na 12 izložaka); ljudska dvostruka anotacija za kappu; Zotero umjesto ručnih referenci; preformulacija q0040 i q0093 (Kerim).
+- **Sljedeće (Mirza):** answerability klasifikator (XLM-R cross-encoder, SQuAD 2.0, Colab) i Methodology.
+
 ### 2026-11-22 — provjera Kerimovih pitanja i prvi baseline rezultati na val
 - **Urađeno:** potvrđeni `docs/annotation_guidelines.md` (uz prijedlog pravila za da/ne pitanja u §5.10). Provjerena Kerimova pitanja q0001–q0100 (AI prvi prolaz + Mirzina provjera označenih i nasumičnih pitanja) i upisano `checked_by = mirza`; validator → `OK (200 questions)`. Lokalno napravljen split (plan B, `--val-exhibits 1 --test-exhibits 4`, seed 3004, bez upisa u CSV) i pokrenut `scripts/run_baselines.py` na val.
 - **Stvarni rezultati (val, 25 pitanja iz 1 izloška, `ibu_about_programs`; prag biran na istim pitanjima, pa su brojevi optimistični):**
